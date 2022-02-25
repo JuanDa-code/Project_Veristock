@@ -17,17 +17,17 @@ class Devolution(models.Model):
 
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100, verbose_name='Name')
-    cost_sale = models.IntegerField(verbose_name='Cost Sale')
-    brand = models.CharField(max_length=100, verbose_name='Brand')
-    reference = models.CharField(max_length=100, verbose_name='Reference')
-    quantity = models.IntegerField(verbose_name='Quantity')
+    name = models.CharField(max_length=100, verbose_name='Nombre')
+    cost_sale = models.IntegerField(verbose_name='Costo Venta')
+    brand = models.CharField(max_length=100, verbose_name='Marca')
+    reference = models.CharField(max_length=100, verbose_name='Referencia')
+    quantity = models.IntegerField(verbose_name='Cantidad')
 
     def __str__(self):
         return self.name
 
     class Meta:
-        ordering = ['name']
+        ordering = ['id']
         verbose_name = 'Product'
 
 
