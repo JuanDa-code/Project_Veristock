@@ -6,6 +6,7 @@ from .forms import ProductForm
 def home(request):
     return HttpResponse("<h1>Welcome</h1>")
 
+# CRUD Product
 
 def product(request):
     products = Product.objects.all()
@@ -30,3 +31,5 @@ def edit_product(request, id):
         form.save()
         return redirect('producto_index')
     return render(request, './stock/producto/editar.html', {'form': form})
+
+# CRUD Item
