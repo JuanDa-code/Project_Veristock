@@ -1,1 +1,5 @@
+project_veristock/__pycache__/
 stock/__pycache__/
+stock/migrations/0001_initial.py
+stock/migrations/__pycache__/
+user/__pycache__/
