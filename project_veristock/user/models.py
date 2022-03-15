@@ -55,7 +55,7 @@ class User(models.Model):
     id = models.AutoField(primary_key=True)
     id_person = models.ForeignKey(Person, on_delete=models.CASCADE)
     password = models.CharField(max_length=100 ,verbose_name="Contraseña")
-    state = models.BinaryField(verbose_name='Estado')
+    state = models.BooleanField(verbose_name='Estado')
 
 
     def __str__(self):
@@ -70,7 +70,7 @@ class User_Position(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
-    state = models.BinaryField(verbose_name='Estado')
+    state = models.BooleanField(verbose_name='Estado')
 
     def __str__(self):
         return self.user
@@ -84,7 +84,7 @@ class User_Position(models.Model):
 class Customer(models.Model):
     id = models.AutoField(primary_key=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
-    state = models.BinaryField(verbose_name='Estado')
+    state = models.BooleanField(verbose_name='Estado')
 
     def __str__(self):
         return self.person

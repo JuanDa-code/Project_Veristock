@@ -1,41 +1,46 @@
 {% extends "./../base.html" %}
 
-{% block title %} Lista de Productos {% endblock %}
+{% block title %} Lista de Items {% endblock %}
 
 {% block content %} 
 
 <div class="card">
     <div class="card-header">
-        <a name="" id="" class="btn btn-dark" href=" {% url 'crear_producto' %}" role="button">Agregar nuevo producto</a>
+        <a name="" id="" class="btn btn-dark" href=" {% url 'crear_item' %}" role="button">Agregar nuevo Item</a>
     </div>
     <div class="card-body">
-        <h4 class="card-title">Productos</h4>
+        <h4 class="card-title">Items</h4>
         
         <table class="table">
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Nombre</th>
+                    <th>Inicio Garantia</th>
+                    <th>Fin Garantia</th>
+                    <th>Observaciones</th>
+                    <th>Serial</th>
+                    <th>Estado</th>
+                    <th>Producto</th>
+                    <th>Compra</th>
                     <th>Costo Venta</th>
-                    <th>Marca</th>
-                    <th>Referencia</th>
-                    <th>Cantidad</th>
-                    <th>Accciones</th>
                 </tr>
             </thead>
             <tbody>
-                {% for product in products %}
+                {% for item in items %}
                 <tr>
-                    <td>{{ product.id }}</td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.cost_sale }}</td>
-                    <td>{{ product.brand }}</td>
-                    <td>{{ product.reference }}</td>
-                    <td>{{ product.quantity }}</td>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.warranty_start }}</td>
+                    <td>{{ item.warranty_end }}</td>
+                    <td>{{ item.remarks }}</td>
+                    <td>{{ item.serial }}</td>
+                    <td>{{ item.state }}</td>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.purchase.invoice_number }}</td>
+                    <td>{{ item.cost_sale }}</td>
                     <td>
-                        <a name="" id="" class="btn btn-info" href="{% url 'editar_producto' product.id %}" role="button">Editar</a>
+                        <a name="" id="" class="btn btn-info" href="{% url 'edit_item' item.id %}" role="button">Editar</a>
                         |
-                        <a name="" id="" class="btn btn-danger" href="{% url 'eliminar_producto' product.id %}" role="button">Eliminar</a>
+                        <a name="" id="" class="btn btn-danger" href="{% url 'eliminar_item' item.id %}" role="button">Eliminar</a>
                     </td>
                 </tr>
                 {% endfor %}
