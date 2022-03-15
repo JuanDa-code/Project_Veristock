@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Product
+from .models import Product, Item
 from .forms import ProductForm
 
 def home(request):
@@ -31,5 +31,9 @@ def edit_product(request, id):
         form.save()
         return redirect('producto_index')
     return render(request, './stock/producto/editar.html', {'form': form})
+
+def item(request):
+    items = Item.objects.all()
+    return render(request, './stock/item/index.html', {'items': items})
 
 # CRUD Item
