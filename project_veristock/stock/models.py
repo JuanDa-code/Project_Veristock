@@ -55,7 +55,7 @@ class Item(models.Model):
     warranty_start = models.DateField(verbose_name='Inicio Garantia')
     warranty_end = models.DateField(verbose_name='Final Garantia')
     remarks = models.TextField(max_length=250, verbose_name='Observaciones', null=True)
-    serial = models.IntegerField(verbose_name='Serial')
+    serial = models.CharField(verbose_name='Serial',max_length=30)
     state = models.CharField(verbose_name='Estado', choices=estado, max_length=10)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE)
