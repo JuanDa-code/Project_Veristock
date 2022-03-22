@@ -43,13 +43,13 @@ def add_type_document(request):
 
 def edit_type_document(request, id):
     type_document = Type_Document.objects.get(id = id)
-    form = PositionForm(request.POST or None, request.FILES or None, instance = type_document)
+    form = Type_DocumentForm(request.POST or None, request.FILES or None, instance = type_document)
     if form.is_valid() and request.POST:
         form.save()
         return redirect('tipo_documento_index')
     return render(request, './user/tipo_documento/editar.html', {'form': form})
 
 def delete_type_document(id):
-    position = Position.objects.get(id = id)
+    position = Type_Document.objects.get(id = id)
     position.delete()
     return redirect('tipo_documento_index')
