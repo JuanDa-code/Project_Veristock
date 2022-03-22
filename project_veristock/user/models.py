@@ -9,7 +9,7 @@ class Type_Document(models.Model):
         return self.type_document
 
     class Meta:
-        ordering = ['type_document']
+        ordering = ['id']
         verbose_name = 'Tipo Documento'
 
 
