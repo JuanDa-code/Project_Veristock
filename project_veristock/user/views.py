@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
-from .models import Position, Type_Document
-from .forms import PositionForm, Type_DocumentForm
+from .models import Person, Position, Type_Document
+from .forms import PersonForm, PositionForm, Type_DocumentForm
 
 # CRUD Position
 
@@ -50,6 +50,33 @@ def edit_type_document(request, id):
     return render(request, './user/tipo_documento/editar.html', {'form': form})
 
 def delete_type_document(id):
-    position = Type_Document.objects.get(id = id)
-    position.delete()
+    type_document = Type_Document.objects.get(id = id)
+    type_document.delete()
     return redirect('tipo_documento_index')
+
+
+# CRUD Person
+
+def person(request):
+    persons = Person.objects.all()
+    return render(request, './user/persona/index.html', {'persons': persons})
+
+def add_person(request):
+    form = PersonForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return redirect('persona_index')
+    return render(request, './user/persona/crear.html', {'form': form})
+
+def edit_person(request, id):
+    person = Person.objects.get(id = id)
+    form = PersonForm(request.POST or None, request.FILES or None, instance = person)
+    if form.is_valid() and request.POST:
+        form.save()
+        return redirect('persona_index')
+    return render(request, './user/persona/editar.html', {'form': form})
+
+def delete_person(id):
+    person = Type_Document.objects.get(id = id)
+    person.delete()
+    return redirect('persona_index')
