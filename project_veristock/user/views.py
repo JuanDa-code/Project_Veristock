@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
-from .models import Person, Position, Type_Document, User
-from .forms import PersonForm, PositionForm, Type_DocumentForm, UserForm
+from .models import Customer, Person, Position, Type_Document, User, Customer
+from .forms import PersonForm, PositionForm, Type_DocumentForm, UserForm, CustomerForm
 
 # CRUD Position
 
@@ -107,3 +107,29 @@ def delete_user(id):
     user = User.objects.get(id = id)
     user.delete()
     return redirect('usuario_index')
+
+# CRUD Customer
+
+def customer(request):
+    customers = Customer.objects.all()
+    return render(request, './user/cliente/index.html', {'customers': customers})
+
+def add_customer(request):
+    form = CustomerForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return redirect('cliente_index')
+    return render(request, './user/cliente/crear.html', {'form': form})
+
+def edit_customer(request, id):
+    customer  = Customer.objects.get(id = id)
+    form = CustomerForm(request.POST or None, request.FILES or None, instance = customer)
+    if form.is_valid() and request.POST:
+        form.save()
+        return redirect('cliente_index')
+    return render(request, './user/cliente/editar.html', {'form': form})
+
+def delete_customer(id):
+    customer = Customer.objects.get(id = id)
+    customer.delete()
+    return redirect('cliente_index')
