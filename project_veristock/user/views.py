@@ -1,9 +1,9 @@
 from django.shortcuts import redirect, render
-from .models import Person, Position, Type_Document, User
-from .forms import PersonForm, PositionForm, Type_DocumentForm, UserForm
+from .models import Person, Position, Type_Document, User, User_Position
+from .forms import PersonForm, PositionForm, Type_DocumentForm, UserForm, User_PositionForm
 
 # CRUD Position
-
+    
 def position(request):
     positions = Position.objects.all()
     return render(request, './user/cargo/index.html', {'positions': positions})
@@ -107,3 +107,29 @@ def delete_user(id):
     user = User.objects.get(id = id)
     user.delete()
     return redirect('usuario_index')
+
+# CRUD User_Position
+
+def user_position(request):
+    user_positions = User_Position.objects.all()
+    return render(request, './user/usuario_cargo/index.html', {'user_positions': user_positions})
+
+def add_user_position(request):
+    form = User_PositionForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return redirect('usuario_cargo_index')
+    return render(request, './user/usuario_cargo/crear.html', {'form': form})
+
+def edit_user_position(request, id):
+    user_position = User_Position.objects.get(id = id)
+    form = User_PositionForm(request.POST or None, request.FILES or None, instance = user_position)
+    if form.is_valid() and request.POST:
+        form.save()
+        return redirect('usuario_cargo_index')
+    return render(request, './user/usuario_cargo/editar.html', {'form': form})
+
+def delete_user_position(id):
+    user_position = User_Position.objects.get(id = id)
+    user_position.delete()
+    return redirect('usuario_cargo_index')
