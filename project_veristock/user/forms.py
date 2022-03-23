@@ -1,5 +1,5 @@
 from django import forms
-from .models import Person, Position, Type_Document
+from .models import Person, Position, Type_Document, User
 
 class PositionForm(forms.ModelForm):
 
@@ -17,4 +17,10 @@ class PersonForm(forms.ModelForm):
 
     class Meta:
         model = Person
+        fields = '__all__'
+
+class UserForm(forms.ModelForm):
+
+    class Meta:
+        model = User
         fields = '__all__'

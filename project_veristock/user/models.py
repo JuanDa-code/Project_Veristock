@@ -1,5 +1,5 @@
 from django.db import models
-
+from stock.choices import estado
 
 class Type_Document(models.Model):
     id = models.AutoField(primary_key=True)
@@ -34,7 +34,7 @@ class Person(models.Model):
     second_name = models.CharField(max_length=100, verbose_name='Segundo Nombre')
     first_surname = models.CharField(max_length=100, verbose_name='Primer Apellido')
     second_surname = models.CharField(max_length=100, verbose_name='Segundo Apellido')
-    type_document = models.ForeignKey(Type_Document, on_delete=models.CASCADE)
+    type_document = models.ForeignKey(Type_Document, on_delete=models.CASCADE, verbose_name='Tipo Documento')
     document_number = models.CharField(max_length=100, verbose_name='Numero Documento')
     email_address = models.EmailField(verbose_name='Email')
     phone = models.BigIntegerField(verbose_name='Teléfono')
@@ -46,7 +46,7 @@ class Person(models.Model):
 
         
     class Meta:
-        ordering = ['document_number']
+        ordering = ['id']
         verbose_name = 'Persona'
 
 
@@ -55,7 +55,7 @@ class User(models.Model):
     id = models.AutoField(primary_key=True)
     id_person = models.ForeignKey(Person, on_delete=models.CASCADE)
     password = models.CharField(max_length=100 ,verbose_name="Contraseña")
-    state = models.BooleanField(verbose_name='Estado')
+    state = models.CharField(verbose_name='Estado', max_length=20, choices=estado)
 
 
     def __str__(self):
@@ -70,7 +70,7 @@ class User_Position(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
-    state = models.BooleanField(verbose_name='Estado')
+    state = models.CharField(verbose_name='Estado', max_length=20, choices=estado)
 
     def __str__(self):
         return self.user
@@ -84,7 +84,7 @@ class User_Position(models.Model):
 class Customer(models.Model):
     id = models.AutoField(primary_key=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
-    state = models.BooleanField(verbose_name='Estado')
+    state = models.CharField(verbose_name='Estado', max_length=20, choices=estado)
 
     def __str__(self):
         return self.person

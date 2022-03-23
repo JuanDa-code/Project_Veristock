@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
-from .models import Person, Position, Type_Document
-from .forms import PersonForm, PositionForm, Type_DocumentForm
+from .models import Person, Position, Type_Document, User
+from .forms import PersonForm, PositionForm, Type_DocumentForm, UserForm
 
 # CRUD Position
 
@@ -77,6 +77,33 @@ def edit_person(request, id):
     return render(request, './user/persona/editar.html', {'form': form})
 
 def delete_person(id):
-    person = Type_Document.objects.get(id = id)
+    person = Person.objects.get(id = id)
     person.delete()
     return redirect('persona_index')
+
+
+# CRUD User
+
+def user(request):
+    users = User.objects.all()
+    return render(request, './user/usuario/index.html', {'users': users})
+
+def add_user(request):
+    form = UserForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return redirect('usuario_index')
+    return render(request, './user/usuario/crear.html', {'form': form})
+
+def edit_user(request, id):
+    user = User.objects.get(id = id)
+    form = UserForm(request.POST or None, request.FILES or None, instance = user)
+    if form.is_valid() and request.POST:
+        form.save()
+        return redirect('usuario_index')
+    return render(request, './user/usuario/editar.html', {'form': form})
+
+def delete_user(id):
+    user = User.objects.get(id = id)
+    user.delete()
+    return redirect('usuario_index')

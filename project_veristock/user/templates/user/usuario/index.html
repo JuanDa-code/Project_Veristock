@@ -1,0 +1,44 @@
+{% extends "./../../stock/base.html" %}
+
+{% block title %} Lista de Usuarios {% endblock %}
+
+{% block content %} 
+
+<div class="card">
+    <div class="card-header">
+        <a name="" id="" class="btn btn-dark" href=" {% url 'crear_usuario' %}" role="button">Agregar nuevo Usuario</a>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Usuarios</h4>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre Persona</th>
+                    <th>Contraseña</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.id_person }}</td>
+                    <td>{{ user.password }}</td>
+                    <td>{{ user.state }}</td>
+                    <td>
+                        <a name="" id="" class="btn btn-info" href="{% url 'editar_usuario' user.id %}" role="button">Editar</a>
+                        |
+                        <a name="" id="" class="btn btn-danger" href="{% url 'eliminar_usuario' user.id %}" role="button">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+
+    </div>
+</div>
+
+{% endblock %}

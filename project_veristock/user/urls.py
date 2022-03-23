@@ -19,4 +19,10 @@ urlpatterns = [
     path('persona/crear/', views.add_person, name='crear_persona'),
     path('persona/eliminar/<int:id>', views.delete_person, name='eliminar_persona'),
     path('persona/editar/<int:id>', views.edit_person, name='editar_persona'),
+
+    # Urls User
+    path('usuario/index/', views.user, name='usuario_index'),
+    path('usuario/crear/', views.add_user, name='crear_usuario'),
+    path('usuario/eliminar/<int:id>', views.delete_user, name='eliminar_usuario'),
+    path('usuario/editar/<int:id>', views.edit_user, name='editar_usuario'),
 ]
