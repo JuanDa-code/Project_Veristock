@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Product, Item
-from .forms import ProductForm, ItemForm
+from .models import Product, Item, Purchase
+from .forms import ProductForm, ItemForm, PurchaseForm
 from .models import Product, Provider
 from .forms import ProductForm, ProviderForm
 
@@ -59,7 +59,8 @@ def delete_item(id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect('item_index')
-#CRUD Provider
+
+# CRUD Provider
 
 def provider(request):
     providers = Provider.objects.all()
@@ -84,3 +85,29 @@ def edit_provider(request, id):
         form.save()
         return redirect('proveedor_index')
     return render(request, './stock/proveedor/editar.html', {'form': form})
+
+# CRUD Purchase
+
+def purchase(request):
+    purchases = Purchase.objects.all()
+    return render(request, './stock/compra/index.html', {'purchases': purchases})
+
+def add_purchase(request):
+    form = PurchaseForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return redirect('compra_index')
+    return render(request, './stock/compra/crear.html', {'form': form})
+
+def delete_purchase(id):
+    purchase = Purchase.objects.get(id = id)
+    purchase.delete()
+    return redirect('compra_index')
+
+def edit_purchase(request, id):
+    purchase = Purchase.objects.get(id = id)
+    form = PurchaseForm(request.POST or None, request.FILES or None, instance = purchase)
+    if form.is_valid() and request.POST:
+        form.save()
+        return redirect('compra_index')
+    return render(request, './stock/compra/editar.html', {'form': form})
