@@ -1,0 +1,18 @@
+{% extends './../base.html' %}
+
+{% block title %} Agregar Nuevo Proveedor {% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+        Crear un Proveedor
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Datos del Proveedor</h4>
+        {% include './../form.html' %}
+
+    </div>
+</div>
+
+{% endblock %}

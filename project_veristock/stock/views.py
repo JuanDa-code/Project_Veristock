@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Product, Item
 from .forms import ProductForm, ItemForm
+from .models import Product, Provider
+from .forms import ProductForm, ProviderForm
 
 def home(request):
     return HttpResponse("<h1>Welcome</h1>")
@@ -57,3 +59,28 @@ def delete_item(id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect('item_index')
+#CRUD Provider
+
+def provider(request):
+    providers = Provider.objects.all()
+    return render(request, './stock/proveedor/index.html', {'providers': providers})
+
+def add_provider(request):
+    form = ProviderForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return redirect('proveedor_index')
+    return render(request, './stock/proveedor/crear.html', {'form': form})
+
+def delete_provider(id):
+    provider = Provider.objects.get(id = id)
+    provider.delete()
+    return redirect('proveedor_index')
+
+def edit_provider(request, id):
+    provider = Provider.objects.get(id = id)
+    form = ProviderForm(request.POST or None, request.FILES or None, instance = provider)
+    if form.is_valid() and request.POST:
+        form.save()
+        return redirect('proveedor_index')
+    return render(request, './stock/proveedor/editar.html', {'form': form})

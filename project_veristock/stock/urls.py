@@ -14,4 +14,9 @@ urlpatterns = [
     path('item/crear/', views.add_item, name='crear_item'),
     path('item/eliminar/<int:id>', views.delete_item, name='eliminar_item'),
     path('item/editar/<int:id>', views.edit_item, name='edit_item'),
+
+    path('proveedor/index/', views.provider, name='proveedor_index'),
+    path('proveedor/crear/', views.add_provider, name='crear_proveedor'),
+    path('proveedor/eliminar/<int:id>', views.delete_provider, name='eliminar_proveedor'),
+    path('proveedor/editar/<int:id>', views.edit_provider, name='editar_proveedor')
 ]
