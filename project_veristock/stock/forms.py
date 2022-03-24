@@ -1,6 +1,6 @@
 from django import forms
-from .models import Item, Product, Purchase
-from .models import Product, Provider
+from .models import Item, Product, Purchase, Provider, Devolution
+
 
 
 class ProductForm(forms.ModelForm):
@@ -22,4 +22,10 @@ class PurchaseForm(forms.ModelForm):
 
     class Meta:
         model = Purchase
+        fields =  '__all__'
+
+class DevolutionForm(forms.ModelForm):
+
+    class Meta:
+        model = Devolution
         fields =  '__all__'

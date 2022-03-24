@@ -28,4 +28,10 @@ urlpatterns = [
     path('compra/crear/', views.add_purchase, name='crear_compra'),
     path('compra/eliminar/<int:id>', views.delete_purchase, name='eliminar_compra'),
     path('compra/editar/<int:id>', views.edit_purchase, name='editar_compra'),
+
+    # Urls Devolution
+    path('devolucion/index/', views.devolution, name='devolucion_index'),
+    path('devolucion/crear/', views.add_devolution, name='crear_devolucion'),
+    path('devolucion/eliminar/<int:id>', views.delete_devolution, name='eliminar_devolucion'),
+    path('devolucion/editar/<int:id>', views.edit_devolution, name='editar_devolucion'),
 ]

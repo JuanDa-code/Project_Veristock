@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Product, Item, Purchase
-from .forms import ProductForm, ItemForm, PurchaseForm
-from .models import Product, Provider
-from .forms import ProductForm, ProviderForm
+from .models import Product, Item, Purchase, Provider, Devolution
+from .forms import ProductForm, ItemForm, PurchaseForm, ProviderForm, DevolutionForm
 
 def home(request):
     return HttpResponse("<h1>Welcome</h1>")
@@ -111,3 +109,29 @@ def edit_purchase(request, id):
         form.save()
         return redirect('compra_index')
     return render(request, './stock/compra/editar.html', {'form': form})
+
+    # CRUD Devolution
+
+def devolution(request):
+    devolutions = Devolution.objects.all()
+    return render(request, './stock/devolucion/index.html', {'devolutions': devolutions})
+
+def add_devolution(request):
+    form = DevolutionForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return redirect('devolucion_index')
+    return render(request, './stock/devolucion/crear.html', {'form': form})
+
+def delete_devolution(id):
+    devolution = Devolution.objects.get(id = id)
+    devolution.delete()
+    return redirect('devolucion_index')
+
+def edit_devolution(request, id):
+    devolution = Devolution.objects.get(id = id)
+    form = DevolutionForm(request.POST or None, request.FILES or None, instance = devolution)
+    if form.is_valid() and request.POST:
+        form.save()
+        return redirect('devolucion_index')
+    return render(request, './stock/devolucion/editar.html', {'form': form})

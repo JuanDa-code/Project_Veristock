@@ -62,7 +62,7 @@ class Item(models.Model):
     cost_sale = models.IntegerField(verbose_name='Costo Venta')
 
     def __str__(self):
-        return self.serial
+        return str(self.serial) 
 
     class Meta:
         ordering = ['serial']
