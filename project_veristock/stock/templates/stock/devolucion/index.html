@@ -18,22 +18,21 @@
                     <th>Fecha</th>
                     <th>Motivo</th>
                     <th>Observaciones</th>
-                    <th>Proveedor</th>
                     <th>Item</th>
                 </tr>
             </thead>
             <tbody>
-                {% for Devolution in devolutions %}
+                {% for devolution in devolutions %}
                 <tr>
-                    <td>{{ Devolution.id }}</td>
-                    <td>{{ Devolution.date }}</td>
-                    <td>{{ Devolution.reason }}</td>
-                    <td>{{ Devolution.remarks }}</td>
-                    <td>{{ Devolution.item }}</td>
+                    <td>{{ devolution.id }}</td>
+                    <td>{{ devolution.date }}</td>
+                    <td>{{ devolution.reason }}</td>
+                    <td>{{ devolution.remarks }}</td>
+                    <td>{{ devolution.item }}</td>
                     <td>
-                        <a name="" id="" class="btn btn-info" href="{% url 'editar_devolucion' Devolution.id %}" role="button">Editar</a>
+                        <a name="" id="" class="btn btn-info" href="{% url 'editar_devolucion' devolution.id %}" role="button">Editar</a>
                         |
-                        <a name="" id="" class="btn btn-danger" href="{% url 'eliminar_devolucion' Devolution.id %}" role="button">Eliminar</a>
+                        <a name="" id="" class="btn btn-danger" href="{% url 'eliminar_devolucion' devolution.id %}" role="button">Eliminar</a>
                     </td>
                 </tr>
                 {% endfor %}

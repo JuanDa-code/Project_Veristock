@@ -39,7 +39,7 @@ class Purchase(models.Model):
     date = models.DateTimeField(verbose_name='Fecha')
     quantity = models.IntegerField(verbose_name='Cantidad')
     purchase_cost = models.IntegerField(verbose_name='Costo Compra')
-    provider = models.ForeignKey(Provider, on_delete=models.CASCADE)
+    provider = models.ForeignKey(Provider, on_delete=models.CASCADE, verbose_name='Proveedor')
     invoice_number = models.IntegerField(verbose_name='Numero Factura')
 
     def __str__(self):
@@ -57,8 +57,8 @@ class Item(models.Model):
     remarks = models.TextField(max_length=250, verbose_name='Observaciones', null=True)
     serial = models.CharField(verbose_name='Serial',max_length=30)
     state = models.CharField(verbose_name='Estado', choices=estado, max_length=10)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Producto')
+    purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE, verbose_name='Compra')
     cost_sale = models.IntegerField(verbose_name='Costo Venta')
 
     def __str__(self):
@@ -73,7 +73,7 @@ class Devolution(models.Model):
     date = models.DateTimeField(verbose_name='Fecha')
     reason = models.CharField(max_length=100, verbose_name='Motivo')
     remarks = models.TextField(null=True, verbose_name='Observaciones')
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True, verbose_name='Item')
 
     def __str__(self):
         return self.reason
@@ -88,9 +88,9 @@ class Sale(models.Model):
     date = models.DateTimeField(verbose_name='Fecha')
     quantity = models.IntegerField(verbose_name='Cantidad')
     total = models.IntegerField(verbose_name='Total')
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name='Cliente')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuario')
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True, verbose_name='Item')
 
     def __str__(self):
         return self.invoice_number

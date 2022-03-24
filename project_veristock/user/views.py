@@ -23,7 +23,7 @@ def edit_position(request, id):
         return redirect('cargo_index')
     return render(request, './user/cargo/editar.html', {'form': form})
 
-def delete_position(id):
+def delete_position(request, id):
     position = Position.objects.get(id = id)
     position.delete()
     return redirect('cargo_index')
@@ -49,7 +49,7 @@ def edit_type_document(request, id):
         return redirect('tipo_documento_index')
     return render(request, './user/tipo_documento/editar.html', {'form': form})
 
-def delete_type_document(id):
+def delete_type_document(request, id):
     type_document = Type_Document.objects.get(id = id)
     type_document.delete()
     return redirect('tipo_documento_index')
@@ -76,7 +76,7 @@ def edit_person(request, id):
         return redirect('persona_index')
     return render(request, './user/persona/editar.html', {'form': form})
 
-def delete_person(id):
+def delete_person(request, id):
     person = Person.objects.get(id = id)
     person.delete()
     return redirect('persona_index')
@@ -103,7 +103,7 @@ def edit_user(request, id):
         return redirect('usuario_index')
     return render(request, './user/usuario/editar.html', {'form': form})
 
-def delete_user(id):
+def delete_user(request, id):
     user = User.objects.get(id = id)
     user.delete()
     return redirect('usuario_index')
@@ -129,7 +129,7 @@ def edit_customer(request, id):
         return redirect('cliente_index')
     return render(request, './user/cliente/editar.html', {'form': form})
 
-def delete_customer(id):
+def delete_customer(request, id):
     customer = Customer.objects.get(id = id)
     customer.delete()
     return redirect('cliente_index')
@@ -155,7 +155,7 @@ def edit_user_position(request, id):
         return redirect('usuario_cargo_index')
     return render(request, './user/usuario_cargo/editar.html', {'form': form})
 
-def delete_user_position(id):
+def delete_user_position(request, id):
     user_position = User_Position.objects.get(id = id)
     user_position.delete()
     return redirect('usuario_cargo_index')

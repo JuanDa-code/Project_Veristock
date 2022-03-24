@@ -53,7 +53,7 @@ class Person(models.Model):
 
 class User(models.Model):
     id = models.AutoField(primary_key=True)
-    id_person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    id_person = models.ForeignKey(Person, on_delete=models.CASCADE, verbose_name='Persona')
     password = models.CharField(max_length=100 ,verbose_name="Contraseña")
     state = models.CharField(verbose_name='Estado', max_length=20, choices=estado)
 
@@ -83,7 +83,7 @@ class User_Position(models.Model):
 
 class Customer(models.Model):
     id = models.AutoField(primary_key=True)
-    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, verbose_name='Persona')
     state = models.CharField(verbose_name='Estado', max_length=20, choices=estado)
 
     def __str__(self):

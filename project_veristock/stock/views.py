@@ -27,8 +27,8 @@ def edit_product(request, id):
         return redirect('producto_index')
     return render(request, './stock/producto/editar.html', {'form': form})
 
-def delete_product(id):
-    product = Product.objects.get(id = id)
+def delete_product(request, id):
+    product = Product.objects.get(pk = id)
     product.delete()
     return redirect('producto_index')
 
@@ -53,7 +53,7 @@ def edit_item(request, id):
         return redirect('item_index')
     return render(request, './stock/item/editar.html', {'form': form})
 
-def delete_item(id):
+def delete_item(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect('item_index')
@@ -71,7 +71,7 @@ def add_provider(request):
         return redirect('proveedor_index')
     return render(request, './stock/proveedor/crear.html', {'form': form})
 
-def delete_provider(id):
+def delete_provider(request, id):
     provider = Provider.objects.get(id = id)
     provider.delete()
     return redirect('proveedor_index')
@@ -97,7 +97,7 @@ def add_purchase(request):
         return redirect('compra_index')
     return render(request, './stock/compra/crear.html', {'form': form})
 
-def delete_purchase(id):
+def delete_purchase(request, id):
     purchase = Purchase.objects.get(id = id)
     purchase.delete()
     return redirect('compra_index')
@@ -123,7 +123,7 @@ def add_sale(request):
         return redirect('venta_index')
     return render(request, './stock/venta/crear.html', {'form': form})
 
-def delete_sale(id):
+def delete_sale(request, id):
     sale = Sale.objects.get(id = id)
     sale.delete()
     return redirect('venta_index')
@@ -150,7 +150,7 @@ def add_devolution(request):
         return redirect('devolucion_index')
     return render(request, './stock/devolucion/crear.html', {'form': form})
 
-def delete_devolution(id):
+def delete_devolution(request, id):
     devolution = Devolution.objects.get(id = id)
     devolution.delete()
     return redirect('devolucion_index')
