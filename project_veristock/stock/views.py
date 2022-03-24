@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Product, Item, Purchase
-from .forms import ProductForm, ItemForm, PurchaseForm
-from .models import Product, Provider
-from .forms import ProductForm, ProviderForm
+from .models import Product, Item, Purchase, Sale, Provider, Sale
+from .forms import ProductForm, ItemForm, PurchaseForm, ProductForm, ProviderForm, SaleForm
 
 def home(request):
     return HttpResponse("<h1>Welcome</h1>")
@@ -111,3 +109,29 @@ def edit_purchase(request, id):
         form.save()
         return redirect('compra_index')
     return render(request, './stock/compra/editar.html', {'form': form})
+
+# CRUD Sale
+
+def sale(request):
+    sales = Sale.objects.all()
+    return render(request, './stock/venta/index.html', {'sales': sales})
+
+def add_sale(request):
+    form = SaleForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return redirect('venta_index')
+    return render(request, './stock/venta/crear.html', {'form': form})
+
+def delete_sale(id):
+    sale = Sale.objects.get(id = id)
+    sale.delete()
+    return redirect('venta_index')
+
+def edit_sale(request, id):
+    sale = Sale.objects.get(id = id)
+    form = SaleForm(request.POST or None, request.FILES or None, instance = sale)
+    if form.is_valid() and request.POST:
+        form.save()
+        return redirect('venta_index')
+    return render(request, './stock/venta/editar.html', {'form': form})

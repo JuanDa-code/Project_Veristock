@@ -28,4 +28,11 @@ urlpatterns = [
     path('compra/crear/', views.add_purchase, name='crear_compra'),
     path('compra/eliminar/<int:id>', views.delete_purchase, name='eliminar_compra'),
     path('compra/editar/<int:id>', views.edit_purchase, name='editar_compra'),
+
+    # Urls Sale
+
+    path('venta/index/', views.sale, name='venta_index'),
+    path('venta/crear/', views.add_sale, name='crear_venta'),
+    path('venta/eliminar/<int:id>', views.delete_sale, name='eliminar_venta'),
+    path('venta/editar/<int:id>', views.edit_sale, name='editar_venta'),
 ]

@@ -1,0 +1,18 @@
+{% extends './../base.html' %}
+
+{% block title %} Agregar Nueva Venta {% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+        Crear una Venta
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Datos de Venta</h4>
+        {% include './../form.html' %}
+
+    </div>
+</div>
+
+{% endblock %}

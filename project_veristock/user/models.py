@@ -59,7 +59,7 @@ class User(models.Model):
 
 
     def __str__(self):
-        return self.id_person
+        return self.id_person.first_name + self.id_person.second_name
 
     class Meta:
         ordering = ['id_person']
@@ -87,7 +87,7 @@ class Customer(models.Model):
     state = models.CharField(verbose_name='Estado', max_length=20, choices=estado)
 
     def __str__(self):
-        return self.person
+        return self.person.first_name + self.person.second_name
 
     class Meta:
         ordering = ['person']
