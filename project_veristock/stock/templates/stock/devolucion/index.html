@@ -1,0 +1,47 @@
+{% extends "./../base.html" %}
+
+{% block title %} Lista de Devolucion {% endblock %}
+
+{% block content %} 
+
+<div class="card">
+    <div class="card-header">
+        <a name="" id="" class="btn btn-dark" href=" {% url 'crear_devolucion' %}" role="button">Agregar nueva Devolucion</a>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Devolucion</h4>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Fecha</th>
+                    <th>Motivo</th>
+                    <th>Observaciones</th>
+                    <th>Proveedor</th>
+                    <th>Item</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Devolution in devolutions %}
+                <tr>
+                    <td>{{ Devolution.id }}</td>
+                    <td>{{ Devolution.date }}</td>
+                    <td>{{ Devolution.reason }}</td>
+                    <td>{{ Devolution.remarks }}</td>
+                    <td>{{ Devolution.item }}</td>
+                    <td>
+                        <a name="" id="" class="btn btn-info" href="{% url 'editar_devolucion' Devolution.id %}" role="button">Editar</a>
+                        |
+                        <a name="" id="" class="btn btn-danger" href="{% url 'eliminar_devolucion' Devolution.id %}" role="button">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+
+    </div>
+</div>
+
+{% endblock %}

@@ -35,4 +35,10 @@ urlpatterns = [
     path('venta/crear/', views.add_sale, name='crear_venta'),
     path('venta/eliminar/<int:id>', views.delete_sale, name='eliminar_venta'),
     path('venta/editar/<int:id>', views.edit_sale, name='editar_venta'),
+    
+    # Urls Devolution
+    path('devolucion/index/', views.devolution, name='devolucion_index'),
+    path('devolucion/crear/', views.add_devolution, name='crear_devolucion'),
+    path('devolucion/eliminar/<int:id>', views.delete_devolution, name='eliminar_devolucion'),
+    path('devolucion/editar/<int:id>', views.edit_devolution, name='editar_devolucion'),
 ]
