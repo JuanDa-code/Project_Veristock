@@ -29,6 +29,7 @@ class CustomerForm(forms.ModelForm):
 
     class Meta:
         model = Customer
+        fields = '__all__'
 class User_PositionForm(forms.ModelForm):
 
     class Meta:
