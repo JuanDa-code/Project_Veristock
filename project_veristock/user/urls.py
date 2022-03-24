@@ -31,4 +31,10 @@ urlpatterns = [
     path('cliente/crear/', views.add_customer, name='crear_cliente'),
     path('cliente/eliminar/<int:id>', views.delete_customer, name='eliminar_cliente'),
     path('cliente/editar/<int:id>', views.edit_customer, name='editar_cliente'),
+
+    # Urls User Position
+    path('usuario_cargo/index/', views.user_position, name='usuario_cargo_index'),
+    path('usuario_cargo/crear/', views.add_user_position, name='crear_usuario_cargo'),
+    path('usuario_cargo/eliminar/<int:id>', views.delete_user_position, name='eliminar_usuario_cargo'),
+    path('usuario_cargo/editar/<int:id>', views.edit_user_position, name='editar_usuario_cargo'),
 ]

@@ -59,7 +59,7 @@ class User(models.Model):
 
 
     def __str__(self):
-        return self.id_person.first_name + self.id_person.second_name
+        return self.id_person.first_name + " " + self.id_person.first_surname
 
     class Meta:
         ordering = ['id_person']
@@ -68,8 +68,8 @@ class User(models.Model):
 
 class User_Position(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    position = models.ForeignKey(Position, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuario')
+    position = models.ForeignKey(Position, on_delete=models.CASCADE, verbose_name='Cargo')
     state = models.CharField(verbose_name='Estado', max_length=20, choices=estado)
 
     def __str__(self):
