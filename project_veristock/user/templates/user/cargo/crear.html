@@ -11,7 +11,7 @@
     <div class="card-body">
         <h4 class="card-title">Datos del Cargo</h4>
         {% include './../../stock/form.html' %}
-
+        {% block cancelar %} <a name="" id="" class="btn btn-secundary" href="{% url 'cargo_index' %}" role="button">Cancelar</a> {% endblock %}
     </div>
 </div>
 

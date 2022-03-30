@@ -43,7 +43,7 @@ class Purchase(models.Model):
     invoice_number = models.IntegerField(verbose_name='Numero Factura')
 
     def __str__(self):
-        return self.invoice_number
+        return str(self.invoice_number)
 
     class Meta:
         ordering = ['invoice_number']

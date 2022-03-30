@@ -11,7 +11,7 @@
     <div class="card-body">
         <h4 class="card-title">Datos de la Compra</h4>
         {% include './../form.html' %}
-
+        {% block cancelar %} <a name="" id="" class="btn btn-secundary" href="{% url 'compra_index' %}" role="button">Cancelar</a> {% endblock %}
     </div>
 </div>
 
