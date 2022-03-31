@@ -1,8 +1,5 @@
-from re import template
-import django
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.views.generic import CreateView
 from .models import Product, Item, Purchase, Sale, Provider, Devolution
 from .forms import ProductForm, ItemForm, PurchaseForm, ProviderForm, SaleForm, DevolutionForm
 

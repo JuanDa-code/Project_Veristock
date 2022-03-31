@@ -38,7 +38,7 @@ class ItemForm(forms.ModelForm):
 
         self.fields['state'].widget.attrs.update({
             'class': 'form-select',
-            'selected': 'Selecione el estado',
+            'default': 'Seleccione una opción',
         })
 
         self.fields['product'].widget.attrs.update({
