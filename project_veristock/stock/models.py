@@ -11,7 +11,14 @@ class Product(models.Model):
     quantity = models.IntegerField(verbose_name='Cantidad')
 
     def __str__(self):
-        return self.name
+        return str(self.id)
+
+    # def list_items(self):
+    #     countItems = 0
+    #     cantidadItems = Item.objects.filter()
+    #     if self.id == Item.objects.filter(product__contains=1):
+    #         countItems = countItems + 1
+    #     return countItems
 
     class Meta:
         ordering = ['id']
@@ -62,7 +69,7 @@ class Item(models.Model):
     cost_sale = models.IntegerField(verbose_name='Costo Venta')
 
     def __str__(self):
-        return str(self.serial) 
+        return str(self.serial)
 
     class Meta:
         ordering = ['serial']

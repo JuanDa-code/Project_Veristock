@@ -20,6 +20,7 @@
                     <th>Marca</th>
                     <th>Referencia</th>
                     <th>Cantidad</th>
+                    <th>Cantidad items</th>
                     <th>Accciones</th>
                 </tr>
             </thead>
@@ -32,6 +33,14 @@
                     <td>{{ product.brand }}</td>
                     <td>{{ product.reference }}</td>
                     <td>{{ product.quantity }}</td>
+                    {% comment %} {% for item in items %}
+                    {{ product.id }} 
+                    {{ item.product }} <br>
+                    {% if product.id == item.product %}
+                    {{ cantidadItems = cantidadItems + 1 }}
+                    <td>{{ cantidadItems }}</td>
+                    {% endif %}
+                    {% endfor %} {% endcomment %}
                     <td>
                         <a name="" id="" class="btn btn-info" href="{% url 'editar_producto' product.id %}" role="button">Editar</a>
                         |
