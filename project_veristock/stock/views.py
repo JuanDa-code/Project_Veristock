@@ -10,16 +10,13 @@ def home(request):
 
 def product(request):
     products = Product.objects.all()
-    # items = list_items()
-    cantidadItems = 0
-    return render(request, './stock/producto/index.html', context={'products': products,  'cantidadItems': cantidadItems})
-
-# def list_items(id_product):
-#     items = Item.objects.filter(product__contains=id_product).count
-#     return items
+    for product in products:
+        product.quantity = Item.objects.filter(product__id=product.id).count()
+    return render(request, './stock/producto/index.html', context={'products': products})
 
 def add_product(request):
     form = ProductForm(request.POST or None, request.FILES or None)
+    products = Product.objects.all()
     if form.is_valid():
         form.save()
         return redirect('producto_index')

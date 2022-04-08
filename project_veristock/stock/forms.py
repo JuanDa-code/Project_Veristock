@@ -5,7 +5,30 @@ from .models import Item, Product, Purchase, Sale, Provider, Devolution
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = ['name', 'cost_sale', 'brand', 'reference']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['name'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Nombre del Producto',
+        })
+
+        self.fields['cost_sale'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Costo al venderlo',
+        })
+
+        self.fields['brand'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Marca del Producto',
+        })
+
+        self.fields['reference'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Referencia del Producto',
+        })
 
 class ItemForm(forms.ModelForm):
 

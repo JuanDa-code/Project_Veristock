@@ -8,17 +8,10 @@ class Product(models.Model):
     cost_sale = models.IntegerField(verbose_name='Costo Venta')
     brand = models.CharField(max_length=100, verbose_name='Marca')
     reference = models.CharField(max_length=100, verbose_name='Referencia')
-    quantity = models.IntegerField(verbose_name='Cantidad')
+    quantity = models.IntegerField(verbose_name='Cantidad', blank=True, null=True)
 
     def __str__(self):
         return str(self.id)
-
-    # def list_items(self):
-    #     countItems = 0
-    #     cantidadItems = Item.objects.filter()
-    #     if self.id == Item.objects.filter(product__contains=1):
-    #         countItems = countItems + 1
-    #     return countItems
 
     class Meta:
         ordering = ['id']
