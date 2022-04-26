@@ -2,6 +2,9 @@ from django.shortcuts import redirect, render
 from .models import Customer, Person, Position, Type_Document, User, User_Position
 from .forms import PersonForm, PositionForm, Type_DocumentForm, UserForm, CustomerForm, User_PositionForm
 
+def home(request):
+    return render(request, './user/usuario/home.html')
+
 # CRUD Position
     
 def position(request):

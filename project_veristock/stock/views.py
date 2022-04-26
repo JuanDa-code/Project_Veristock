@@ -3,8 +3,6 @@ from django.http import HttpResponse
 from .models import Product, Item, Purchase, Sale, Provider, Devolution
 from .forms import ProductForm, ItemForm, PurchaseForm, ProviderForm, SaleForm, DevolutionForm
 
-def home(request):
-    return HttpResponse("<h1>Welcome</h1>")
 
 # CRUD Product
 
