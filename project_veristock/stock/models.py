@@ -15,41 +15,7 @@ class Product(models.Model):
 
     class Meta:
         ordering = ['id']
-        verbose_name = 'Producto'
-
-
-class Provider(models.Model):
-    id = models.AutoField(primary_key=True)
-    NIT = models.CharField(max_length=100, verbose_name='NIT')
-    name = models.CharField(max_length=100, verbose_name='Nombre')
-    phone = models.BigIntegerField(verbose_name='Telefono')
-    address = models.CharField(max_length=100, verbose_name='Dirección')
-    email_address = models.EmailField(max_length=100, verbose_name='Email')
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['name']
-        verbose_name = 'Proveedor'
-
-
-class Purchase(models.Model):
-    id = models.AutoField(primary_key=True)
-    date = models.DateTimeField(verbose_name='Fecha')
-    quantity = models.IntegerField(verbose_name='Cantidad')
-    purchase_cost = models.IntegerField(verbose_name='Costo Compra')
-    provider = models.ForeignKey(Provider, on_delete=models.CASCADE, verbose_name='Proveedor')
-    invoice_number = models.IntegerField(verbose_name='Numero Factura')
-
-    def __str__(self):
-        return str(self.invoice_number)
-
-    class Meta:
-        ordering = ['invoice_number']
-        verbose_name = 'Compra'
-
-
+        verbose_name = 'Producto'      
 class Item(models.Model):
     id = models.AutoField(primary_key=True)
     warranty_start = models.DateField(verbose_name='Inicio Garantia')
@@ -58,7 +24,6 @@ class Item(models.Model):
     serial = models.CharField(verbose_name='Serial',max_length=30)
     state = models.CharField(verbose_name='Estado', choices=estado, max_length=10)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Producto')
-    purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE, verbose_name='Compra')
     cost_sale = models.IntegerField(verbose_name='Costo Venta')
 
     def __str__(self):
@@ -81,6 +46,19 @@ class Devolution(models.Model):
     class Meta:
         ordering = ['reason']
         verbose_name = 'Devolution'
+
+class Logs(models.Model):
+    id = models.AutoField(primary_key=True)
+    description = models.TextField(max_length=100, verbose_name='Descripcion')
+    date = models.DateTimeField(verbose_name='Fecha')
+    user = models.TextField(max_length=100, verbose_name='Usuario')
+
+    def __str__(self):
+        return self.reason
+
+    class Meta:
+        ordering = ['description']
+        verbose_name = 'Logs'
 
 class Sale(models.Model):
     id = models.AutoField(primary_key=True)

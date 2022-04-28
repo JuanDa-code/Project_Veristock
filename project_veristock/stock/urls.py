@@ -14,20 +14,6 @@ urlpatterns = [
     path('item/eliminar/<int:id>', views.delete_item, name='eliminar_item'),
     path('item/editar/<int:id>', views.edit_item, name='edit_item'),
 
-    # Urls Provider
-
-    path('proveedor/index/', views.provider, name='proveedor_index'),
-    path('proveedor/crear/', views.add_provider, name='crear_proveedor'),
-    path('proveedor/eliminar/<int:id>', views.delete_provider, name='eliminar_proveedor'),
-    path('proveedor/editar/<int:id>', views.edit_provider, name='editar_proveedor'),
-
-    # Urls Purchase
-
-    path('compra/index/', views.purchase, name='compra_index'),
-    path('compra/crear/', views.add_purchase, name='crear_compra'),
-    path('compra/eliminar/<int:id>', views.delete_purchase, name='eliminar_compra'),
-    path('compra/editar/<int:id>', views.edit_purchase, name='editar_compra'),
-
     # Urls Sale
 
     path('venta/index/', views.sale, name='venta_index'),

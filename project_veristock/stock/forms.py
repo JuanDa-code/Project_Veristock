@@ -1,5 +1,5 @@
 from django import forms
-from .models import Item, Product, Purchase, Sale, Provider, Devolution
+from .models import Item, Product, Sale, Devolution
 
 
 class ProductForm(forms.ModelForm):
@@ -35,7 +35,7 @@ class ItemForm(forms.ModelForm):
 
     class Meta:
         model = Item
-        fields = ['warranty_start', 'warranty_end', 'remarks', 'serial', 'state', 'product', 'purchase', 'cost_sale']
+        fields = ['warranty_start', 'warranty_end', 'remarks', 'serial', 'state', 'product', 'cost_sale']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -70,83 +70,10 @@ class ItemForm(forms.ModelForm):
             'placeholder': 'Producto',
         })
 
-        self.fields['purchase'].widget.attrs.update({
-            'class': 'form-select',
-            'placeholder': 'Compra',
-        })
-
         self.fields['cost_sale'].widget.attrs.update({
             'class': 'form-control',
             'placeholder': 'Costo venta',
         })
-        
-class ProviderForm(forms.ModelForm):
-    class Meta:
-        model = Provider
-        fields = ['NIT', 'name', 'phone', 'address', 'email_address']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields['NIT'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Ingrese el NIT del proveedor',
-        })
-
-        self.fields['name'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Nombre del Proveedor',
-        })
-
-        self.fields['phone'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Télefono del Proveedor',
-        })
-
-        self.fields['address'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Dirección del Proveedor',
-        })
-
-        self.fields['email_address'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Correo electronico del Proveedor',
-        })
-
-class PurchaseForm(forms.ModelForm):
-
-    class Meta:
-        model = Purchase
-        fields =  ['date', 'quantity', 'purchase_cost', 'provider', 'invoice_number']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields['date'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Ingrese fecha de la compra',
-        })
-
-        self.fields['quantity'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Ingrese la cantidad',
-        })
-
-        self.fields['purchase_cost'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Ingrese el costo de la compra',
-        })
-
-        self.fields['provider'].widget.attrs.update({
-            'class': 'form-select',
-            'placeholder': 'Ingrese el proveedor',
-        })
-        
-        self.fields['invoice_number'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Número de factura',
-        })
-
 class SaleForm(forms.ModelForm):
 
     class Meta:

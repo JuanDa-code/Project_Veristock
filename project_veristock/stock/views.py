@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Product, Item, Purchase, Sale, Provider, Devolution
-from .forms import ProductForm, ItemForm, PurchaseForm, ProviderForm, SaleForm, DevolutionForm
+from .models import Product, Item, Sale, Devolution
+from .forms import ProductForm, ItemForm, SaleForm, DevolutionForm
 
 
 # CRUD Product
@@ -58,58 +58,6 @@ def delete_item(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect('item_index')
-
-# CRUD Provider
-
-def provider(request):
-    providers = Provider.objects.all()
-    return render(request, './stock/proveedor/index.html', {'providers': providers})
-
-def add_provider(request):
-    form = ProviderForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        form.save()
-        return redirect('proveedor_index')
-    return render(request, './stock/proveedor/crear.html', {'form': form})
-
-def delete_provider(request, id):
-    provider = Provider.objects.get(id = id)
-    provider.delete()
-    return redirect('proveedor_index')
-
-def edit_provider(request, id):
-    provider = Provider.objects.get(id = id)
-    form = ProviderForm(request.POST or None, request.FILES or None, instance = provider)
-    if form.is_valid() and request.POST:
-        form.save()
-        return redirect('proveedor_index')
-    return render(request, './stock/proveedor/editar.html', {'form': form})
-
-# CRUD Purchase
-
-def purchase(request):
-    purchases = Purchase.objects.all()
-    return render(request, './stock/compra/index.html', {'purchases': purchases})
-
-def add_purchase(request):
-    form = PurchaseForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        form.save()
-        return redirect('compra_index')
-    return render(request, './stock/compra/crear.html', {'form': form})
-
-def delete_purchase(request, id):
-    purchase = Purchase.objects.get(id = id)
-    purchase.delete()
-    return redirect('compra_index')
-
-def edit_purchase(request, id):
-    purchase = Purchase.objects.get(id = id)
-    form = PurchaseForm(request.POST or None, request.FILES or None, instance = purchase)
-    if form.is_valid() and request.POST:
-        form.save()
-        return redirect('compra_index')
-    return render(request, './stock/compra/editar.html', {'form': form})
 
 # CRUD Sale
 
