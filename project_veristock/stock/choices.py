@@ -1,4 +1,5 @@
 estado = (
     ('A', 'Activo'),
-    ('I', 'Inactivo')
+    ('V', 'Vendido'),
+    ('D', 'Devolucion')
 )
