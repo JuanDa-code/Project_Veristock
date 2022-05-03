@@ -43,18 +43,19 @@
 
       <div class="logo me-auto">
         <!-- Uncomment below if you prefer to use an image logo -->
-        <a href="index.html"><img src="./../../../static/img/logo.png" alt="" class="img-fluid"></a>
+        <a href="{% url 'home'%}"><img src="./../../../static/img/logo.png" alt="" class="img-fluid"></a>
       </div>
 
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Inicio</a></li>
-          <li><a class="nav-link scrollto" href="#about">Nosotros</a></li>
-          <li><a class="nav-link scrollto" href="#services">Funcionalidades</a></li>
+          <li><a class="nav-link scrollto" href="#about">Veristock</a></li>
           <li><a class="nav-link scrollto" href="#modulos">Modulos</a></li>
-          <li><a class="nav-link scrollto" href="#team">Grupo</a></li>
-          <li><a class="nav-link scrollto" href="#powers">ventajas</a></li>
-          <li><a class="nav-link scrollto" href="#contact">Contactanos</a></li>
+          <li><a class="nav-link scrollto" href="#services">Funcionalidades</a></li>
+          <li><a class="nav-link scrollto" href="#powers">Ventajas</a></li>
+          <li><a class="nav-link scrollto" href="#team">Equipo De Trabajo</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Contáctenos</a></li>
+          <li><a class="nav-link scrollto" href="#sesion">Iniciar Sesión</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -95,14 +96,14 @@
 
         <div class="row no-gutters">
           <div class="col-lg-6 video-box">
-            <img src="./../../../static/img/producto.png" class="img-fluid" alt="">
+            <img src="./../../../static/img/modulos.jpeg" class="img-fluid" alt="">
             <!--<a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>-->
           </div>
 
           <div class="col-lg-6 d-flex flex-column justify-content-center about-content">
 
             <div class="section-title">
-              <h2>Nosotros</h2>
+              <h2>Acerca De Veristock</h2>
               <p><center>Software de facil comprension y velocidad para la actualizacion  de tu inventario, echo para aquellas empresas que usan documentos fisicos para llevar un control en su inventario, devoluciones y ventas de sus productos.</center></p>
             </div>
 
@@ -120,36 +121,42 @@
           <div class="section-title">
             <h2>Modulos</h2>
           </div>
-          <center>
+          
           <div class="col-lg-4 col-md-6 content-item" data-aos="fade-up">
-            <img src="./../../../static/img/inventar.jpg " width ="100" height ="100" class="img-fluid" alt="">
+            <center>
+            <img src="./../../../static/img/inventar.jpg " width ="200" height ="200" class="img-fluid" alt="">
+            </center>
             <span></span>
             <h4><center>Inventarios</center></h4>
             <p><center>Un software de control para inventarios, lleva el conteo de los articulos que estan disponibles para la venta y de los que se encuentran en los almacenes o bodegas.</center></p>
           </div>
 
           <div class="col-lg-4 col-md-6 content-item" data-aos="fade-up" data-aos-delay="100">
-            <img src="./../../../static/img/devolucion.jpg " width ="100" height ="100" class="img-fluid" alt="">
+            <center>
+            <img src="./../../../static/img/devolucion.jpg " width ="200" height ="200" class="img-fluid" alt="">
+            </center>
             <span></span>
             <h4><center>Devoluciones</center></h4>
             <p><center>Es momento de poner en practica un manejo mas seguro y efectivo de tu inventareio,para que disminuyas perdidas, localices tus productos rapidamente y protejas tu inversion.</center></p>
           </div>
 
-          <div class="col-lg-4 col-md-6 content-item" data-aos="fade-up" data-aos-delay="200">
-            <img src="./../../../static/img/reporte.jpg " width ="100" height ="100" class="img-fluid" alt="">
+          <div class="col-lg-4 col-md-6 content-item" data-aos="fade-up" data-aos-delay="150">
+            <center>
+            <img src="./../../../static/img/reporte.jpg " width ="140" height ="140" class="img-fluid" alt="">
+            </center>
             <span></span>
             <h4><center>Reportes</center></h4>
             <p><center>Toma mejores decisiones con la ayuda de reportes dinamicos en tiempo real que puedes guardar y compartir con quien sea; Manten la informacion clave al alcance de la mano con los tableros personalizados.</center></p>
           </div> 
         </div>
-      </center>
+      
 
       </div>
     </section><!-- End About Lists Section -->
 
     <!-- ======= Counts Section ======= -->
-    <section id="powers" class="ventajas"
-      <div class="container">
+    <section id="powers" class="ventajas section-bg"
+    <div class="container" data-aos="fade-up">
 
         <div class="row">
           <div class="section-title">
@@ -200,24 +207,24 @@
         </div>
         <center>
         <div class="row ">
-          <div class="col-lg-5 col-md-5 icon-box" data-aos="fade-up">
-            <div class="icon"><i class="bi bi-chat-left-dots"></i></div>
+          <div class="col-lg-3 col-md-4 icon-box" data-aos="fade-up">
+            <div class="icon"><i class="bi bi-speedometer"></i></div>
             <h4 class="title"><a href="">Velocidad</a></h4>
             <p class="description">Te garantizamos velocidad a la hora de hacer la actualización de tus ventas e inventario.</p>
           </div>
-          <div class="col-lg-5 col-md-5 icon-box" data-aos="fade-up" data-aos-delay="100">
-            <div class="icon"><i class="bi bi-bounding-box"></i></div>
+          <div class="col-lg-3 col-md-4 icon-box" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon"><i class="bi bi-file-earmark-lock2"></i></div>
             <h4 class="title"><a href="">Seguridad</a></h4>
             <p class="description">Protegemos tu informacion y evitamos que tengan perdida de datos.</p>
           </div>
-          <div class="col-lg-5 col-md-5 icon-box" data-aos="fade-up" data-aos-delay="200">
-            <div class="icon"><i class="bi bi-globe"></i></div>
+          <div class="col-lg-3 col-md-4 icon-box" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon"><i class="bi bi-building"></i></div>
             <h4 class="title"><a href="">Organizar</a></h4>
             <p class="description">Organiza tu ionventario y revisa que usuario realiza cambios.</p>
             
           </div>
-          <div class="col-lg-5 col-md-5 icon-box" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon"><i class="bi bi-broadcast"></i></div>
+          <div class="col-lg-3 col-md-4 icon-box" data-aos="fade-up" data-aos-delay="300">
+            <div class="icon"><i class="bi bi-arrow-repeat"></i></div>
             <h4 class="title"><a href="">Devoluciones</a></h4>
             <p class="description">Gestiona de manera efectiva las devoluciones.</p>
           </div>

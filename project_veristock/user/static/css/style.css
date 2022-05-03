@@ -30,8 +30,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6, .font-primary {
-  font-family: "Nexa Bold";
-  src: url(./../fonts/Nexa\ Bold.otf);
+  font-family: "Open Sans", sans-serif;
   color: rgb(247, 144, 10);
 }
 
@@ -376,12 +375,14 @@ h1, h2, h3, h4, h5, h6, .font-primary {
 #hero h2 {
   color: #fff;
   margin-bottom: 30px;
+  font-family: "Open Sans", sans-serif;
   font-size: 48px;
   font-weight: 900;
 }
 #hero p {
-  width: 80%;
+  width: 250%;
   -webkit-animation-delay: 0.4s;
+  font-family: "Open Sans", sans-serif;
   animation-delay: 0.4s;
   color: #fff;
 }
@@ -421,7 +422,7 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   cursor: pointer;
 }
 #hero .btn-get-started {
-  font-family: "Raleway", sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: 500;
   font-size: 14px;
   letter-spacing: 1px;
@@ -435,7 +436,7 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   -webkit-animation-delay: 0.8s;
   animation-delay: 0.8s;
   border: 0;
-  background: #e74b0f;
+  background: #ee8905;
 }
 #hero .btn-get-started:hover {
   background: #932c1c;
@@ -476,6 +477,7 @@ section {
   padding-bottom: 30px;
 }
 .section-title h2 {
+  font-family: "Open Sans", sans-serif;
   font-size: 32px;
   font-weight: 600;
   margin-bottom: 20px;
@@ -540,6 +542,7 @@ section {
   padding: 15px 0;
 }
 .about .section-title p {
+  font-family: "Open Sans", sans-serif;
   text-align: left;
   font-style: italic;
   color: #666;
@@ -747,8 +750,8 @@ section {
 }
 .counts .count-box p {
   padding: 0;
-  margin: 0;
-  font-family: "Raleway", sans-serif;
+  margin: 0;;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
 }
 
@@ -772,7 +775,7 @@ section {
   background: #fff;
   border-radius: 50%;
   transition: 0.5s;
-  color: #428bca;
+  color: #f36b11;
   box-shadow: 0px 0 25px rgba(0, 0, 0, 0.15);
   overflow: hidden;
 }
@@ -781,7 +784,7 @@ section {
   line-height: 0;
 }
 .services .icon-box:hover .icon {
-  box-shadow: 0px 0 30px rgba(66, 139, 202, 0.5);
+  box-shadow: 0px 0 30px rgb(245, 116, 11);
 }
 .services .title {
   font-weight: 600;
@@ -803,7 +806,7 @@ section {
   display: block;
   width: 50px;
   height: 2px;
-  background: #428bca;
+  background: #ee9510;
   bottom: 0;
   left: calc(50% - 25px);
 }
@@ -980,7 +983,7 @@ section {
   position: relative;
 }
 .team .member .pic {
-  border-radius: 4px;
+  border-radius: 100px;
   overflow: hidden;
 }
 .team .member img {
@@ -1072,10 +1075,10 @@ section {
 }
 .contact .info-box i {
   font-size: 32px;
-  color: #428bca;
+  color: #e7901d;
   border-radius: 50%;
   padding: 8px;
-  border: 2px dotted #9eccf4;
+  border: 2px dotted #f3a024;
 }
 .contact .info-box h3 {
   font-size: 20px;
@@ -1148,7 +1151,7 @@ section {
   padding: 12px 15px;
 }
 .contact .php-email-form button[type=submit] {
-  background: #428bca;
+  background: #f39111;
   border: 0;
   padding: 10px 30px;
   color: #fff;
@@ -1200,7 +1203,7 @@ section {
   font-size: 14px;
   line-height: 24px;
   margin-bottom: 0;
-  font-family: "Raleway", sans-serif;
+  font-family: "Open Sans", sans-serif;
   color: #fff;
 }
 #footer .footer-top .social-links a {
@@ -1300,7 +1303,7 @@ section {
   color: #fff;
 }
 #footer .credits a {
-  color: #9eccf4;
+  color: #f5a716;
 }
 
 .texto-justificado {
