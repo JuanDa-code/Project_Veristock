@@ -32,6 +32,7 @@ a:hover {
 h1, h2, h3, h4, h5, h6, .font-primary {
   font-family: "Nexa Bold";
   src: url(./../fonts/Nexa\ Bold.otf);
+  color: rgb(247, 144, 10);
 }
 
 /*--------------------------------------------------------------
@@ -177,7 +178,7 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   margin-left: 5px;
 }
 .navbar a:hover, .navbar .active, .navbar .active:focus, .navbar li:hover > a {
-  color: #428bca;
+  color: #f36c13;
 }
 .navbar .dropdown ul {
   display: block;
@@ -234,7 +235,7 @@ h1, h2, h3, h4, h5, h6, .font-primary {
 * Mobile Navigation 
 */
 .mobile-nav-toggle {
-  color: #1f3548;
+  color: #f85307;
   font-size: 28px;
   cursor: pointer;
   display: none;
@@ -261,7 +262,7 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   right: 0;
   left: 0;
   bottom: 0;
-  background: rgba(31, 53, 72, 0.9);
+  background: rgba(212, 77, 14, 0.9);
   transition: 0.3s;
   z-index: 998;
 }
@@ -434,7 +435,7 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   -webkit-animation-delay: 0.8s;
   animation-delay: 0.8s;
   border: 0;
-  background: #428bca;
+  background: #e74b0f;
 }
 #hero .btn-get-started:hover {
   background: #932c1c;
@@ -479,7 +480,7 @@ section {
   font-weight: 600;
   margin-bottom: 20px;
   padding-bottom: 0;
-  color: #5c768d;
+  color: #f5740b;
 }
 .section-title p {
   margin-bottom: 0;
@@ -1174,14 +1175,14 @@ section {
 }
 
 #footer {
-  background: #587187;
+  background: #a3a5a7;
   padding: 0 0 30px 0;
   color: #fff;
   font-size: 14px;
 }
 #footer .footer-top {
-  background: #5c768d;
-  border-top: 1px solid #768fa6;
+  background: #969595;
+  border-top: 1px solid #8a8b8b;
   border-bottom: 1px solid #67839c;
   padding: 60px 0 30px 0;
 }
@@ -1300,4 +1301,8 @@ section {
 }
 #footer .credits a {
   color: #9eccf4;
+}
+
+.texto-justificado {
+  text-align: center;
 }
