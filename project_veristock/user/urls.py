@@ -1,8 +1,14 @@
+from re import template
 from django.urls import path
 from . import views
+from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('home', views.home1, name='home1'),
+    path('navbar', views.navbar, name='navbar'),
+    path('base/', views.base, name='base'),
+    path('iniciar_sesion/', LoginView.as_view(template_name='social/iniciar_sesion.html'), name='iniciar_sesion'),
     # Urls Position
     path('cargo/index/', views.position, name='cargo_index'),
     path('cargo/crear/', views.add_position, name='crear_cargo'),

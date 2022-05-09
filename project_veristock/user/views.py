@@ -1,9 +1,32 @@
 from django.shortcuts import redirect, render
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from .models import Customer, Person, Position, Type_Document, User, User_Position
 from .forms import PersonForm, PositionForm, Type_DocumentForm, UserForm, CustomerForm, User_PositionForm
 
 def home(request):
     return render(request, './user/usuario/home.html')
+
+def home1(request):
+    return render(request, './social/home1.html')
+
+def navbar(request):
+    return render(request, './social/navbar.html')
+
+def base(request):
+    return render(request, './social/base.html')
+
+def login(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            messages.success(request, f'Usuario {username} ha ingresado con éxito.')
+    else:
+        form = UserCreationForm()
+
+    context = { 'form': form }
+    return render(request, './social/iniciar_sesion.html', context)
 
 # CRUD Position
     
