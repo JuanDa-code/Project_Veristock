@@ -7,7 +7,7 @@
     position: fixed;
     width: 200px;
     height: 100%;
-    background: #706F6F;
+    background: #212529;
     left: -200px;
     transition: all 600ms linear;
 }
@@ -92,4 +92,12 @@
 
 #navMenu.active > span:nth-child(3) {
     transform: translateY(-9px) rotate(90deg);
+}
+
+#contenedor-tabla {
+    float: right;
+}
+
+#tabla {
+    width: 100%;
 }
