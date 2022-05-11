@@ -10,16 +10,18 @@
     background: #212529;
     left: -200px;
     transition: all 600ms linear;
+    align-content: center;
 }
 
 #sidebar.active {
     left: 0;
+    justify-content: center;
 }
 
 #sidebar ul li {
     color: rgba(230, 230, 230, .9);
     text-align: center;
-    padding: 15px 10px;
+    padding: 10px 10px;
     list-style: none;
     border-bottom: 1px solid rgba(100, 100, 100, .3);
 }

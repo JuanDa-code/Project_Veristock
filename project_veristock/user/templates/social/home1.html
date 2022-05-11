@@ -1,4 +1,5 @@
 {% extends './base.html' %}
+{% load static %}
 
 {% block content%}
 
@@ -12,7 +13,7 @@
         <div class="carousel-inner" role="listbox">
 
           <!-- Slide 1 -->
-          <div class="carousel-item active" style="background-image: url('./../../../static/img/digital.jpeg');">
+          <div class="carousel-item active" style="background-image: url('{% static 'img/digital.jpeg' %}');">
             <div class="carousel-container">
               <div class="carousel-content container">
                 <h2 class="animate__animated animate__fadeInDown">Bienvenidos a <span>Veristock</span></h2>
@@ -35,7 +36,7 @@
 
         <div class="row no-gutters">
           <div class="col-lg-6 video-box">
-            <img src="./../../../static/img/producto.png" class="img-fluid" alt="">
+            <img src="img/producto.png" class="img-fluid" alt="">
             <!--<a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>-->
           </div>
 
@@ -62,21 +63,21 @@
           </div>
           <center>
           <div class="col-lg-4 col-md-6 content-item" data-aos="fade-up">
-            <img src="./../../../static/img/inventar.jpg " width ="100" height ="100" class="img-fluid" alt="">
+            <img src="{% static 'img/inventar.jpg' %}" width ="100" height ="100" class="img-fluid" alt="">
             <span></span>
             <h4><center>Inventarios</center></h4>
             <p><center>Un software de control para inventarios, lleva el conteo de los articulos que estan disponibles para la venta y de los que se encuentran en los almacenes o bodegas.</center></p>
           </div>
 
           <div class="col-lg-4 col-md-6 content-item" data-aos="fade-up" data-aos-delay="100">
-            <img src="./../../../static/img/devolucion.jpg " width ="100" height ="100" class="img-fluid" alt="">
+            <img src="{% static 'img/devolucion.jpg' %}" width ="100" height ="100" class="img-fluid" alt="">
             <span></span>
             <h4><center>Devoluciones</center></h4>
             <p><center>Es momento de poner en practica un manejo mas seguro y efectivo de tu inventareio,para que disminuyas perdidas, localices tus productos rapidamente y protejas tu inversion.</center></p>
           </div>
 
           <div class="col-lg-4 col-md-6 content-item" data-aos="fade-up" data-aos-delay="200">
-            <img src="./../../../static/img/reporte.jpg " width ="100" height ="100" class="img-fluid" alt="">
+            <img src="{% static 'img/reporte.jpg' %}" width ="100" height ="100" class="img-fluid" alt="">
             <span></span>
             <h4><center>Reportes</center></h4>
             <p><center>Toma mejores decisiones con la ayuda de reportes dinamicos en tiempo real que puedes guardar y compartir con quien sea; Manten la informacion clave al alcance de la mano con los tableros personalizados.</center></p>
@@ -97,7 +98,7 @@
           </div>
           <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up">
             <div class="count-box">
-              <img src="./../../../static/img/documentos.png " width ="100" height ="100" class="img-fluid" alt="">
+              <img src="{% static 'img/documentos.png' %}" width ="100" height ="100" class="img-fluid" alt="">
               <i class="bi bi-simple-smile" style="color: #20b38e;"></i>
               <p>Deja atras los documentos físicos</p>
             </div>
@@ -105,7 +106,7 @@
 
           <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="200">
             <div class="count-box">
-              <img src="./../../../static/img/click.png " width ="100" height ="100" class="img-fluid" alt="">
+              <img src="{% static 'img/click.png' %}" width ="100" height ="100" class="img-fluid" alt="">
               <i class="bi bi-document-folder" style="color: #c042ff;"></i>
               <p>Maneja todo tu inventario con solo un click</p>
             </div>
@@ -113,14 +114,14 @@
 
           <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="400">
             <div class="count-box">
-              <img src="./../../../static/img/controlar.png " width ="100" height ="100" class="img-fluid" alt="">
+              <img src="{% static 'img/controlar.png' %}" width ="100" height ="100" class="img-fluid" alt="">
               <i class="bi bi-live-support" style="color: #46d1ff;"></i>
               <p>Controla entradas y salidas de productos.</p>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="600">
-            <div class="count-box"><img src="./../../../static/img/almacena.png " width ="100" height ="100" class="img-fluid" alt="">
+            <div class="count-box"><img src="{% static 'img/almacena.png' %}" width ="100" height ="100" class="img-fluid" alt="">
               <i class="bi bi-users-alt-5" style="color: #ffb459;"></i>
               <p>Almacena mayor cantidad de datos.</p>
             </div>
@@ -180,7 +181,7 @@
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up">
             <div class="member">
-              <div class="pic"><img src="./../../../static/img/team/camilo.jpeg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="{% static 'img/team/camilo.jpeg' %}" class="img-fluid" alt=""></div>
               <div class="member-info">
                 <h4>Juan Camilo</h4>
                 <span>Desarrollador web</span>
@@ -191,7 +192,7 @@
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="member">
-              <div class="pic"><img src="./../../../static/img/team/nicolas.jpeg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="{% static 'img/team/nicolas.jpeg' %}" class="img-fluid" alt=""></div>
               <div class="member-info">
                 <h4>Juan Nicolas</h4>
                 <span>Desarrollador web</span>
@@ -201,7 +202,7 @@
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="member">
-              <div class="pic"><img src="./../../../static/img/team/kevin.jpeg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="{% static 'img/team/kevin.jpeg' %}" class="img-fluid" alt=""></div>
               <div class="member-info">
                 <h4>Kevin Daniel</h4>
                 <span>Desarrollador web</span>
@@ -211,7 +212,7 @@
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="member">
-              <div class="pic"><img src="./../../../static/img/team/david.jpeg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="{% static 'img/team/david.jpeg' %}" class="img-fluid" alt=""></div>
               <div class="member-info">
                 <h4>Juan David</h4>
                 <span>Desarrollador web</span>

@@ -12,27 +12,29 @@
 <body>
     
     <div id="sidebar">
-        <div class="toggle-btn" id="navMenu">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div id="contenedor-navbar">
+            <div class="toggle-btn" id="navMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul>
+                <li>
+                    <img src="{% static 'img/logos/Versión-blanca.png' %}" alt="Logotipo" class="logo">
+                </li>
+                <li>Perfil</li>
+                <li><a class="nav-item nav-link active" href="{% url 'producto_index' %}">Producto</a></li>
+                <li><a class="nav-item nav-link active" href="{% url 'item_index' %}">Item</a></li>
+                <li><a class="nav-item nav-link active" href="{% url 'cargo_index' %}">Cargo</a></li>
+                <li><a class="nav-item nav-link active" href="{% url 'tipo_documento_index' %}">Tipo Documento</a></li>
+                <li><a class="nav-item nav-link active" href="{% url 'persona_index' %}">Persona</a></li>
+                <li><a class="nav-item nav-link active" href="{% url 'usuario_index' %}">Usuario</a></li>
+                <li><a class="nav-item nav-link active" href="{% url 'cliente_index' %}">Clientes</a></li>
+                <li><a class="nav-item nav-link active" href="{% url 'venta_index' %}">Ventas</a></li>
+                <li><a class="nav-item nav-link active" href="{% url 'usuario_cargo_index' %}">Usuario Cargo</a></li>
+                <li><a class="nav-item nav-link active" href="{% url 'devolucion_index' %}">Devoluciones</a></li>
+            </ul>
         </div>
-        <ul>
-            <li>
-                <img src="{% static 'img/logos/Logo-Positivo.png' %}" alt="Logotipo" class="logo">
-            </li>
-            <li>Perfil</li>
-            <li><a class="nav-item nav-link active" href="{% url 'producto_index' %}">Producto</a></li>
-            <li><a class="nav-item nav-link active" href="{% url 'item_index' %}">Item</a></li>
-            <li><a class="nav-item nav-link active" href="{% url 'cargo_index' %}">Cargo</a></li>
-            <li><a class="nav-item nav-link active" href="{% url 'tipo_documento_index' %}">Tipo Documento</a></li>
-            <li><a class="nav-item nav-link active" href="{% url 'persona_index' %}">Persona</a></li>
-            <li><a class="nav-item nav-link active" href="{% url 'usuario_index' %}">Usuario</a></li>
-            <li><a class="nav-item nav-link active" href="{% url 'cliente_index' %}">Clientes</a></li>
-            <li><a class="nav-item nav-link active" href="{% url 'venta_index' %}">Ventas</a></li>
-            <li><a class="nav-item nav-link active" href="{% url 'usuario_cargo_index' %}">Usuario Cargo</a></li>
-            <li><a class="nav-item nav-link active" href="{% url 'devolucion_index' %}">Devoluciones</a></li>
-        </ul>
     </div>
 
     <div class="container">
