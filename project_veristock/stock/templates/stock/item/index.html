@@ -21,7 +21,6 @@
                     <th>Serial</th>
                     <th>Estado</th>
                     <th>Producto</th>
-                    <th>Compra</th>
                     <th>Costo Venta</th>
                     <th>Accciones</th>
                 </tr>
@@ -36,7 +35,6 @@
                     <td>{{ item.serial }}</td>
                     <td>{{ item.state }}</td>
                     <td>{{ item.product.name }}</td>
-                    <td>{{ item.purchase.invoice_number }}</td>
                     <td>{{ item.cost_sale }}</td>
                     <td>
                         <a name="" id="" class="btn btn-info" href="{% url 'edit_item' item.id %}" role="button">Editar</a>

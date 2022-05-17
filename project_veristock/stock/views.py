@@ -13,6 +13,8 @@ def product(request):
     return render(request, './stock/producto/index.html', context={'products': products})
 
 def add_product(request):
+    # ciclo de la lista que tienes
+    # how to django save in the db a list of object<T>
     form = ProductForm(request.POST or None, request.FILES or None)
     products = Product.objects.all()
     if form.is_valid():
@@ -60,6 +62,16 @@ def delete_item(request, id):
     return redirect('item_index')
 
 # CRUD Sale
+
+def sale_register(request):
+    products = Product.objects.all()
+    for product in products:
+        product.quantity = Item.objects.filter(product__id=product.id).count()
+    form = SaleForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return redirect('venta_index')
+    return render(request, './stock/venta/index1.html', context={'products': products, 'form': form})
 
 def sale(request):
     sales = Sale.objects.all()

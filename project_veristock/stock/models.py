@@ -11,11 +11,12 @@ class Product(models.Model):
     quantity = models.IntegerField(verbose_name='Cantidad', blank=True, null=True)
 
     def __str__(self):
-        return str(self.id)
+        return self.name + " " + self.brand + " " + self.reference
 
     class Meta:
         ordering = ['id']
         verbose_name = 'Producto'      
+        
 class Item(models.Model):
     id = models.AutoField(primary_key=True)
     warranty_start = models.DateField(verbose_name='Inicio Garantia')
@@ -61,8 +62,7 @@ class Logs(models.Model):
         verbose_name = 'Logs'
 
 class Sale(models.Model):
-    id = models.AutoField(primary_key=True)
-    invoice_number = models.IntegerField(verbose_name='Numero Factura')
+    invoice_number = models.AutoField(verbose_name='Numero Factura', primary_key=True)
     date = models.DateTimeField(verbose_name='Fecha')
     quantity = models.IntegerField(verbose_name='Cantidad')
     total = models.IntegerField(verbose_name='Total')

@@ -95,11 +95,3 @@
 #navMenu.active > span:nth-child(3) {
     transform: translateY(-9px) rotate(90deg);
 }
-
-#contenedor-tabla {
-    float: right;
-}
-
-#tabla {
-    width: 100%;
-}

@@ -43,6 +43,7 @@ class ItemForm(forms.ModelForm):
         self.fields['warranty_start'].widget.attrs.update({
             'class': 'form-control',
             'placeholder': 'Ingrese el inicio de la garantia',
+            'type': 'date',
         })
 
         self.fields['warranty_end'].widget.attrs.update({
@@ -74,19 +75,15 @@ class ItemForm(forms.ModelForm):
             'class': 'form-control',
             'placeholder': 'Costo venta',
         })
+
 class SaleForm(forms.ModelForm):
 
     class Meta:
         model = Sale
-        fields =  ['invoice_number', 'date', 'quantity', 'total', 'customer', 'user', 'item']
+        fields =  ['date', 'quantity', 'total', 'customer', 'user', 'item']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        self.fields['invoice_number'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Número de factura',
-        })
 
         self.fields['date'].widget.attrs.update({
             'class': 'form-control',
