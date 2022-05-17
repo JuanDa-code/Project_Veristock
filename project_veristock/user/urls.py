@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('inicio_sesion', views.inicio_sesion, name='login'),
     # Urls Position
     path('cargo/index/', views.position, name='cargo_index'),
     path('cargo/crear/', views.add_position, name='crear_cargo'),

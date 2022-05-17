@@ -5,6 +5,9 @@ from .forms import PersonForm, PositionForm, Type_DocumentForm, UserForm, Custom
 def home(request):
     return render(request, './user/usuario/home.html')
 
+def inicio_sesion(request):
+    return render(request, './user/usuario/inicio_sesion.html')
+
 # CRUD Position
     
 def position(request):

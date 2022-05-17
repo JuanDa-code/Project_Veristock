@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Sistema de Inventarios Veristock</title>
+  <title>S istema de Inventarios Veristock</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -50,12 +50,12 @@
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Inicio</a></li>
           <li><a class="nav-link scrollto" href="#about">Veristock</a></li>
-          <li><a class="nav-link scrollto" href="#modulos">Modulos</a></li>
+          <li><a class="nav-link scrollto" href="#modulos">Módulos</a></li>
           <li><a class="nav-link scrollto" href="#services">Funcionalidades</a></li>
           <li><a class="nav-link scrollto" href="#powers">Ventajas</a></li>
-          <li><a class="nav-link scrollto" href="#team">Equipo De Trabajo</a></li>
+          <li><a class="nav-link scrollto" href="#team">Equipo de desarrollo</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contáctenos</a></li>
-          <li><a class="nav-link scrollto" href="#sesion">Iniciar Sesión</a></li>
+          <li><a class="nav-link scrollto btn btn-primary" href="{% url 'login' %}" role="button">Iniciar Sesión</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -77,8 +77,7 @@
             <div class="carousel-container">
               <div class="carousel-content container">
                 <h2 class="animate__animated animate__fadeInDown">Bienvenidos a <span>Veristock</span></h2>
-                <p class="animate__animated animate__fadeInUp">Maneja el inventario de tu empresa de forma segura y practica.</p>
-                <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">Saber más</a>
+                <p class="animate__animated animate__fadeInUp">Maneja el inventario de tu empresa de forma segura y práctica.</p>
               </div>
             </div>
           </div>
@@ -103,8 +102,8 @@
           <div class="col-lg-6 d-flex flex-column justify-content-center about-content">
 
             <div class="section-title">
-              <h2>Acerca De Veristock</h2>
-              <p><center>Software de facil comprension y velocidad para la actualizacion  de tu inventario, echo para aquellas empresas que usan documentos fisicos para llevar un control en su inventario, devoluciones y ventas de sus productos.</center></p>
+              <h2>Acerca de veristock</h2>
+              <p><center>Software de fácil comprensión y velocidad para la actualización  de tu inventario, echo para aquellas empresas que usan documentos físicos para llevar un control en su inventario, devoluciones y ventas de sus productos.</center></p>
             </div>
 
           </div>
@@ -119,7 +118,7 @@
 
         <div class="row no-gutters">
           <div class="section-title">
-            <h2>Modulos</h2>
+            <h2>Módulos</h2>
           </div>
           
           <div class="col-lg-4 col-md-6 content-item" data-aos="fade-up">
@@ -128,7 +127,7 @@
             </center>
             <span></span>
             <h4><center>Inventarios</center></h4>
-            <p><center>Un software de control para inventarios, lleva el conteo de los articulos que estan disponibles para la venta y de los que se encuentran en los almacenes o bodegas.</center></p>
+            <p><center>Lleva el contro de los articulos que estan disponibles para la venta y de los que se encuentran en los almacenes o bodegas.</center></p>
           </div>
 
           <div class="col-lg-4 col-md-6 content-item" data-aos="fade-up" data-aos-delay="100">
@@ -137,7 +136,7 @@
             </center>
             <span></span>
             <h4><center>Devoluciones</center></h4>
-            <p><center>Es momento de poner en practica un manejo mas seguro y efectivo de tu inventareio,para que disminuyas perdidas, localices tus productos rapidamente y protejas tu inversion.</center></p>
+            <p><center>Controla las devoluciones, calculando apropiadamente el costo de su inventario.</center></p>
           </div>
 
           <div class="col-lg-4 col-md-6 content-item" data-aos="fade-up" data-aos-delay="150">
@@ -146,7 +145,7 @@
             </center>
             <span></span>
             <h4><center>Reportes</center></h4>
-            <p><center>Toma mejores decisiones con la ayuda de reportes dinamicos en tiempo real que puedes guardar y compartir con quien sea; Manten la informacion clave al alcance de la mano con los tableros personalizados.</center></p>
+            <p><center>Toma mejores decisiones con la ayuda de reportes dinámicos en tiempo real; Mantén la información clave al alcance de la mano con los tableros personalizados.</center></p>
           </div> 
         </div>
       
@@ -164,25 +163,25 @@
         <center>
         <div class="row ">
           <div class="col-lg-3 col-md-4 icon-box" data-aos="fade-up">
-            <div class="icon"><i class="bi bi-speedometer"></i></div>
-            <h4 class="title"><a href="">Velocidad</a></h4>
-            <p class="description">Te garantizamos velocidad a la hora de hacer la actualización de tus ventas e inventario.</p>
+            <div class="icon"><i class="bi bi-files"></i></div>
+            <h4 class="title"><a href="">Gestión</a></h4>
+            <p class="description">Gestiona en tu inventario entradas, salidas, ajustes y control de mermas.</p>
           </div>
           <div class="col-lg-3 col-md-4 icon-box" data-aos="fade-up" data-aos-delay="100">
-            <div class="icon"><i class="bi bi-file-earmark-lock2"></i></div>
-            <h4 class="title"><a href="">Seguridad</a></h4>
-            <p class="description">Protegemos tu informacion y evitamos que tengan perdida de datos.</p>
-          </div>
+            <div class="icon"><i class="bi bi-file-earmark-person"></i></div>
+            <h4 class="title"><a href="">Usuarios y roles</a></h4>
+            <p class="description">Veristock le permite la gestión de usuarios de acuerdo a los cargos de su empresa y nivel de responsabilidad.</p>
+          </div> 
           <div class="col-lg-3 col-md-4 icon-box" data-aos="fade-up" data-aos-delay="200">
-            <div class="icon"><i class="bi bi-building"></i></div>
-            <h4 class="title"><a href="">Organizar</a></h4>
-            <p class="description">Organiza tu ionventario y revisa que usuario realiza cambios.</p>
+            <div class="icon"><i class="bi bi-bar-chart"></i></div>
+            <h4 class="title"><a href="">Control de perdidas</a></h4>
+            <p class="description">El control del stock ahorra a las pequeñas empresas mucho dinero.</p>
             
           </div>
           <div class="col-lg-3 col-md-4 icon-box" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon"><i class="bi bi-arrow-repeat"></i></div>
-            <h4 class="title"><a href="">Devoluciones</a></h4>
-            <p class="description">Gestiona de manera efectiva las devoluciones.</p>
+            <div class="icon"><i class="bi bi-file-check"></i></div>
+            <h4 class="title"><a href="">Eficaz</a></h4>
+            <p class="description">Haz crecer tu empresa de manera organizada.</p>
           </div>
         </center>
         </div>
@@ -203,7 +202,7 @@
             <div class="count-box">
               <img src="./../../../static/img/documentos.png " width ="150" height ="150" class="img-fluid" alt="">
               <i class="bi bi-simple-smile" style="color: #20b38e;"></i>
-              <p>Deja atras los documentos físicos</p>
+              <p>Deja atrás los documentos físicos</p>
             </div>
           </div>
 
@@ -211,7 +210,7 @@
             <div class="count-box">
               <img src="./../../../static/img/click.png " width ="150" height ="150" class="img-fluid" alt="">
               <i class="bi bi-document-folder" style="color: #c042ff;"></i>
-              <p>Maneja todo tu inventario con solo un click</p>
+              <p>Optimiza tu tiempo y realiza tu trabajo de manera mas eficiente.</p>
             </div>
           </div>
 
@@ -219,14 +218,14 @@
             <div class="count-box">
               <img src="./../../../static/img/controlar.png " width ="150" height ="150" class="img-fluid" alt="">
               <i class="bi bi-live-support" style="color: #46d1ff;"></i>
-              <p>Controla entradas y salidas de productos.</p>
+              <p>Reduce los costos de tus almacenes.</p>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="600">
             <div class="count-box"><img src="./../../../static/img/almacena.png " width ="150" height ="150" class="img-fluid" alt="">
               <i class="bi bi-users-alt-5" style="color: #ffb459;"></i>
-              <p>Almacena mayor cantidad de datos.</p>
+              <p>Ordena la información de manera automatizada y actualizada. Así de fácil, ¡así de eficaz!</p>
             </div>
           </div>
 
@@ -240,7 +239,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Nuestro equipo</h2>
+          <h2>Equipo de desarrollo</h2>
           <p>Aprendices del tecnólogo ADSI</p>
         </div>
 
@@ -248,9 +247,9 @@
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up">
             <div class="member">
-              <div class="pic"><img src="./../../../static/img/team/camilo.jpeg" width ="300" height ="300" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="./../../../static/img/team/camilo2.jpeg" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Juan Camilo</h4>
+                <h4>Juan Camilo Robayo</h4>
                 <span>Desarrollador web</span>
                 <span></span>
               </div>
@@ -259,9 +258,9 @@
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="member">
-              <div class="pic"><img src="./../../../static/img/team/nicolas.jpeg" width ="300" height ="300" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="./../../../static/img/team/nicolas1.jpeg"class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Juan Nicolas</h4>
+                <h4>Juan Nicolás Moreno</h4>
                 <span>Desarrollador web</span>
               </div>
             </div>
@@ -269,9 +268,9 @@
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="member">
-              <div class="pic"><img src="./../../../static/img/team/kevin.jpeg" width ="300" height ="300" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="./../../../static/img/team/kevin1.jpeg" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Kevin Daniel</h4>
+                <h4>Kevin Daniel Mora</h4>
                 <span>Desarrollador web</span>
               </div>
             </div>
@@ -279,9 +278,9 @@
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="member">
-              <div class="pic"><img src="./../../../static/img/team/david.jpeg" width ="300" height ="300" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="./../../../static/img/team/david.jpeg" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Juan David</h4>
+                <h4>Juan David Oviedo</h4>
                 <span>Desarrollador web</span>
 
               </div>
@@ -298,7 +297,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Contactanos</h2>
+          <h2>Contáctanos</h2>
         </div>
 
         <div class="row">
@@ -306,24 +305,24 @@
           <div class="col-lg-6 d-flex" data-aos="fade-up">
             <div class="info-box">
               <i class="bx bx-map"></i>
-              <h3>Direccion</h3>
-              <p>A108 Adam Street, New York, NY 535022</p>
+              <h3>Dirección</h3>
+              <p>Calle 22 #08-60 Alameda Centro.</p>
             </div>
           </div>
 
           <div class="col-lg-3 d-flex" data-aos="fade-up" data-aos-delay="100">
             <div class="info-box">
               <i class="bx bx-envelope"></i>
-              <h3>Email de contacto</h3>
-              <p>info@example.com<br>contact@example.com</p>
+              <h3>Email</h3>
+              <p>Veristock@gmail.com</p>
             </div>
           </div>
 
           <div class="col-lg-3 d-flex" data-aos="fade-up" data-aos-delay="200">
             <div class="info-box ">
               <i class="bx bx-phone-call"></i>
-              <h3>Telefonos</h3>
-              <p>+1 5589 55488 55<br>+1 6678 254445 41</p>
+              <h3>Télefonos</h3>
+              <p>+57 3016442525<br>+57 3115841904</p>
             </div>
           </div>
 
@@ -334,7 +333,7 @@
                   <input type="text" name="name" class="form-control" id="name" placeholder="Tu nombre" required>
                 </div>
                 <div class="col-lg-6 form-group">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Correo Electronico" required>
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Correo Electrónico" required>
                 </div>
               </div>
               <div class="form-group">
@@ -346,7 +345,7 @@
               <div class="my-3">
                 <div class="loading">Cargando</div>
                 <div class="error-message"></div>
-                <div class="sent-message">Tu mensaje ha sido enviado con exito!</div>
+                <div class="sent-message">Tu mensaje ha sido enviado con éxito!</div>
               </div>
               <div class="text-center"><button type="submit">Enviar</button></div>
             </form>
@@ -369,7 +368,7 @@
     </figure>
 
     <span>
-      <small class ="derechos">&copy; 2022 - Todos los Derechos Reservados.</small>
+      <small class ="derechos">&copy; 2022 - Todos los Derechos Reservados a Veristock.</small>
     </span>     
   </div>
  
