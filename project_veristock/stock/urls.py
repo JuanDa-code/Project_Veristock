@@ -8,12 +8,6 @@ urlpatterns = [
     path('producto/eliminar/<int:id>', views.delete_product, name='eliminar_producto'),
     path('producto/editar/<int:id>', views.edit_product, name='editar_producto'),
 
-    # Urls Item
-    path('item/index/', views.item, name='item_index'),
-    path('item/crear/', views.add_item, name='crear_item'),
-    path('item/eliminar/<int:id>', views.delete_item, name='eliminar_item'),
-    path('item/editar/<int:id>', views.edit_item, name='edit_item'),
-
     # Urls Sale
 
     path('venta/index/', views.sale, name='venta_index'),

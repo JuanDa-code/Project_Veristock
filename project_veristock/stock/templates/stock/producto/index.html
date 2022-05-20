@@ -19,7 +19,7 @@
                     <th>Costo Venta</th>
                     <th>Marca</th>
                     <th>Referencia</th>
-                    <th>Cantidad items</th>
+                    <th>Stock</th>
                     <th>Accciones</th>
                 </tr>
             </thead>
@@ -31,7 +31,7 @@
                     <td>{{ product.cost_sale }}</td>
                     <td>{{ product.brand }}</td>
                     <td>{{ product.reference }}</td>
-                    <td>{{ product.quantity }}</td>
+                    <td>{{ product.stock }}</td>
                     <td>
                         <a name="" id="" class="btn btn-info" href="{% url 'editar_producto' product.id %}" role="button">Editar</a>
                         |

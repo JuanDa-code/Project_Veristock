@@ -1,15 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Product, Item, Sale, Devolution
-from .forms import ProductForm, ItemForm, SaleForm, DevolutionForm
+from .models import Product, Sale, Devolution
+from .forms import ProductForm, SaleForm, DevolutionForm
 
 
 # CRUD Product
 
 def product(request):
     products = Product.objects.all()
-    for product in products:
-        product.quantity = Item.objects.filter(product__id=product.id).count()
     return render(request, './stock/producto/index.html', context={'products': products})
 
 def add_product(request):
@@ -35,38 +33,12 @@ def delete_product(request, id):
     product.delete()
     return redirect('producto_index')
 
-# CRUD Item
-
-def item(request):
-    items = Item.objects.all()
-    return render(request, './stock/item/index.html', {'items': items})
-
-def add_item(request):
-    form = ItemForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        form.save()
-        return redirect('item_index')
-    return render(request, './stock/item/crear.html', {'form': form})
-
-def edit_item(request, id):
-    item = Item.objects.get(id = id)
-    form = ItemForm(request.POST or None, request.FILES or None, instance = item)
-    if form.is_valid() and request.POST:
-        form.save()
-        return redirect('item_index')
-    return render(request, './stock/item/editar.html', {'form': form})
-
-def delete_item(request, id):
-    item = Item.objects.get(id = id)
-    item.delete()
-    return redirect('item_index')
-
 # CRUD Sale
 
 def sale_register(request):
     products = Product.objects.all()
-    for product in products:
-        product.quantity = Item.objects.filter(product__id=product.id).count()
+    # for product in products:
+    #     product.quantity = Item.objects.filter(product__id=product.id).count()
     form = SaleForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save()
