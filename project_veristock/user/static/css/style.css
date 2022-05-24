@@ -368,18 +368,22 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   left: 0;
   right: 0;
   overflow: hidden;
+  color: white;
 }
+
 #hero .carousel-content {
   text-align: left;
 }
-@media (max-width: 992px) {
+@media (max-width: 874px) {
   #hero, #hero .carousel-item {
     height: calc(100vh - 70px);
   }
   #hero .carousel-content.container {
     padding: 0 50px;
+    margin-right: 0;
   }
 }
+
 #hero h2 {
   color: #fff;
   margin-bottom: 30px;
@@ -467,6 +471,8 @@ h1, h2, h3, h4, h5, h6, .font-primary {
     width: 5%;
   }
 }
+
+
 
 /*--------------------------------------------------------------
 # Sections General
@@ -996,11 +1002,9 @@ section {
 }
 .team .member img {
   transition: all ease-in-out 0.4s;
-  width: 100%;
-  height: 100%;
-  max-width: 50px;
-  max-height: 50px;
 }
+
+
 .team .member:hover img {
   transform: scale(1.1);
 }

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>S istema de Inventarios Veristock</title>
+  <title>Sistema de Inventarios Veristock</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -55,7 +55,7 @@
           <li><a class="nav-link scrollto" href="#powers">Ventajas</a></li>
           <li><a class="nav-link scrollto" href="#team">Equipo de desarrollo</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contáctenos</a></li>
-          <li><a class="nav-link scrollto btn btn-primary" href="{% url 'login' %}" role="button">Iniciar Sesión</a></li>
+          <li><a href="{% url 'login' %}"><button type="button" class="btn btn-warning">Iniciar sesión</button></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -76,8 +76,8 @@
           <div class="carousel-item active" style="background-image: url('./../../../static/img/digital.jpeg');">
             <div class="carousel-container">
               <div class="carousel-content container">
-                <h2 class="animate__animated animate__fadeInDown">Bienvenidos a <span>Veristock</span></h2>
-                <p class="animate__animated animate__fadeInUp">Maneja el inventario de tu empresa de forma segura y práctica.</p>
+                <h2 class="animate__animated animate__fadeInDown"><center>Bienvenidos a <span>Veristock</span></center></h2>
+                <p class="parrafo"> <center>Maneja el inventario de tu empresa de forma segura y práctica.</center></p>
               </div>
             </div>
           </div>
@@ -162,26 +162,20 @@
         </div>
         <center>
         <div class="row ">
-          <div class="col-lg-3 col-md-4 icon-box" data-aos="fade-up">
+          <div class="col-lg-4 col-md-4 icon-box" data-aos="fade-up">
             <div class="icon"><i class="bi bi-files"></i></div>
             <h4 class="title"><a href="">Gestión</a></h4>
             <p class="description">Gestiona en tu inventario entradas, salidas, ajustes y control de mermas.</p>
           </div>
-          <div class="col-lg-3 col-md-4 icon-box" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-4 col-md-4 icon-box" data-aos="fade-up" data-aos-delay="100">
             <div class="icon"><i class="bi bi-file-earmark-person"></i></div>
             <h4 class="title"><a href="">Usuarios y roles</a></h4>
             <p class="description">Veristock le permite la gestión de usuarios de acuerdo a los cargos de su empresa y nivel de responsabilidad.</p>
           </div> 
-          <div class="col-lg-3 col-md-4 icon-box" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-lg-4 col-md-4  icon-box" data-aos="fade-up" data-aos-delay="200">
             <div class="icon"><i class="bi bi-bar-chart"></i></div>
             <h4 class="title"><a href="">Control de perdidas</a></h4>
             <p class="description">El control del stock ahorra a las pequeñas empresas mucho dinero.</p>
-            
-          </div>
-          <div class="col-lg-3 col-md-4 icon-box" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon"><i class="bi bi-file-check"></i></div>
-            <h4 class="title"><a href="">Eficaz</a></h4>
-            <p class="description">Haz crecer tu empresa de manera organizada.</p>
           </div>
         </center>
         </div>
@@ -268,7 +262,7 @@
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="member">
-              <div class="pic"><img src="./../../../static/img/team/kevin1.jpeg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="./../../../static/img/team/kevin1.jpeg" class="img-fluid"  alt=""></div>
               <div class="member-info">
                 <h4>Kevin Daniel Mora</h4>
                 <span>Desarrollador web</span>
