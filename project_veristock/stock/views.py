@@ -14,7 +14,6 @@ def add_product(request):
     # ciclo de la lista que tienes
     # how to django save in the db a list of object<T>
     form = ProductForm(request.POST or None, request.FILES or None)
-    products = Product.objects.all()
     if form.is_valid():
         form.save()
         return redirect('producto_index')

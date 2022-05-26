@@ -1,3 +1,4 @@
+from urllib.parse import DefragResult
 from django.db import models
 from user.models import Customer, User
 from .choices import estado, garantia
@@ -5,20 +6,21 @@ from .choices import estado, garantia
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, verbose_name='Nombre')
-    cost_sale = models.IntegerField(verbose_name='Costo Venta')
+    cost_sale = models.IntegerField(verbose_name='Costo Venta', default=0)
     brand = models.CharField(max_length=100, verbose_name='Marca')
     reference = models.CharField(max_length=100, verbose_name='Referencia')
     warranty = models.CharField(max_length=10, choices=garantia, verbose_name='Tiempo Garantia')
     remarks = models.TextField(max_length=250, verbose_name='Observaciones', null=True)
-    stock = models.IntegerField(verbose_name='Stock')
+    stock = models.IntegerField(verbose_name='Stock', default=0)
     state = models.CharField(verbose_name='Estado', choices=estado, max_length=10)
 
     def __str__(self):
-        return self.name + " " + self.brand + " " + self.reference
+        return '{} {} {}'.format(self.name, self.brand, self.reference)
 
     class Meta:
         ordering = ['id']
         verbose_name = 'Producto'     
+        unique_together = ('name','brand','reference')
 
 class Entries(models.Model):
     id = models.AutoField(primary_key=True)

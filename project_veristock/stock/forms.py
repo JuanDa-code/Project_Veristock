@@ -1,3 +1,6 @@
+from tkinter.tix import Select
+from unicodedata import name
+from xml.dom import ValidationErr
 from django import forms
 from .models import Product, Sale, Devolution
 
@@ -5,50 +8,63 @@ from .models import Product, Sale, Devolution
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'cost_sale', 'brand', 'reference', 'warranty', 'remarks', 'stock', 'state']
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(
+                attrs = {
+                    'class': 'form-control',
+                    'placeholder': 'Nombre del producto',
+                }
+            ),
+            'cost_sale': forms.NumberInput(
+                attrs = {
+                    'class': 'form-control',
+                    'placeholder': 'Precio del producto',
+                }
+            ),
+            'brand': forms.TextInput(
+                attrs = {
+                    'class': 'form-control',
+                    'placeholder': 'Marca del producto',
+                }
+            ),
+            'reference': forms.TextInput(
+                attrs = {
+                    'class': 'form-control',
+                    'placeholder': 'Referencia del producto',
+                }
+            ),
+            'warranty': forms.Select(
+                attrs = {
+                    'class': 'form-select',
+                }
+            ),
+            'remarks': forms.TextInput(
+                attrs = {
+                    'class': 'form-control',
+                    'placeholder': 'Observaciones del producto',
+                }
+            ),
+            'stock': forms.NumberInput(
+                attrs = {
+                    'class': 'form-control',
+                    'placeholder': 'Cantidad en bodega',
+                }
+            ),
+            'state': forms.Select(
+                attrs = {
+                    'class': 'form-select',
+                }
+            ),
+        }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def clean(self):
+        cleaned_data = self.cleaned_data
 
-        self.fields['name'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Ingrese el nombre del producto',
-        })
+        if Product.objects.filter(name=cleaned_data['name'], brand=cleaned_data['brand'], reference=cleaned_data['reference']):
+            raise forms.ValidationError('El producto ya existe')
 
-        self.fields['cost_sale'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Ingrese el precio del producto',
-        })
-        
-        self.fields['brand'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Ingrese la Marca del Producto',
-        })
-
-        self.fields['reference'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Ingrese la referencia del Producto',
-        })
-
-        self.fields['warranty'].widget.attrs.update({
-            'class': 'form-select',
-            'placeholder': 'Seleccione si posee garantía',
-        })
-
-        self.fields['remarks'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Observaciones del producto',
-        })
-
-        self.fields['stock'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Cantidad en Bodega',
-        })
-
-        self.fields['state'].widget.attrs.update({
-            'class': 'form-select',
-            'placeholder': 'Estado del producto',
-        })
+        return cleaned_data
 
 class SaleForm(forms.ModelForm):
 
