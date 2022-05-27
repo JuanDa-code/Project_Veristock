@@ -9,6 +9,7 @@ urlpatterns = [
     path('navbar', views.navbar, name='navbar'),
     path('base/', views.base, name='base'),
     path('iniciar_sesion/', LoginView.as_view(template_name='social/iniciar_sesion.html'), name='iniciar_sesion'),
+     path('iniciar_sesion1/', LoginView.as_view(template_name='social/iniciar_sesion1.html'), name='iniciar_sesion1'),
     # Urls Position
     path('cargo/index/', views.position, name='cargo_index'),
     path('cargo/crear/', views.add_position, name='crear_cargo'),
