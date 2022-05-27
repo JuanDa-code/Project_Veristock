@@ -15,7 +15,7 @@ def navbar(request):
     return render(request, './social/navbar.html')
 
 def base(request):
-    return render(request, './social/base.html')
+    return render(request, './dashboard/base.html')
 
 def register(request):
     form = UserCreationForm()
