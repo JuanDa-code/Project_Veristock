@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Sistema de Inventarios Veristock</title>
+  <title>Veristock-gestor de inventarios</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -55,7 +55,7 @@
           <li><a class="nav-link scrollto" href="#powers">Ventajas</a></li>
           <li><a class="nav-link scrollto" href="#team">Equipo de desarrollo</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contáctenos</a></li>
-          <li><a href="{% url 'login' %}"><button type="button" class="btn btn-warning">Iniciar sesión</button></a></li>
+          <li><a href="{% url 'login' %}"><button type="button" class="btn-abrir-popup">Iniciar sesión</button></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -76,8 +76,8 @@
           <div class="carousel-item active" style="background-image: url('./../../../static/img/digital.jpeg');">
             <div class="carousel-container">
               <div class="carousel-content container">
-                <h2 class="animate__animated animate__fadeInDown"><center>Bienvenidos a <span>Veristock</span></center></h2>
-                <p class="parrafo"> <center>Maneja el inventario de tu empresa de forma segura y práctica.</center></p>
+                <h2 class="animate__animated animate__fadeInDown">Bienvenidos a <span>Veristock</span></h2>
+                <p class="parrafo">Maneja el inventario de tu empresa de forma segura y práctica.</p>
               </div>
             </div>
           </div>
@@ -103,7 +103,7 @@
 
             <div class="section-title">
               <h2>Acerca de veristock</h2>
-              <p><center>Software de fácil comprensión y velocidad para la actualización  de tu inventario, echo para aquellas empresas que usan documentos físicos para llevar un control en su inventario, devoluciones y ventas de sus productos.</center></p>
+              <p>Software de fácil comprensión y velocidad para la actualización  de tu inventario, echo para aquellas empresas que usan documentos físicos para llevar un control en su inventario, devoluciones y ventas de sus productos.</p>
             </div>
 
           </div>
@@ -122,30 +122,28 @@
           </div>
           
           <div class="col-lg-4 col-md-6 content-item" data-aos="fade-up">
-            <center>
             <img src="./../../../static/img/inventar.jpg " width ="200" height ="200" class="img-fluid" alt="">
-            </center>
             <span></span>
-            <h4><center>Inventarios</center></h4>
-            <p><center>Lleva el contro de los articulos que estan disponibles para la venta y de los que se encuentran en los almacenes o bodegas.</center></p>
+            <h4>Inventarios</h4>
+            <p>Lleva el contro de los articulos que estan disponibles para la venta y de los que se encuentran en los almacenes o bodegas.</p>
           </div>
 
           <div class="col-lg-4 col-md-6 content-item" data-aos="fade-up" data-aos-delay="100">
-            <center>
+            
             <img src="./../../../static/img/devolucion.jpg " width ="200" height ="200" class="img-fluid" alt="">
-            </center>
+            
             <span></span>
-            <h4><center>Devoluciones</center></h4>
-            <p><center>Controla las devoluciones, calculando apropiadamente el costo de su inventario.</center></p>
+            <h4>Devoluciones</h4>
+            <p>Controla las devoluciones, calculando apropiadamente el costo de su inventario.</p>
           </div>
 
           <div class="col-lg-4 col-md-6 content-item" data-aos="fade-up" data-aos-delay="150">
-            <center>
+            
             <img src="./../../../static/img/reporte.jpg " width ="140" height ="140" class="img-fluid" alt="">
-            </center>
+            
             <span></span>
-            <h4><center>Reportes</center></h4>
-            <p><center>Toma mejores decisiones con la ayuda de reportes dinámicos en tiempo real; Mantén la información clave al alcance de la mano con los tableros personalizados.</center></p>
+            <h4>Reportes</h4>
+            <p>Toma mejores decisiones con la ayuda de reportes dinámicos en tiempo real; Mantén la información clave al alcance de la mano con los tableros personalizados.</p>
           </div> 
         </div>
       
@@ -160,7 +158,7 @@
         <div class="section-title">
           <h2>Funcionalidades</h2>
         </div>
-        <center>
+        
         <div class="row ">
           <div class="col-lg-4 col-md-4 icon-box" data-aos="fade-up">
             <div class="icon"><i class="bi bi-files"></i></div>
@@ -177,7 +175,7 @@
             <h4 class="title"><a href="">Control de perdidas</a></h4>
             <p class="description">El control del stock ahorra a las pequeñas empresas mucho dinero.</p>
           </div>
-        </center>
+        
         </div>
 
       </div>
@@ -324,7 +322,7 @@
             <form action="forms/contact.php" method="post" role="form" class="php-email-form">
               <div class="row">
                 <div class="col-lg-6 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Tu nombre" required>
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Nombre" required>
                 </div>
                 <div class="col-lg-6 form-group">
                   <input type="email" class="form-control" name="email" id="email" placeholder="Correo Electrónico" required>
