@@ -39,13 +39,14 @@
             <div class="card-box mb-30">
                 <div class="pd-20">
                     <h4 class="text-blue h4">Lista de Productos</h4>
-                    <p class="mb-0">you can find more options <a class="text-primary" href="https://datatables.net/" target="_blank">Click Here</a></p>
+                    <a class="btn btn-primary" href="{% url 'crear_producto' %}">Crear nuevo producto</a>
                 </div>
                 <div class="pd-20">
-                    <table class="data-table table stripe hover nowrap">
-                        <thead>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
                             <tr>
-                                <th class="table-plus datatable-nosort">Id</th>
+                                <th scope="col">#</th>
                                 <th>Nombre</th>
                                 <th>Costo Venta</th>
                                 <th>Marca</th>
@@ -53,8 +54,8 @@
                                 <th>Stock</th>
                                 <th>Acciones</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                          </thead>
+                          <tbody>
                             {% for product in products %}
                             <tr>
                                 <td class="table-plus">{{ product.id }}</td>
@@ -69,99 +70,19 @@
                                             <i class="dw dw-more"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Editar</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                            <a class="dropdown-item" href="{% url 'editar_producto' product.id %}"><i class="dw dw-edit2"></i> Editar</a>
+                                            <a class="dropdown-item" href="{% url 'eliminar_producto' product.id %}"><i class="dw dw-delete-3"></i> Eliminar</a>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
                             {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!-- Tabla de prueba -->
-            <div class="pd-20">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th>Nombre</th>
-                            <th>Costo Venta</th>
-                            <th>Marca</th>
-                            <th>Referencia</th>
-                            <th>Stock</th>
-                            <th>Acciones</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for product in products %}
-                        <tr>
-                            <td class="table-plus">{{ product.id }}</td>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.cost_sale }}</td>
-                            <td>{{ product.brand }}</td>
-                            <td>{{ product.reference }}</td>
-                            <td>{{ product.stock }}</td>
-                            <td>
-                                <div class="dropdown">
-                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                        <i class="dw dw-more"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                        <a class="dropdown-item" href="{% url 'editar_producto' product.id %}"><i class="dw dw-edit2"></i> Editar</a>
-                                        <a class="dropdown-item" href="{% url 'eliminar_producto' product.id %}"><i class="dw dw-delete-3"></i> Eliminar</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
+                          </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-header">
-        <a name="" id="" class="btn btn-dark" href=" {% url 'crear_producto' %}" role="button">Agregar nuevo producto</a>
-    </div>
-    <div class="card-body">
-        <h4 class="card-title">Productos</h4>
-        
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Costo Venta</th>
-                    <th>Marca</th>
-                    <th>Referencia</th>
-                    <th>Stock</th>
-                    <th>Accciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for product in products %}
-                <tr>
-                    <td>{{ product.id }}</td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.cost_sale }}</td>
-                    <td>{{ product.brand }}</td>
-                    <td>{{ product.reference }}</td>
-                    <td>{{ product.stock }}</td>
-                    <td>
-                        <a name="" id="" class="btn btn-info" href="{% url 'editar_producto' product.id %}" role="button">Editar</a>
-                        |
-                        <a name="" id="" class="btn btn-danger" href="{% url 'eliminar_producto' product.id %}" role="button">Eliminar</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
     </div>
 </div>
 

@@ -35,14 +35,15 @@ def delete_product(request, id):
 # CRUD Sale
 
 def sale_register(request):
-    products = Product.objects.all()
+    sales = Sale.objects.all()
+    return render(request, './stock/venta/index1.html', {'sales': sales})
     # for product in products:
     #     product.quantity = Item.objects.filter(product__id=product.id).count()
-    form = SaleForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        form.save()
-        return redirect('venta_index')
-    return render(request, './stock/venta/index1.html', context={'products': products, 'form': form})
+    # form = SaleForm(request.POST or None, request.FILES or None)
+    # if form.is_valid():
+    #     form.save()
+    #     return redirect('venta_index')
+    
 
 def sale(request):
     sales = Sale.objects.all()
