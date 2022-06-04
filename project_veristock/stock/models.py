@@ -32,6 +32,13 @@ class Entries(models.Model):
     def __str__(self):
         return str(self.id)
 
+    # def save(self, *args, **kwargs):
+    #     product = Product.objects.get(id=self.id_product)
+    #     product.stock += self.quantity
+    #     product.cost_sale += self.price
+    #     product.save()
+    #     return super(Entries, self).save(*args, **kwargs)
+
     class Meta:
         ordering = ['id']
         verbose_name = 'Entrada'

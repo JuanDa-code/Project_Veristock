@@ -1,6 +1,6 @@
 {% extends './../../dashboard/base.html' %}
 
-{% block title %} Editar Producto {% endblock %}
+{% block title %} Crear nuevo producto {% endblock %}
 
 {% block container %}
 
@@ -12,12 +12,12 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>Editar Producto</h4>
+                            <h4>Crear Entrada</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Editar producto</li>
+                                <li class="breadcrumb-item active" aria-current="page">Crear Entrada</li>
                             </ol>
                         </nav>
                     </div>
@@ -35,7 +35,7 @@
                     {% include './../../social/form.html' %}
 
                     <input class="btn btn-primary" type="submit" value="Enviar Datos">
-                    <a class="btn btn-secundary" href="{% url 'producto_index' %}" role="button">Cancelar</a>
+                    <a class="btn btn-secundary" href="{% url 'entradas_index' %}" role="button">Cancelar</a>
                 </form>
             </div>
         </div>

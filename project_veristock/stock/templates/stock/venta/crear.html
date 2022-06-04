@@ -1,17 +1,108 @@
-{% extends './../../social/navbar.html' %}
+{% extends './../../dashboard/base.html' %}
 
-{% block title %} Agregar Nueva Venta {% endblock %}
+{% block title %} Agrergar nueva venta {% endblock %}
 
-{% block content %}
+{% block container %}
 
-<div class="card">
-    <div class="card-header">
-        Crear una Venta
-    </div>
-    <div class="card-body">
-        <h4 class="card-title">Datos de Venta</h4>
-        {% include './../form.html' %}
-        {% block cancelar %} <a name="" id="" class="btn btn-secundary" href="{% url 'venta_index' %}" role="button">Cancelar</a> {% endblock %}
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="title">
+                            <h4>Crear venta</h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Nueva venta</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- Formulario -->
+
+            <div class="pd-20 card-box mb-30">
+                <div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <h4 class="text-blue h4">Productos</h4>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <select class="selectpicker form-control" data-size="5" data-style="btn-outline-secondary" multiple>
+                                    {% for product in products %}
+                                        <option value="{{ product.id }}">{{ product.name }} - {{ product.brand }} - {{ product.reference }}</option>
+                                    {% endfor %}
+                                    <optgroup label="Condiments">
+                                        <option>Mustard</option>
+                                        <option>Ketchup</option>
+                                        <option>Relish</option>
+                                    </optgroup>
+                                    <optgroup label="Breads">
+                                        <option>Plain</option>
+                                        <option>Steamed</option>
+                                        <option>Toasted</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-box mb-30">
+					<div class="pd-20">
+						<h4 class="text-blue h4">Productos</h4>
+					</div>
+					<div class="pb-20">
+						<table class="checkbox-datatable table nowrap">
+                            <thead>
+								<tr>
+									<th></th>
+									<th>Nombre</th>
+									<th>Marca</th>
+									<th>Referencia</th>
+									<th>Stock</th>
+									<th>Precio</th>
+								</tr>
+							</thead>
+                            {% for product in products %}
+                            <tbody>
+								<tr>
+									<td>
+                                        <div class="dt-checkbox">
+											<input type="checkbox" name="id[{{ product.id }}]" value="{{ product.id }}">
+											<span class="dt-checkbox-label"></span>
+										</div>
+                                    </td>
+									<td>{{ product.name }}</td>
+									<td>{{ product.brand }}</td>
+									<td>{{ product.reference }}</td>
+									<td>{{ product.stock }}</td>
+									<td>{{ product.cost_sale }}</td>
+								</tr>
+							</tbody>
+                            {% endfor %}
+						</table>
+					</div>
+				</div>
+                <div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <h4 class="text-blue h4">Información de la venta</h4>
+                        </div>
+                    </div>
+                    <form method="post">{% csrf_token %}
+                        {% include './../../social/form.html' %}
+    
+                        <input class="btn btn-primary" type="submit" value="Enviar Datos">
+                        <a class="btn btn-secundary" href="{% url 'producto_index' %}" role="button">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

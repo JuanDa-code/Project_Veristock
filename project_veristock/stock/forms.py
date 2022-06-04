@@ -2,7 +2,7 @@ from tkinter.tix import Select
 from unicodedata import name
 from xml.dom import ValidationErr
 from django import forms
-from .models import Product, Sale, Devolution
+from .models import Entries, Product, Sale, Devolution
 
 
 class ProductForm(forms.ModelForm):
@@ -36,7 +36,7 @@ class ProductForm(forms.ModelForm):
             ),
             'warranty': forms.Select(
                 attrs = {
-                    'class': 'form-select',
+                    'class': 'custom-select',
                 }
             ),
             'remarks': forms.TextInput(
@@ -53,7 +53,7 @@ class ProductForm(forms.ModelForm):
             ),
             'state': forms.Select(
                 attrs = {
-                    'class': 'form-select',
+                    'class': 'custom-select',
                 }
             ),
         }
@@ -93,6 +93,34 @@ class SaleForm(forms.ModelForm):
         self.fields['user'].widget.attrs.update({
             'class': 'form-select',
             'placeholder': 'Ingrese el usuario',
+        })
+
+class EntriesForm(forms.ModelForm):
+
+    class Meta:
+        model = Entries
+        fields =  ['id_product', 'date', 'quantity', 'price']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['id_product'].widget.attrs.update({
+            'class': 'custom-select',
+        })
+
+        self.fields['date'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Seleccione la fecha',
+        })
+
+        self.fields['quantity'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Cantidad',
+        })
+
+        self.fields['price'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Precio',
         })
         
 class DevolutionForm(forms.ModelForm):
