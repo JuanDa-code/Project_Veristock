@@ -9,9 +9,8 @@ urlpatterns = [
     path('producto/editar/<int:id>', views.edit_product, name='editar_producto'),
 
     # Urls Entries
-
-    path('entradas/index/', views.entries, name='entradas_index'),
-    path('entradas/crear/', views.add_entries, name='crear_entradas'),
+    
+    # path('producto/agregar_stock/<int:id>', views.addStockProduct, name='agregar_stock'),
 
     # Urls Sale
 

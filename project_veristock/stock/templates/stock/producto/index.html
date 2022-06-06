@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Tabla principal -->
+            <!-- Tabla de productos -->
             <div class="card-box mb-30">
                 <div class="pd-20">
                     <h4 class="text-blue h4">Lista de Productos</h4>
@@ -70,6 +70,7 @@
                                             <i class="dw dw-more"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                            <a class="dropdown-item open-modal" href="{% url 'agregar_stock' product.id %}" data-open="agregar_productos"><i class="icon-copy fa fa-plus" aria-hidden="true"></i> Agregar productos</a>
                                             <a class="dropdown-item" href="{% url 'editar_producto' product.id %}"><i class="dw dw-edit2"></i> Editar</a>
                                             <a class="dropdown-item" href="{% url 'eliminar_producto' product.id %}"><i class="dw dw-delete-3"></i> Eliminar</a>
                                         </div>
@@ -82,8 +83,59 @@
                     </div>
                 </div>
             </div>
+            <!-- Tabla de entradas -->
+            <div class="card-box mb-30">
+                <div class="pd-20">
+                    <h4 class="text-blue h4">Historial de Entradas</h4>
+                </div>
+                <div class="pd-20">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th>Nombre Producto</th>
+                                <th>Fecha</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for entrie in entries %}
+                            <tr>
+                                <td class="table-plus">{{ entrie.id }}</td>
+                                <td>{{ entrie.id_product }}</td>
+                                <td>{{ entrie.date }}</td>
+                                <td>{{ entrie.quantity }}</td>
+                                <td>{{ entrie.price }}</td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="agregar_productos" role="dialog">
+                
+            </div>
         </div>
     </div>
 </div>
 
 {% endblock %}
+
+{% comment %} {% block extrajs %}
+<script type="text/javascript">
+    const openEls = document.querySelectorAll("[data-open]");
+    const isVisible = "is-visible";
+
+    for(const el of openEls) {
+        el.addEventListener("click", function() {
+            const modalId = this.dataset.open;
+            document.getElementById(modalId).classList.add(isVisible);
+        });
+    }
+</script>
+{% endblock extrajs %} {% endcomment %}

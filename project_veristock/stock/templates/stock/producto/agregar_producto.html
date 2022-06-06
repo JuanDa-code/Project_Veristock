@@ -1,0 +1,24 @@
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Agregar productos</h2>
+            <button class="close" type="button" aria-dismiss = "modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form action="" method="post" name="form-add-product" id="form_add_product">
+                <h2 class="nameProducto">{{ product.name }} {{ product.brand }} {{ product.reference }}</h2>
+                <input type="number" name="stock" id="txtStock" placeholder="Cantidad del producto" required><br>
+                <input type="text" name="precio" id="txtPrecio" placeholder="Precio del producto" required><br>
+                <input type="hidden" name="producto_id" id="producto_id" required>
+                <input type="hidden" name="action" value="addProduct" required>
+                <div class="alert alertAddProduct"><p>Alerta de acción</p></div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger" type="button" data-dismiss="modal"><i class="icon-copy fa fa-window-close" aria-hidden="true"></i>Cancelar</button>
+            <button class="btn btn-primary" type="submit" data-dismiss="modal"><i class="icon-copy fa fa-plus-square" aria-hidden="true"></i>Confirmar</button>
+        </div>
+    </div>
+</div>

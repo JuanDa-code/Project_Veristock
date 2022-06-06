@@ -6,12 +6,12 @@ from .choices import estado, garantia
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, verbose_name='Nombre')
-    cost_sale = models.IntegerField(verbose_name='Costo Venta', default=0)
+    cost_sale = models.IntegerField(verbose_name='Costo Venta', default=0, null=False)
     brand = models.CharField(max_length=100, verbose_name='Marca')
     reference = models.CharField(max_length=100, verbose_name='Referencia')
     warranty = models.CharField(max_length=10, choices=garantia, verbose_name='Tiempo Garantia')
     remarks = models.TextField(max_length=250, verbose_name='Observaciones', null=True)
-    stock = models.IntegerField(verbose_name='Stock', default=0)
+    stock = models.IntegerField(verbose_name='Stock', default=0, null=False)
     state = models.CharField(verbose_name='Estado', choices=estado, max_length=10)
 
     def __str__(self):

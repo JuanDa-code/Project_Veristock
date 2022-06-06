@@ -1,8 +1,5 @@
-from tkinter.tix import Select
-from unicodedata import name
-from xml.dom import ValidationErr
 from django import forms
-from .models import Entries, Product, Sale, Devolution
+from .models import Product, Sale, Devolution
 
 
 class ProductForm(forms.ModelForm):
@@ -95,34 +92,6 @@ class SaleForm(forms.ModelForm):
             'placeholder': 'Ingrese el usuario',
         })
 
-class EntriesForm(forms.ModelForm):
-
-    class Meta:
-        model = Entries
-        fields =  ['id_product', 'date', 'quantity', 'price']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields['id_product'].widget.attrs.update({
-            'class': 'custom-select',
-        })
-
-        self.fields['date'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Seleccione la fecha',
-        })
-
-        self.fields['quantity'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Cantidad',
-        })
-
-        self.fields['price'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Precio',
-        })
-        
 class DevolutionForm(forms.ModelForm):
 
     class Meta:
