@@ -70,7 +70,7 @@
                                             <i class="dw dw-more"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item open-modal" href="{% url 'agregar_stock' product.id %}" data-open="agregar_productos"><i class="icon-copy fa fa-plus" aria-hidden="true"></i> Agregar productos</a>
+                                            <a href="" class="dropdown-item btn-block" data-toggle="modal" data-target="#Medium-modal" type="button"><i class="icon-copy fa fa-plus" aria-hidden="true"></i> Agregar productos</a>
                                             <a class="dropdown-item" href="{% url 'editar_producto' product.id %}"><i class="dw dw-edit2"></i> Editar</a>
                                             <a class="dropdown-item" href="{% url 'eliminar_producto' product.id %}"><i class="dw dw-delete-3"></i> Eliminar</a>
                                         </div>
@@ -117,9 +117,77 @@
             </div>
 
             <!-- Modal -->
-            <div class="modal fade" id="agregar_productos" role="dialog">
-                
+            <div class="modal fade" id="Medium-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myLargeModalLabel">Agregar productos</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <h6 class="modal-title">{{ product.name }} {{ product.brand }} {{ product.reference }} A</h6>
+                            <form>
+                                <div class="select-role">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn active">
+                                            <input type="radio" name="options" id="admin">
+                                            <div class="icon"><img src="vendors/images/briefcase.svg" class="svg" alt=""></div>
+                                            <span>I'm</span>
+                                            Manager
+                                        </label>
+                                        <label class="btn">
+                                            <input type="radio" name="options" id="user">
+                                            <div class="icon"><img src="vendors/images/person.svg" class="svg" alt=""></div>
+                                            <span>I'm</span>
+                                            Employee
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="input-group custom">
+                                    <input type="text" class="form-control form-control-lg" placeholder="Username">
+                                    <div class="input-group-append custom">
+                                        <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
+                                    </div>
+                                </div>
+                                <div class="input-group custom">
+                                    <input type="password" class="form-control form-control-lg" placeholder="**********">
+                                    <div class="input-group-append custom">
+                                        <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
+                                    </div>
+                                </div>
+                                <div class="row pb-30">
+                                    <div class="col-6">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                            <label class="custom-control-label" for="customCheck1">Remember</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="forgot-password"><a href="forgot-password.html">Forgot Password</a></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="input-group mb-0">
+                                            <!--
+                                                use code for form submit
+                                                <input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
+                                            -->
+                                            <a class="btn btn-primary btn-lg btn-block" href="index.html">Sign In</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
         </div>
     </div>
 </div>
