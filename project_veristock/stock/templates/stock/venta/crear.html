@@ -23,34 +23,23 @@
                     </div>
                 </div>
             </div>
+
             <!-- Formulario -->
 
             <div class="pd-20 card-box mb-30">
                 <div class="pd-20 card-box mb-30">
-                    <div class="clearfix">
-                        <div class="pull-left">
-                            <h4 class="text-blue h4">Productos</h4>
-                        </div>
-                        <div class="col-md-4 col-sm-12">
-                            <div class="form-group">
-                                <select class="selectpicker form-control" data-size="5" data-style="btn-outline-secondary" multiple>
-                                    {% for product in products %}
-                                        <option value="{{ product.id }}">{{ product.name }} - {{ product.brand }} - {{ product.reference }}</option>
-                                    {% endfor %}
-                                    <optgroup label="Condiments">
-                                        <option>Mustard</option>
-                                        <option>Ketchup</option>
-                                        <option>Relish</option>
-                                    </optgroup>
-                                    <optgroup label="Breads">
-                                        <option>Plain</option>
-                                        <option>Steamed</option>
-                                        <option>Toasted</option>
-                                    </optgroup>
-                                </select>
+                    <form action="" method="GET">
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <h4 class="text-blue h4">Buscar Productos</h4>
+                                
+                                <div class="input-group-append">
+                                    <input type="search" class="form-control" placeholder="Buscar..." aria-controls="Datatables_Table_0" value="{{ request.GET.buscar }}" name="buscar">
+                                    <button class="btn btn-primary"><i class="icon-copy fa fa-search-plus" aria-hidden="true"></i></button>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </div>    
+                    </form>
                 </div>
                 <div class="card-box mb-30">
 					<div class="pd-20">
@@ -68,7 +57,7 @@
 									<th>Precio</th>
 								</tr>
 							</thead>
-                            {% for product in products %}
+                            {% for product in productos %}
                             <tbody>
 								<tr>
 									<td>

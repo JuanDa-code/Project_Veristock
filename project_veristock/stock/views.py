@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from .models import Product, Sale, Devolution, Entries
 from .forms import ProductForm, SaleForm, DevolutionForm
 
@@ -38,6 +39,19 @@ def delete_product(request, id):
     return redirect('producto_index')
 
 # CRUD Sale
+
+def listar_productos(request):
+    busqueda = request.GET.get("buscar")
+    productos = Product.objects.all()
+
+    if busqueda:
+        productos = Product.objects.filter(
+            Q(name__icontains = busqueda) |
+            Q(brand__icontains = busqueda) |
+            Q(reference__icontains = busqueda)
+        ).distinct()
+
+    return render(request, './stock/venta/crear.html', {'productos': productos})
 
 def sale_register(request):
     sales = Sale.objects.all()
