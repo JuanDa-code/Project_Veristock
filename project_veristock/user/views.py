@@ -6,7 +6,7 @@ from .models import Customer, Person, Position, Type_Document, User
 from .forms import PersonForm, PositionForm, Type_DocumentForm, UserForm, CustomerForm
 
 def home(request):
-    return render(request, './user/usuario/home.html')
+    return render(request, './social/home1.html')
 
 def home1(request):
     return render(request, './social/home1.html')
