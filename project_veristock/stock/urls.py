@@ -10,7 +10,7 @@ urlpatterns = [
 
     # Urls Entries
     
-    # path('producto/agregar_stock/<int:id>', views.addStockProduct, name='agregar_stock'),
+    path('producto/agregar_stock/<int:id>', views.addStockProduct, name='agregar_stock'),
 
     # Urls Sale
 

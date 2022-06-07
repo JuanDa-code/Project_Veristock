@@ -7,13 +7,17 @@ from .forms import ProductForm, SaleForm, DevolutionForm
 # CRUD Product
 
 
-# def addStockProduct(request, id):
-#     product = Product.objects.get(id = id)
-#     return render(request, './stock/producto/agregar_producto.html', context={'product': product})
+def addStockProduct(request, id):
+    product = Product.objects.get(id = id)
+    return render(request, './stock/producto/agregar_producto.html', context={'product': product})
 
 def product(request):
     products = Product.objects.all()
     entries = Entries.objects.all()
+
+    stock = request.GET.get("stock")
+    precio = request.GET.get("precio")
+
     return render(request, './stock/producto/index.html', context={'products': products, 'entries': entries})
 
 def add_product(request):
