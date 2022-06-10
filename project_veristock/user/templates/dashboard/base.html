@@ -21,6 +21,7 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'vendor/dashboard/styles/icon-font.min.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'vendor/plugins/datatables/css/dataTables.bootstrap4.min.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'vendor/plugins/datatables/css/responsive.bootstrap4.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/plugins/sweetalert2/sweetalert2.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'vendor/dashboard/styles/style.css' %}">
 
 	<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -95,62 +96,6 @@
 					<a class="dropdown-toggle no-arrow" href="javascript:;" data-toggle="right-sidebar">
 						<i class="dw dw-settings2"></i>
 					</a>
-				</div>
-			</div>
-			<div class="user-notification">
-				<div class="dropdown">
-					<a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
-						<i class="icon-copy dw dw-notification"></i>
-						<span class="badge notification-active"></span>
-					</a>
-					<div class="dropdown-menu dropdown-menu-right">
-						<div class="notification-list mx-h-350 customscroll">
-							<ul>
-								<li>
-									<a href="#">
-										<img src="{% static 'vendor/dashboard/images/img.jpg' %}" alt="">
-										<h3>John Doe</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="{% static 'vendor/dashboard/images/photo1.jpg' %}" alt="">
-										<h3>Lea R. Frith</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="{% static 'vendor/dashboard/images/photo2.jpg' %}" alt="">
-										<h3>Erik L. Richards</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="{% static 'vendor/dashboard/images/photo3.jpg' %}" alt="">
-										<h3>John Doe</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="{% static 'vendor/dashboard/images/photo4.jpg' %}" alt="">
-										<h3>Renee I. Hansen</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="{% static 'vendor/dashboard/images/img.jpg' %}" alt="">
-										<h3>Vicki M. Coleman</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
 				</div>
 			</div>
 			<div class="user-info-dropdown">
@@ -252,7 +197,7 @@
 
 	<div class="left-side-bar">
 		<div class="brand-logo">
-			<a href="index.html">
+			<a href="{% url 'home1' %}">
 				<img src="{% static 'img/logos/blanco.png' %}" alt="">
 
 			</a>
@@ -268,9 +213,14 @@
 							<span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
 						</a>
 						<ul class="submenu">
-							<li><a href="index.html">Dashboard style 1</a></li>
-							<li><a href="index2.html">Dashboard style 2</a></li>
-							<li><a href="index3.html">Dashboard style 3</a></li>
+							<li><a class="nav-item nav-link active" href="{% url 'producto_index' %}">Producto</a></li>
+                            <li><a class="nav-item nav-link active" href="{% url 'cargo_index' %}">Cargo</a></li>
+                            <li><a class="nav-item nav-link active" href="{% url 'tipo_documento_index' %}">Tipo Documento</a></li>
+                            <li><a class="nav-item nav-link active" href="{% url 'persona_index' %}">Persona</a></li>
+                            <li><a class="nav-item nav-link active" href="{% url 'usuario_index' %}">Usuario</a></li>
+                            <li><a class="nav-item nav-link active" href="{% url 'cliente_index' %}">Clientes</a></li>
+                            <li><a class="nav-item nav-link active" href="{% url 'venta_index1' %}">Ventas</a></li>
+                            <li><a class="nav-item nav-link active" href="{% url 'devolucion_index' %}">Devoluciones</a></li>
 						</ul>
 					</li> 	
 				</ul>
@@ -293,6 +243,9 @@
 	<script src="{% static 'vendor/plugins/datatables/js/dataTables.bootstrap4.min.js' %}"></script>
 	<script src="{% static 'vendor/plugins/datatables/js/dataTables.responsive.min.js' %}"></script>
 	<script src="{% static 'vendor/plugins/datatables/js/responsive.bootstrap4.min.js' %}"></script>
+	<script src="{% static 'vendor/plugins/sweetalert2/sweetalert2.all.js' %}"></script>
+	<script src="{% static 'vendor/plugins/sweetalert2/sweet-alert.init.js' %}"></script>
 	<script src="{% static 'vendor/dashboard/scripts/dashboard.js' %}"></script>
+	{% block extrajs %}{% endblock extrajs %}
 </body>
 </html>

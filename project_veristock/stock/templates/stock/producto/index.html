@@ -70,7 +70,7 @@
                                             <i class="dw dw-more"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <button class="dropdown-item btn-block" data-toggle="modal" data-target="#Medium-modal" type="button" onclick="{% url 'agregar_stock' product.id %}"><i class="icon-copy fa fa-plus" aria-hidden="true"></i> Agregar productos</button>
+                                            <button class="dropdown-item" onclick="abrir_modal('{% url 'agregar_stock' product.id %}')"><i class="icon-copy fa fa-plus" aria-hidden="true"></i> Agregar productos</button>
                                             <a class="dropdown-item" href="{% url 'editar_producto' product.id %}"><i class="dw dw-edit2"></i> Editar</a>
                                             <a class="dropdown-item" href="{% url 'eliminar_producto' product.id %}"><i class="dw dw-delete-3"></i> Eliminar</a>
                                         </div>
@@ -117,25 +117,22 @@
             </div>
 
             <!-- Modal -->
-            <div class="modal fade" id="Medium-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                
+            <div class="modal fade" id="actualizacion" role="dialog">
+               
             </div>
+
         </div>
     </div>
 </div>
 
 {% endblock %}
 
-{% comment %} {% block extrajs %}
+{% block extrajs %}
 <script type="text/javascript">
-    const openEls = document.querySelectorAll("[data-open]");
-    const isVisible = "is-visible";
-
-    for(const el of openEls) {
-        el.addEventListener("click", function() {
-            const modalId = this.dataset.open;
-            document.getElementById(modalId).classList.add(isVisible);
+    function abrir_modal(url){
+        $('#actualizacion').load(url, function() {
+            $(this).modal('show');
         });
-    }
+    };
 </script>
-{% endblock extrajs %} {% endcomment %}
+{% endblock extrajs %}

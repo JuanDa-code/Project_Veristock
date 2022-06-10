@@ -1,3 +1,4 @@
+<!-- Modal -->
 <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header">
@@ -5,8 +6,9 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         </div>
         <div class="modal-body">
-            <h5 class="modal-title">{{ product.name }} {{ product.brand }} {{ product.reference }} Hola</h5><br>
-            <form method="GET" action="">
+            <h5 class="modal-title">{{ product.name }} {{ product.brand }} {{ product.reference }}</h5><br>
+            <form method="POST" action="{% url 'agregar_stock' product.id %}">
+                {% csrf_token %}
                 <div class="input-group custom">
                     <input type="number" class="form-control form-control-lg" placeholder="Stock" name="stock">
                     <div class="input-group-append custom">
@@ -28,11 +30,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-        <div class="modal-footer">
-            <div class="alert alert-success" role="alert">
-                This is a success alert—check it out!
-            </div>
         </div>
     </div>
 </div>

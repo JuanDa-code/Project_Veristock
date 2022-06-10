@@ -25,8 +25,8 @@
         $('#sa-success').click(function () {
             swal(
                 {
-                    title: 'Good job!',
-                    text: 'You clicked the button!',
+                    title: '¡Buen trabajo!',
+                    text: '¡El producto se ha actualizado con éxito!',
                     type: 'success',
                     showCancelButton: true,
                     confirmButtonClass: 'btn btn-success',

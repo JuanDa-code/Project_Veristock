@@ -44,18 +44,18 @@
 
       <div class="logo me-auto">
         <!-- Uncomment below if you prefer to use an image logo -->
-        <a href="index.html"><img src="{% static 'img/logos/logo.png' %}" alt="" class="img-fluid"></a>
+        <a href="{% url 'home1' %}"><img src="{% static 'img/logos/logo.png' %}" alt="" class="img-fluid"></a>
       </div>
 
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Inicio</a></li>
           <li><a class="nav-link scrollto" href="#about">Nosotros</a></li>
+          <li><a class="nav-link scrollto" href="#modulos">Módulos</a></li>
           <li><a class="nav-link scrollto" href="#services">Funcionalidades</a></li>
-          <li><a class="nav-link scrollto" href="#modulos">Modulos</a></li>
+          <li><a class="nav-link scrollto" href="#powers">Ventajas</a></li>
           <li><a class="nav-link scrollto" href="#team">Grupo</a></li>
-          <li><a class="nav-link scrollto" href="#powers">ventajas</a></li>
-          <li><a class="nav-link scrollto" href="#contact">Contactanos</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Contáctanos</a></li>
           <li><a href="{% url 'iniciar_sesion1' %}"><button type="button" class="btn btn-warning">Iniciar sesión</button></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>

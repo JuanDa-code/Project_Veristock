@@ -9,14 +9,22 @@ from .forms import ProductForm, SaleForm, DevolutionForm
 
 def addStockProduct(request, id):
     product = Product.objects.get(id = id)
+
+    if request.method == 'POST':
+        stock = request.POST.get("stock")
+        precio = request.POST.get("precio")
+
+        product.stock += int(stock)
+        product.cost_sale = int(precio)
+        
+        product.save()
+        return redirect('producto_index')
+
     return render(request, './stock/producto/agregar_producto.html', context={'product': product})
 
 def product(request):
     products = Product.objects.all()
     entries = Entries.objects.all()
-
-    stock = request.GET.get("stock")
-    precio = request.GET.get("precio")
 
     return render(request, './stock/producto/index.html', context={'products': products, 'entries': entries})
 
