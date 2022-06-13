@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>Crear venta</h4>
+                            <h4>Creación de una venta</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
@@ -25,70 +25,52 @@
             </div>
 
             <!-- Formulario -->
-
-            <div class="pd-20 card-box mb-30">
-                <div class="pd-20 card-box mb-30">
-                    <form action="" method="GET">
+            <div class="row">
+                <div class="col-md-6 col-sm-12 mb-30">
+                    <div class="pd-20 card-box mb-30">
                         <div class="clearfix">
-                            <div class="pull-left">
-                                <h4 class="text-blue h4">Buscar Productos</h4>
-                                
+                            <h3 class="text-blue h3"><i class="icon-copy fa fa-cubes" aria-hidden="true"></i>  Detalle de producto</h3>
+                            <label>Buscador de productos</label> <br>
+                            <div class="form-group">
                                 <div class="input-group-append">
-                                    <input type="search" class="form-control" placeholder="Buscar..." aria-controls="Datatables_Table_0" value="{{ request.GET.buscar }}" name="buscar">
-                                    <button class="btn btn-primary"><i class="icon-copy fa fa-search-plus" aria-hidden="true"></i></button>
+                                    <input type="text" class="form-control" placeholder="Ingrese una descripción de producto"  name="buscar">
+                                    <button class="btn btn-danger"><i class="icon-copy fa fa-window-close" aria-hidden="true"></i></button>
                                 </div>
                             </div>
-                        </div>    
-                    </form>
-                </div>
-                <div class="card-box mb-30">
-					<div class="pd-20">
-						<h4 class="text-blue h4">Productos</h4>
-					</div>
-					<div class="pb-20">
-						<table class="checkbox-datatable table nowrap">
+                        </div>
+                        <hr>
+                        <table class="table table-striped">
                             <thead>
-								<tr>
-									<th></th>
-									<th>Nombre</th>
-									<th>Marca</th>
-									<th>Referencia</th>
-									<th>Stock</th>
-									<th>Precio</th>
-								</tr>
-							</thead>
-                            {% for product in productos %}
+                                <tr>
+                                    <th>Eliminar</th>
+                                    <th>Producto</th>
+                                    <th>Precio Unidad</th>
+                                    <th>Cantidad</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            
                             <tbody>
-								<tr>
-									<td>
-                                        <div class="dt-checkbox">
-											<input type="checkbox" name="id[{{ product.id }}]" value="{{ product.id }}">
-											<span class="dt-checkbox-label"></span>
-										</div>
-                                    </td>
-									<td>{{ product.name }}</td>
-									<td>{{ product.brand }}</td>
-									<td>{{ product.reference }}</td>
-									<td>{{ product.stock }}</td>
-									<td>{{ product.cost_sale }}</td>
-								</tr>
-							</tbody>
-                            {% endfor %}
-						</table>
-					</div>
-				</div>
-                <div class="pd-20 card-box mb-30">
-                    <div class="clearfix">
-                        <div class="pull-left">
-                            <h4 class="text-blue h4">Información de la venta</h4>
+                                <tr>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 mb-30">
+                    <div class="pd-20 card-box mb-30">
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <h3 class="text-blue h3"><i class="icon-copy fa fa-shopping-cart" aria-hidden="true"></i>   Datos de la venta</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                {{ form }}
+                            </div>
                         </div>
                     </div>
-                    <form method="post">{% csrf_token %}
-                        {% include './../../social/form.html' %}
-    
-                        <input class="btn btn-primary" type="submit" value="Enviar Datos">
-                        <a class="btn btn-secundary" href="{% url 'producto_index' %}" role="button">Cancelar</a>
-                    </form>
                 </div>
             </div>
         </div>
@@ -96,3 +78,61 @@
 </div>
 
 {% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+    $(function () {
+
+        // Búsqueda de productos
+    
+        var availableTags = [
+            "ActionScript",
+            "AppleScript",
+            "Asp",
+            "BASIC",
+            "C",
+            "C++",
+            "Clojure",
+            "COBOL",
+            "ColdFusion",
+            "Erlang",
+            "Fortran",
+            "Groovy",
+            "Haskell",
+            "Java",
+            "JavaScript",
+            "Lisp",
+            "Perl",
+            "PHP",
+            "Python",
+            "Ruby",
+            "Scala",
+            "Scheme"
+          ];
+          $('input[name="buscar"]').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: window.location.pathname,
+                    type: 'POST',
+                    data: {
+                        'action': 'autocomplete',
+                        'term': request.term
+                    },
+                    dataType: 'json',
+                }).done(function (data) {
+                    response(data);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    //alert(textStatus + ': ' + errorThrown);
+                }).always(function (data) {
+
+                });
+            },
+            delay: 500,
+            minLength: 2,
+            select: function (event, ui) {
+                console.log(ui.item);
+            }
+          });
+    })
+</script>
+{% endblock extrajs %}

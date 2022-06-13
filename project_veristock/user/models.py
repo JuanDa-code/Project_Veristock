@@ -69,7 +69,7 @@ class Customer(models.Model):
     state = models.CharField(verbose_name='Estado', max_length=20, choices=estado)
 
     def __str__(self):
-        return self.person.first_name + self.person.second_name
+        return self.person.first_name + " " + self.person.last_names
 
     class Meta:
         ordering = ['person']

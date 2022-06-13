@@ -1,131 +1,91 @@
-{% extends "./../../dashboard/base.html" %}
+{% extends "./../../social/listar.html" %}
 
-{% block title %} Lista de Productos {% endblock %}
+{% block titlePaginador %} Lista de Productos {% endblock titlePaginador %}
 
-{% block container %} 
-<!-- Main Container -->
-<div class="main-container">
-    <div class="pd-ltr-20 xs-pd-20-10">
-        <div class="min-height-200px">
-            <!-- Page Header -->
-            <div class="page-header">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12">
-                        <div class="title">
-                            <h4>Lista de Productos</h4>
-                        </div>
-                        <nav aria-label="breadcrumb" role="navigation">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Productos</li>
-                            </ol>
-                        </nav>
-                    </div>
-                    <div class="col-md-6 col-sm-12 text-right">
-                        <div class="dropdown">
-                            <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                January 2018
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Export List</a>
-                                <a class="dropdown-item" href="#">Policies</a>
-                                <a class="dropdown-item" href="#">View Assets</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Tabla de productos -->
-            <div class="card-box mb-30">
-                <div class="pd-20">
-                    <h4 class="text-blue h4">Lista de Productos</h4>
-                    <a class="btn btn-primary" href="{% url 'crear_producto' %}">Crear nuevo producto</a>
-                </div>
-                <div class="pd-20">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                          <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th>Nombre</th>
-                                <th>Costo Venta</th>
-                                <th>Marca</th>
-                                <th>Referencia</th>
-                                <th>Stock</th>
-                                <th>Acciones</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {% for product in products %}
-                            <tr>
-                                <td class="table-plus">{{ product.id }}</td>
-                                <td>{{ product.name }}</td>
-                                <td>{{ product.cost_sale }}</td>
-                                <td>{{ product.brand }}</td>
-                                <td>{{ product.reference }}</td>
-                                <td>{{ product.stock }}</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                            <i class="dw dw-more"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <button class="dropdown-item" onclick="abrir_modal('{% url 'agregar_stock' product.id %}')"><i class="icon-copy fa fa-plus" aria-hidden="true"></i> Agregar productos</button>
-                                            <a class="dropdown-item" href="{% url 'editar_producto' product.id %}"><i class="dw dw-edit2"></i> Editar</a>
-                                            <a class="dropdown-item" href="{% url 'eliminar_producto' product.id %}"><i class="dw dw-delete-3"></i> Eliminar</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                          </tbody>
-                        </table>
+{% block titleH4 %}Lista de Productos{% endblock titleH4 %}
+{% block breadcrumb %} Productos {% endblock breadcrumb %}
+{% block titleTable %}Lista de Productos{% endblock titleTable %}
+{% block urlCrear %}{% url 'crear_producto' %}{% endblock urlCrear %}{% url 'crear_producto' %}
+{% block botonCrear %}producto{% endblock botonCrear %}
+
+{% block col %}
+<tr>
+    <th scope="col">#</th>
+    <th>Nombre</th>
+    <th>Costo Venta</th>
+    <th>Marca</th>
+    <th>Referencia</th>
+    <th>Stock</th>
+    <th>Acciones</th>
+</tr>
+{% endblock col %}
+
+{% block row %}
+    {% for product in products %}
+        <tr>
+            <td class="table-plus">{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.cost_sale }}</td>
+            <td>{{ product.brand }}</td>
+            <td>{{ product.reference }}</td>
+            <td>{{ product.stock }}</td>
+            <td>
+                <div class="dropdown">
+                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <i class="dw dw-more"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                        <button class="dropdown-item" onclick="abrir_modal('{% url 'agregar_stock' product.id %}')"><i class="icon-copy fa fa-plus" aria-hidden="true"></i> Agregar productos</button>
+                        <a class="dropdown-item" href="{% url 'editar_producto' product.id %}"><i class="dw dw-edit2"></i> Editar</a>
+                        <a class="dropdown-item" href="{% url 'eliminar_producto' product.id %}"><i class="dw dw-delete-3"></i> Eliminar</a>
                     </div>
                 </div>
-            </div>
-            <!-- Tabla de entradas -->
-            <div class="card-box mb-30">
-                <div class="pd-20">
-                    <h4 class="text-blue h4">Historial de Entradas</h4>
-                </div>
-                <div class="pd-20">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                          <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th>Nombre Producto</th>
-                                <th>Fecha</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {% for entrie in entries %}
-                            <tr>
-                                <td class="table-plus">{{ entrie.id }}</td>
-                                <td>{{ entrie.id_product }}</td>
-                                <td>{{ entrie.date }}</td>
-                                <td>{{ entrie.quantity }}</td>
-                                <td>{{ entrie.price }}</td>
-                            </tr>
-                            {% endfor %}
-                          </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock row %}
 
-            <!-- Modal -->
-            <div class="modal fade" id="actualizacion" role="dialog">
-               
-            </div>
-
+{% block extraTables %}
+<!-- Tabla de entradas -->
+<div class="card-box mb-30">
+    <div class="pd-20">
+        <h4 class="text-blue h4">Historial de Entradas</h4>
+    </div>
+    <div class="pd-20">
+        <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th>Nombre Producto</th>
+                    <th>Fecha</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for entrie in entries %}
+                <tr>
+                    <td class="table-plus">{{ entrie.id }}</td>
+                    <td>{{ entrie.id_product }}</td>
+                    <td>{{ entrie.date }}</td>
+                    <td>{{ entrie.quantity }}</td>
+                    <td>{{ entrie.price }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
         </div>
     </div>
 </div>
+{% endblock extraTables %}
 
-{% endblock %}
+{% block extraContent %}
+<!-- Modal -->
+<div class="modal fade" id="actualizacion" role="dialog">
+               
+</div>
+{% endblock extraContent %}
 
 {% block extrajs %}
 <script type="text/javascript">
@@ -134,5 +94,22 @@
             $(this).modal('show');
         });
     };
+
+    $(function () {
+        $('.btnTest').on('click', function () {
+            $.ajax({
+                url: '{% url 'producto_index' %}',
+                type: 'POST',
+                data: {id: 1},
+                DataType: 'json'
+            }).done(function (data) { 
+                console.log(data);
+            }).fail(function (data) {
+                alert("error");
+            }).always(function (data) {
+                
+            });
+        });
+    });
 </script>
 {% endblock extrajs %}

@@ -1,0 +1,133 @@
+{% extends "./../../social/listar.html" %}
+
+{% block titlePaginador %} Lista de Productos {% endblock titlePaginador %}
+
+{% block titleH4 %}Lista de Productos{% endblock titleH4 %}
+{% block breadcrumb %} Productos {% endblock breadcrumb %}
+{% block titleTable %}Lista de Productos{% endblock titleTable %}
+{% block urlCrear %}{% url 'crear_producto' %}{% endblock urlCrear %}{% url 'crear_producto' %}
+{% block botonCrear %}producto{% endblock botonCrear %}
+
+{% block col %}
+<tr>
+    <th scope="col" style="width: 10%">#</th>
+    <th style="width: 15%">Nombre</th>
+    <th style="width: 15%">Costo Venta</th>
+    <th style="width: 15%">Marca</th>
+    <th style="width: 15%">Referencia</th>
+    <th style="width: 15%">Stock</th>
+    <th style="width: 15%">Acciones</th>
+</tr>
+{% endblock col %}
+
+{% block row %}
+    {% for p in object_list %}
+        <tr>
+            <td class="table-plus">{{ p.id }}</td>
+            <td>{{ p.name }}</td>
+            <td>{{ p.cost_sale }}</td>
+            <td>{{ p.brand }}</td>
+            <td>{{ p.reference }}</td>
+            <td>{{ p.stock }}</td>
+            <td>
+                <div class="dropdown">
+                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <i class="dw dw-more"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                        <button class="dropdown-item" onclick="abrir_modal('{% url 'agregar_stock' p.id %}')"><i class="icon-copy fa fa-plus" aria-hidden="true"></i> Agregar productos</button>
+                        <a class="dropdown-item" href="{% url 'editar_producto' p.id %}"><i class="dw dw-edit2"></i> Editar</a>
+                        <a class="dropdown-item" href="{% url 'eliminar_producto' p.id %}"><i class="dw dw-delete-3"></i> Eliminar</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock row %}
+
+{% block extraTables %}
+<!-- Tabla de entradas -->
+<div class="card-box mb-30">
+    <div class="pd-20">
+        <h4 class="text-blue h4">Historial de Entradas</h4>
+    </div>
+    <div class="pd-20">
+        <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th>Nombre Producto</th>
+                    <th>Fecha</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for e in entries %}
+                <tr>
+                    <td class="table-plus">{{ e.id }}</td>
+                    <td>{{ e.id_product }}</td>
+                    <td>{{ e.date }}</td>
+                    <td>{{ e.quantity }}</td>
+                    <td>{{ e.price }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock extraTables %}
+
+{% block extraContent %}
+<!-- Modal -->
+<div class="modal fade" id="actualizacion" role="dialog">
+               
+</div>
+{% endblock extraContent %}
+
+{% block extrajs %}
+<script type="text/javascript">
+    function abrir_modal(url){
+        $('#actualizacion').load(url, function() {
+            $(this).modal('show');
+        });
+    };
+
+    $(function () {
+        $('.btnTest').on('click', function () {
+            $.ajax({
+                url: '{% url 'producto_index1' %}',
+                type: 'POST',
+                data: {id: 2},
+                dataType: 'json'
+            }).done(function (data) { 
+                console.log(data);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            }).always(function (data) {
+                
+            });
+        });
+
+        $('#data').DataTable({
+            responsive: true,
+            autoWidth: false,
+            language: {
+                emptyTable: "No hay registros en la tabla",
+                info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                search: "Buscar: <i class='icon-copy fa fa-search' aria-hidden='true'></i>",
+                lengthMenu: "Mostrar _MENU_ registros",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior",
+                },
+            }
+        });
+    });
+</script>
+{% endblock extrajs %}

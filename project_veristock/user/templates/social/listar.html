@@ -1,0 +1,72 @@
+{% extends "./../dashboard/base.html" %}
+{% load static %}
+
+{% block title %} {% block titlePaginador %}{% endblock titlePaginador %} {% endblock %}
+
+{% block extracss %}{% endblock extracss %}
+
+{% block container %} 
+<!-- Main Container -->
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="title">
+                            <h4>{% block titleH4 %}{% endblock titleH4 %}</h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{% block breadcrumb %}{% endblock breadcrumb %}</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-right">
+                        <div class="dropdown">
+                            <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                January 2018
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Export List</a>
+                                <a class="dropdown-item" href="#">Policies</a>
+                                <a class="dropdown-item" href="#">View Assets</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Tabla de productos -->
+            <div class="card-box mb-30">
+                <div class="pd-20">
+                    <h4 class="text-blue h4">{% block titleTable %}{% endblock titleTable %}</h4>
+                    <a class="btn btn-primary" href="{% block urlCrear %}{% endblock urlCrear %}">Crear nuevo {% block botonCrear %}{% endblock botonCrear %}</a>
+                    <a class="btn btn-primary btnTest" href="#">Recargar</a>
+                </div>
+                <div class="pd-20">
+                    <div class="table-responsive">
+                        <table class="table" id="data">
+                          <thead>
+                            {% block col %}
+                            {% endblock col %}
+                          </thead>
+                          <tbody>
+                            {% block row %}
+                            {% endblock row %}
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% block extraTables %}
+            {% endblock extraTables %}
+
+            {% block extraContent %}
+            {% endblock extraContent %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

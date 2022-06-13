@@ -1,7 +1,8 @@
-from urllib.parse import DefragResult
 from django.db import models
+from django.forms import model_to_dict
 from user.models import Customer, User
 from .choices import estado, garantia
+import datetime
 
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
@@ -16,6 +17,10 @@ class Product(models.Model):
 
     def __str__(self):
         return '{} {} {}'.format(self.name, self.brand, self.reference)
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
     class Meta:
         ordering = ['id']
@@ -32,15 +37,8 @@ class Entries(models.Model):
     def __str__(self):
         return str(self.id)
 
-    # def save(self, *args, **kwargs):
-    #     product = Product.objects.get(id=self.id_product)
-    #     product.stock += self.quantity
-    #     product.cost_sale += self.price
-    #     product.save()
-    #     return super(Entries, self).save(*args, **kwargs)
-
     class Meta:
-        ordering = ['id']
+        ordering = ['-date']
         verbose_name = 'Entrada'
 
 class Devolution(models.Model):
@@ -82,6 +80,7 @@ class Details_sale(models.Model):
         return str(self.invoice_number)
 
     class Meta:
+        verbose_name = 'Detalle de Venta'
         ordering = ['invoice_number']
 
 class Detail_temp(models.Model):

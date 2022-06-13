@@ -8,12 +8,6 @@ from .forms import PersonForm, PositionForm, Type_DocumentForm, UserForm, Custom
 def home(request):
     return render(request, './social/home1.html')
 
-def home1(request):
-    return render(request, './social/home1.html')
-
-def navbar(request):
-    return render(request, './social/navbar.html')
-
 def base(request):
     return render(request, './dashboard/base.html')
 
@@ -26,30 +20,6 @@ def register(request):
 
     context = {'form': form}
     return render(request, './social/registrar.html', context)
-
-def login(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            messages.success(request, f'Usuario {username} ha ingresado con éxito.')
-    else:
-        form = UserCreationForm()
-
-    context = { 'form': form }
-    return render(request, './social/iniciar_sesion.html', context)
-
-def login1(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            messages.success(request, f'Usuario {username} ha ingresado con éxito.')
-    else:
-        form = UserCreationForm()
-
-    context = { 'form': form }
-    return render(request, './social/iniciar_sesion.html', context)
 
 # CRUD Position
     

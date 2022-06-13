@@ -10,7 +10,7 @@
             <form method="POST" action="{% url 'agregar_stock' product.id %}">
                 {% csrf_token %}
                 <div class="input-group custom">
-                    <input type="number" class="form-control form-control-lg" placeholder="Stock" name="stock">
+                    <input type="number" class="form-control form-control-lg" placeholder="Stock" name="stock" required>
                     <div class="input-group-append custom">
                         <span class="input-group-text"><i class="icon-copy fa fa-cubes" aria-hidden="true"></i></span>
                     </div>

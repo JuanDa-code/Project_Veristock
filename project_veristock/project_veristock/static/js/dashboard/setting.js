@@ -169,26 +169,26 @@ jQuery(document).ready(function(){
 
 	// date picker
 	$('.date-picker').datepicker({
-		language: 'en',
+		language: 'es',
 		autoClose: true,
-		dateFormat: 'dd MM yyyy',
+		dateFormat: 'yyyy MM dd',
 	});
 	$('.datetimepicker').datepicker({
 		timepicker: true,
-		language: 'en',
+		language: 'es',
 		autoClose: true,
 		dateFormat: 'dd MM yyyy',
 	});
 	$('.datetimepicker-range').datepicker({
-		language: 'en',
+		language: 'es',
 		range: true,
 		multipleDates: true,
 		multipleDatesSeparator: " - "
 	});
 	$('.month-picker').datepicker({
-		language: 'en',
-		minView: 'months',
-		view: 'months',
+		language: 'es',
+		minView: 'Meses',
+		view: 'meses',
 		autoClose: true,
 		dateFormat: 'MM yyyy',
 	});

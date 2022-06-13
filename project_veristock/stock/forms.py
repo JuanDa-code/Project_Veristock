@@ -1,3 +1,4 @@
+import datetime
 from django import forms
 from .models import Product, Sale, Devolution
 
@@ -68,55 +69,61 @@ class SaleForm(forms.ModelForm):
     class Meta:
         model = Sale
         fields =  ['date', 'totalSale', 'customer', 'user']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields['date'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Ingrese fecha de venta',
-        })
-
-        self.fields['totalSale'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Cantidad',
-        })
-
-        self.fields['customer'].widget.attrs.update({
-            'class': 'form-select',
-            'placeholder': 'Ingrese el cliente',
-        })
-
-        self.fields['user'].widget.attrs.update({
-            'class': 'form-select',
-            'placeholder': 'Ingrese el usuario',
-        })
+        widgets = {
+            'date': forms.DateInput(
+                attrs = {
+                    'autocomplete': 'off',
+                    'class': 'form-control date-picker',
+                    'placeholder': 'Seleccione una fecha',
+                }
+            ),
+            'totalSale': forms.NumberInput(
+                attrs = {
+                    'class': 'form-control',
+                    'placeholder': 'Valor total de la venta',
+                    'readonly': True,
+                }
+            ),
+            'customer': forms.Select(
+                attrs = {
+                    'class': 'custom-select',
+                }
+            ),
+            'user': forms.Select(
+                attrs = {
+                    'class': 'custom-select'
+                }
+            ),
+        }
 
 class DevolutionForm(forms.ModelForm):
 
     class Meta:
         model = Devolution
         fields =  ['date', 'reason', 'remarks', 'id_product']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields['date'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Ingrese la fecha de la devolucion',
-        })
-
-        self.fields['reason'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Motivo de la devolucion',
-        })
-
-        self.fields['remarks'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Observaciones',
-        })
-
-        self.fields['id_product'].widget.attrs.update({
-            'class': 'form-select',
-            'placeholder': 'Observaciones',
-        })
+        widgets = {
+            'date': forms.DateTimeInput(
+                attrs = {
+                    'autocomplete': 'off',
+                    'class': 'form-control datetimepicker',
+                    'placeholder': 'Seleccione una fecha',
+                }
+            ),
+            'reason': forms.TextInput(
+                attrs = {
+                    'class': 'form-control',
+                    'placeholder': 'Motivos de la devolución'
+                }
+            ),
+            'remarks': forms.Textarea(
+                attrs = {
+                    'class': 'form-control',
+                    'placeholder': 'Observaciones del producto'
+                }
+            ),
+            'id_product': forms.Select(
+                attrs = {
+                    'class': 'custom-select'
+                }
+            ),
+        }

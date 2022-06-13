@@ -1,47 +1,43 @@
-{% extends "./../../social/navbar.html" %}
+{% extends "./../../social/listar.html" %}
 
-{% block title %} Lista de Devolucion {% endblock %}
+{% block titlePaginador %} Lista de Devoluciones {% endblock titlePaginador %}
 
-{% block content %} 
+{% block titleH4 %}Lista de Devoluciones{% endblock titleH4 %}
+{% block breadcrumb %} Devoluciones {% endblock breadcrumb %}
+{% block titleTable %}Lista de devoluciones{% endblock titleTable %}
+{% block urlCrear %}{% url 'crear_devolucion' %}{% endblock urlCrear %}
+{% block botonCrear %}devolución{% endblock botonCrear %}
 
-<div class="card">
-    <div class="card-header">
-        <a name="" id="" class="btn btn-dark" href=" {% url 'crear_devolucion' %}" role="button">Agregar nueva Devolucion</a>
-    </div>
-    <div class="card-body">
-        <h4 class="card-title">Devolucion</h4>
-        
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Fecha</th>
-                    <th>Motivo</th>
-                    <th>Observaciones</th>
-                    <th>Item</th>
-                    <th>Accciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for devolution in devolutions %}
-                <tr>
-                    <td>{{ devolution.id }}</td>
-                    <td>{{ devolution.date }}</td>
-                    <td>{{ devolution.reason }}</td>
-                    <td>{{ devolution.remarks }}</td>
-                    <td>{{ devolution.item }}</td>
-                    <td>
-                        <a name="" id="" class="btn btn-info" href="{% url 'editar_devolucion' devolution.id %}" role="button">Editar</a>
-                        |
-                        <a name="" id="" class="btn btn-danger" href="{% url 'eliminar_devolucion' devolution.id %}" role="button">Eliminar</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        
+{% block col %}
+<tr>
+    <th scope="col">#</th>
+    <th>Fecha</th>
+    <th>Motivo</th>
+    <th>Observaciones</th>
+    <th>Nombre Producto</th>
+    <th>Accciones</th>
+</tr>
+{% endblock col %}
 
-    </div>
-</div>
-
-{% endblock %}
+{% block row %}
+    {% for devolution in devolutions %}
+        <tr>
+            <td class="table-plus">{{ devolution.id }}</td>
+            <td>{{ devolution.date }}</td>
+            <td>{{ devolution.reason }}</td>
+            <td>{{ devolution.remarks }}</td>
+            <td>{{ devolution.id_product.name }} {{ devolution.id_product.brand }} {{ devolution.id_product.reference }}</td>
+            <td>
+                <div class="dropdown">
+                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <i class="dw dw-more"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                        <a class="dropdown-item" href="{% url 'editar_devolucion' devolution.id %}"><i class="dw dw-edit2"></i> Editar</a>
+                        <a class="dropdown-item" href="{% url 'eliminar_devolucion' devolution.id %}"><i class="dw dw-delete-3"></i> Eliminar</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock row %}

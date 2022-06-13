@@ -1,45 +1,7 @@
-{% extends './../../dashboard/base.html' %}
+{% extends './../../social/crear.html' %}
 
-{% block title %} Crear nuevo producto {% endblock %}
-
-{% block container %}
-
-<div class="main-container">
-    <div class="pd-ltr-20 xs-pd-20-10">
-        <div class="min-height-200px">
-            <!-- Page Header -->
-            <div class="page-header">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12">
-                        <div class="title">
-                            <h4>Crear Producto</h4>
-                        </div>
-                        <nav aria-label="breadcrumb" role="navigation">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Crear producto</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-            <!-- Formulario -->
-
-            <div class="pd-20 card-box mb-30">
-                <div class="clearfix">
-                    <div class="pull-left">
-                        <h4 class="text-blue h4">Información del producto</h4>
-                    </div>
-                </div>
-                <form method="post">{% csrf_token %}
-                    {% include './../../social/form.html' %}
-
-                    <input class="btn btn-primary" type="submit" value="Enviar Datos">
-                    <a class="btn btn-secundary" href="{% url 'producto_index' %}" role="button">Cancelar</a>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-{% endblock %}
+{% block titlePaginador %} Crear nuevo producto {% endblock titlePaginador %}
+{% block h4 %}producto{% endblock h4 %}
+{% block brearcrumb %}producto{% endblock brearcrumb %}
+{% block infoH4 %}Información del producto{% endblock infoH4 %}
+{% block botonCancelar %}{% url 'producto_index' %}{% endblock botonCancelar %}

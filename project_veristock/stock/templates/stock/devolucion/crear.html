@@ -1,18 +1,7 @@
-{% extends './../../social/navbar.html' %}
+{% extends './../../social/crear.html' %}
 
-{% block title %} Agregar Nueva Devolucion {% endblock %}
-
-{% block content %}
-
-<div class="card">
-    <div class="card-header">
-        Crear Devolucion
-    </div>
-    <div class="card-body">
-        <h4 class="card-title">Datos de la Devolucion</h4>
-        {% include './../form.html' %}
-        {% block cancelar %} <a name="" id="" class="btn btn-secundary" href="{% url 'devolucion_index' %}" role="button">Cancelar</a> {% endblock %}
-    </div>
-</div>
-
-{% endblock %}
+{% block titlePaginador %} Crear nueva devolución {% endblock titlePaginador %}
+{% block h4 %}devolución{% endblock h4 %}
+{% block brearcrumb %}devolución{% endblock brearcrumb %}
+{% block infoH4 %}Información de la devolución{% endblock infoH4 %}
+{% block botonCancelar %}{% url 'devolucion_index' %}{% endblock botonCancelar %}
