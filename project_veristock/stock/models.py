@@ -1,6 +1,6 @@
 from urllib.parse import DefragResult
 from django.db import models
-from user.models import Customer, User
+from user.models import Customer, User 
 from .choices import estado, garantia
 
 class Product(models.Model):
