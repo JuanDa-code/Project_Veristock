@@ -4,11 +4,10 @@ from . import views
 
 urlpatterns = [
     # Urls Product
-    path('producto/index/', views.product, name='producto_index'),
-    path('producto/index1/', ProductListView.as_view(), name='producto_index1'),
-    path('producto/crear/', views.add_product, name='crear_producto'),
+    path('producto/index/', ProductListView.as_view(), name='producto_index'),
+    path('producto/crear/', ProductCreateView.as_view(), name='crear_producto'),
     path('producto/eliminar/<int:id>', views.delete_product, name='eliminar_producto'),
-    path('producto/editar/<int:id>', views.edit_product, name='editar_producto'),
+    path('producto/editar/<int:pk>', ProductUpdateView.as_view(), name='editar_producto'),
 
     # Urls Entries
     
@@ -23,8 +22,8 @@ urlpatterns = [
     path('venta/editar/<int:id>', views.edit_sale, name='editar_venta'),
     
     # Urls Devolution
-    path('devolucion/index/', views.devolution, name='devolucion_index'),
-    path('devolucion/crear/', views.add_devolution, name='crear_devolucion'),
+    path('devolucion/index/', DevolutionListView.as_view(), name='devolucion_index'),
+    path('devolucion/crear/', DevolutionCreateView.as_view(), name='crear_devolucion'),
     path('devolucion/eliminar/<int:id>', views.delete_devolution, name='eliminar_devolucion'),
-    path('devolucion/editar/<int:id>', views.edit_devolution, name='editar_devolucion'),
+    path('devolucion/editar/<int:id>', DevolutionUpdateView.as_view(), name='editar_devolucion'),
 ]

@@ -1,7 +1,36 @@
-{% extends './../../social/crear.html' %}
+{% extends './../../social/form.html' %}
 
-{% block titlePaginador %} Crear nueva devolución {% endblock titlePaginador %}
-{% block h4 %}devolución{% endblock h4 %}
-{% block brearcrumb %}devolución{% endblock brearcrumb %}
-{% block infoH4 %}Información de la devolución{% endblock infoH4 %}
-{% block botonCancelar %}{% url 'devolucion_index' %}{% endblock botonCancelar %}
+{% block icon %}<i class="icon-copy fa fa-plus" aria-hidden="true"></i>{% endblock icon %}
+
+{% block inputHidden %}
+    <input type="hidden" name="action" value="{{ action }}">
+{% endblock inputHidden %}
+
+
+{% block extrajs %}
+<script type="text/javascript">
+
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+
+        var parameters = $(this).serializeArray();
+
+        $.ajax({
+            url: window.location.pathname,
+            type: 'POST',
+            data: parameters,
+            dataType: 'json'
+        }).done(function (data) { 
+            if(!data.hasOwnProperty('error')) {
+                location.href = '{{ url_listar }}';
+                return false;
+            }
+            message_error(data.error);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus + ': ' + errorThrown);
+        }).always(function (data) {
+            
+        });
+    });
+</script>
+{% endblock extrajs %}

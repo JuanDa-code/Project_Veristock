@@ -1,17 +1,24 @@
-import datetime
 from django import forms
 from .models import Product, Sale, Devolution
 
 
 class ProductForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for form in self.visible_fields():
+            form.field.widget.attrs['autocomplete'] = 'off'
+
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = ['name', 'cost_sale', 'brand', 'reference', 'warranty', 'remarks', 'stock']
+        exclude = ['state']
         widgets = {
             'name': forms.TextInput(
                 attrs = {
                     'class': 'form-control',
                     'placeholder': 'Nombre del producto',
+                    'autofocus': True
                 }
             ),
             'cost_sale': forms.NumberInput(
@@ -49,20 +56,19 @@ class ProductForm(forms.ModelForm):
                     'placeholder': 'Cantidad en bodega',
                 }
             ),
-            'state': forms.Select(
-                attrs = {
-                    'class': 'custom-select',
-                }
-            ),
         }
 
-    def clean(self):
-        cleaned_data = self.cleaned_data
-
-        if Product.objects.filter(name=cleaned_data['name'], brand=cleaned_data['brand'], reference=cleaned_data['reference']):
-            raise forms.ValidationError('El producto ya existe')
-
-        return cleaned_data
+    def save(self, commit = True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
 
 class SaleForm(forms.ModelForm):
 
@@ -127,3 +133,15 @@ class DevolutionForm(forms.ModelForm):
                 }
             ),
         }
+
+    def save(self, commit = True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data

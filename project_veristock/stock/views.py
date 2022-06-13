@@ -1,4 +1,5 @@
-from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.db.models import Q
@@ -15,7 +16,7 @@ from .forms import ProductForm, SaleForm, DevolutionForm
 
 class ProductListView(ListView):
     model = Product
-    template_name = 'stock/producto/index1.html'
+    template_name = 'stock/producto/index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -36,6 +37,73 @@ class ProductListView(ListView):
         
         return JsonResponse(data)
 
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'stock/producto/crear.html'
+    success_url = reverse_lazy('producto_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Crear nuevo producto'
+        context['infoH4'] = 'Información del producto'
+        context['botonCancelar'] = reverse_lazy('producto_index')
+        context['url_listar'] = reverse_lazy('producto_index')
+        context['listar'] = 'Listar Productos'
+        context['action'] = 'add'
+        return context
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'add':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'stock/producto/editar.html'
+    success_url = reverse_lazy('producto_index')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'edit':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Editar producto'
+        context['infoH4'] = 'Información del producto'
+        context['botonCancelar'] = reverse_lazy('producto_index')
+        context['url_listar'] = reverse_lazy('producto_index')
+        context['listar'] = 'Listar Productos'
+        context['action'] = 'edit'
+        return context
+
+def delete_product(request, id):
+    product = Product.objects.get(id = id)
+    product.delete()
+    return redirect('producto_index')
+
 def addStockProduct(request, id):
     product = Product.objects.get(id = id)
 
@@ -50,34 +118,8 @@ def addStockProduct(request, id):
 
     return render(request, './stock/producto/agregar_producto.html', context={'product': product})
 
-def product(request):
-    products = Product.objects.all()
-    entries = Entries.objects.all()
-
-    return render(request, './stock/producto/index.html', context={'products': products, 'entries': entries})
-
-def add_product(request):
-    form = ProductForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        form.save()
-        return redirect('producto_index')
-    return render(request, './stock/producto/crear.html', {'form': form})
-
 # ciclo de la lista que tienes
 # how to django save in the db a list of object<T>
-
-def edit_product(request, id):
-    product = Product.objects.get(id = id)
-    form = ProductForm(request.POST or None, request.FILES or None, instance = product)
-    if form.is_valid() and request.POST:
-        form.save()
-        return redirect('producto_index')
-    return render(request, './stock/producto/editar.html', {'form': form})
-
-def delete_product(request, id):
-    product = Product.objects.get(pk = id)
-    product.delete()
-    return redirect('producto_index')
 
 # CRUD Sale
 
@@ -159,26 +201,87 @@ def edit_sale(request, id):
 
     # CRUD Devolution
 
-def devolution(request):
-    devolutions = Devolution.objects.all()
-    return render(request, './stock/devolucion/index.html', {'devolutions': devolutions})
+class DevolutionListView(ListView):
+    model = Devolution
+    template_name = 'stock/devolucion/index.html'
 
-def add_devolution(request):
-    form = DevolutionForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        form.save()
-        return redirect('devolucion_index')
-    return render(request, './stock/devolucion/crear.html', {'form': form})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+    
+    @method_decorator(login_required)
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            data = Devolution.objects.get(id = request.POST['id']).toJSON()
+        except Exception as e:
+            data['error'] = str(e)
+        
+        return JsonResponse(data)
+
+class DevolutionCreateView(CreateView):
+    model = Devolution
+    form_class = DevolutionForm
+    template_name = 'stock/devolucion/crear.html'
+    success_url = reverse_lazy('devolucion_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Crear nueva devolución'
+        context['infoH4'] = 'Información de la devolución'
+        context['botonCancelar'] = reverse_lazy('devolucion_index')
+        context['url_listar'] = reverse_lazy('devolucion_index')
+        context['listar'] = 'Listar Devoluciones'
+        context['action'] = 'add'
+        return context
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'add':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+class DevolutionUpdateView(UpdateView):
+    model = Devolution
+    form_class = DevolutionForm
+    template_name = 'stock/devolucion/editar.html'
+    success_url = reverse_lazy('devolucion_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Editar devolución'
+        context['infoH4'] = 'Información de la devolución'
+        context['botonCancelar'] = reverse_lazy('devolucion_index')
+        context['url_listar'] = reverse_lazy('devolucion_index')
+        context['listar'] = 'Listar devoluciones'
+        context['action'] = 'edit'
+        return context
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'edit':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
 
 def delete_devolution(request, id):
     devolution = Devolution.objects.get(id = id)
     devolution.delete()
     return redirect('devolucion_index')
-
-def edit_devolution(request, id):
-    devolution = Devolution.objects.get(id = id)
-    form = DevolutionForm(request.POST or None, request.FILES or None, instance = devolution)
-    if form.is_valid() and request.POST:
-        form.save()
-        return redirect('devolucion_index')
-    return render(request, './stock/devolucion/editar.html', {'form': form})

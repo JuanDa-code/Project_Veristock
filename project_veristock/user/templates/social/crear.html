@@ -12,11 +12,12 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>Crear {% block h4 %}{% endblock h4 %}</h4>
+                            <h4><i class="icon-copy fa fa-plus" aria-hidden="true"></i> Crear {% block h4 %}{% endblock h4 %}</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url_listar }}">{{ listar }}</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Crear {% block brearcrumb %}{% endblock brearcrumb %}</li>
                             </ol>
                         </nav>
@@ -31,11 +32,33 @@
                         <h4 class="text-blue h4">{% block infoH4 %}{% endblock infoH4 %}</h4>
                     </div>
                 </div>
-                <form method="post">{% csrf_token %}
-                    {% include './form.html' %}
+                <form method="post" novalidate="novalidate">{% csrf_token %}
+                    <input type="hidden" name="action" value="{{ action }}">
 
-                    <input class="btn btn-primary" type="submit" value="Enviar Datos">
-                    <a class="btn btn-secundary" href="{% block botonCancelar %}{% endblock botonCancelar %}" role="button">Cancelar</a>
+                    {% if form.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            <h4 class="alert-heading h4">Ha ocurrido un error al querer guardar el registro.</h4>
+                            <ul>
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    {% for field in form.visible_fields %}
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">{{ field.label }}</label>
+                            <div class="col-sm-12 col-md-10">
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <button class="btn btn-primary" type="submit" id="enviar"><i class="icon-copy fa fa-save" aria-hidden="true"></i>  Guardar datos</button>
+                    <a class="btn btn-secundary" href="{% block botonCancelar %}{% endblock botonCancelar %}" role="button"><i class="icon-copy fa fa-window-close-o" aria-hidden="true"></i>  Cancelar</a>
                 </form>
             </div>
         </div>

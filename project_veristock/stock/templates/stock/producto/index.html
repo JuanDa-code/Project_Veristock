@@ -10,34 +10,38 @@
 
 {% block col %}
 <tr>
-    <th scope="col">#</th>
-    <th>Nombre</th>
-    <th>Costo Venta</th>
-    <th>Marca</th>
-    <th>Referencia</th>
-    <th>Stock</th>
-    <th>Acciones</th>
+    <th scope="col" style="width: 10%">#</th>
+    <th style="width: 15%">Nombre</th>
+    <th style="width: 15%">Costo Venta</th>
+    <th style="width: 15%">Marca</th>
+    <th style="width: 15%">Referencia</th>
+    <th style="width: 15%">Garantía</th>
+    <th style="width: 15%">Stock</th>
+    <th style="width: 15%">Estado</th>
+    <th style="width: 15%">Acciones</th>
 </tr>
 {% endblock col %}
 
 {% block row %}
-    {% for product in products %}
+    {% for p in object_list %}
         <tr>
-            <td class="table-plus">{{ product.id }}</td>
-            <td>{{ product.name }}</td>
-            <td>{{ product.cost_sale }}</td>
-            <td>{{ product.brand }}</td>
-            <td>{{ product.reference }}</td>
-            <td>{{ product.stock }}</td>
+            <td class="table-plus">{{ p.id }}</td>
+            <td>{{ p.name }}</td>
+            <td>{{ p.cost_sale }}</td>
+            <td>{{ p.brand }}</td>
+            <td>{{ p.reference }}</td>
+            <td>{{ p.warranty }}</td>
+            <td>{{ p.stock }}</td>
+            <td>{{ p.state }}</td>
             <td>
                 <div class="dropdown">
                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                         <i class="dw dw-more"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <button class="dropdown-item" onclick="abrir_modal('{% url 'agregar_stock' product.id %}')"><i class="icon-copy fa fa-plus" aria-hidden="true"></i> Agregar productos</button>
-                        <a class="dropdown-item" href="{% url 'editar_producto' product.id %}"><i class="dw dw-edit2"></i> Editar</a>
-                        <a class="dropdown-item" href="{% url 'eliminar_producto' product.id %}"><i class="dw dw-delete-3"></i> Eliminar</a>
+                        <button class="dropdown-item" onclick="abrir_modal('{% url 'agregar_stock' p.id %}')"><i class="icon-copy fa fa-plus" aria-hidden="true"></i> Agregar productos</button>
+                        <a class="dropdown-item" href="{% url 'editar_producto' p.id %}"><i class="dw dw-edit2"></i> Editar</a>
+                        <a class="dropdown-item" href="{% url 'eliminar_producto' p.id %}"><i class="dw dw-delete-3"></i> Eliminar</a>
                     </div>
                 </div>
             </td>
@@ -64,13 +68,13 @@
                 </tr>
               </thead>
               <tbody>
-                {% for entrie in entries %}
+                {% for e in entries %}
                 <tr>
-                    <td class="table-plus">{{ entrie.id }}</td>
-                    <td>{{ entrie.id_product }}</td>
-                    <td>{{ entrie.date }}</td>
-                    <td>{{ entrie.quantity }}</td>
-                    <td>{{ entrie.price }}</td>
+                    <td class="table-plus">{{ e.id }}</td>
+                    <td>{{ e.id_product }}</td>
+                    <td>{{ e.date }}</td>
+                    <td>{{ e.quantity }}</td>
+                    <td>{{ e.price }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -98,17 +102,35 @@
     $(function () {
         $('.btnTest').on('click', function () {
             $.ajax({
-                url: '{% url 'producto_index' %}',
+                url: window.location.pathname,
                 type: 'POST',
-                data: {id: 1},
-                DataType: 'json'
+                data: {id: 2},
+                dataType: 'json'
             }).done(function (data) { 
                 console.log(data);
-            }).fail(function (data) {
-                alert("error");
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
             }).always(function (data) {
                 
             });
+        });
+
+        $('#data').DataTable({
+            responsive: true,
+            autoWidth: false,
+            language: {
+                emptyTable: "No hay registros en la tabla",
+                info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                search: "Buscar: <i class='icon-copy fa fa-search' aria-hidden='true'></i>",
+                lengthMenu: "Mostrar _MENU_ registros",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior",
+                },
+            }
         });
     });
 </script>

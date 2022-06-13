@@ -2,7 +2,6 @@ from django.db import models
 from django.forms import model_to_dict
 from user.models import Customer, User
 from .choices import estado, garantia
-import datetime
 
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
@@ -13,7 +12,7 @@ class Product(models.Model):
     warranty = models.CharField(max_length=10, choices=garantia, verbose_name='Tiempo Garantia')
     remarks = models.TextField(max_length=250, verbose_name='Observaciones', null=True)
     stock = models.IntegerField(verbose_name='Stock', default=0, null=False)
-    state = models.CharField(verbose_name='Estado', choices=estado, max_length=10)
+    state = models.CharField(verbose_name='Estado', choices=estado, max_length=10, default='A')
 
     def __str__(self):
         return '{} {} {}'.format(self.name, self.brand, self.reference)
@@ -24,7 +23,7 @@ class Product(models.Model):
 
     class Meta:
         ordering = ['id']
-        verbose_name = 'Producto'     
+        verbose_name = 'Producto'
         unique_together = ('name','brand','reference')
 
 class Entries(models.Model):
@@ -50,6 +49,10 @@ class Devolution(models.Model):
 
     def __str__(self):
         return self.reason
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
     class Meta:
         ordering = ['reason']
