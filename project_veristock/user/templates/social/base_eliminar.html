@@ -12,11 +12,7 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            {% if action == 'add' %}
-                            <h4><i class="icon-copy fa fa-plus" aria-hidden="true"></i> {{ titlePaginador }}</h4>
-                            {% else %}
-                            <h4><i class="icon-copy fa fa-edit" aria-hidden="true"></i> {{ titlePaginador }}</h4>
-                            {% endif %}
+                            <h4><i class="icon-copy fa fa-trash" aria-hidden="true"></i> {{ titlePaginador }}</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
@@ -33,23 +29,19 @@
             <div class="pd-20 card-box mb-30">
                 <div class="clearfix">
                     <div class="pull-left">
-                        <h4 class="text-blue h4">{{ infoH4 }}</h4>
+                        
                     </div>
                 </div>
                 <form method="post" novalidate="novalidate">{% csrf_token %}
-                    <input type="hidden" name="action" value="{{ action }}">
-
-                    {% for field in form.visible_fields %}
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">{{ field.label }}</label>
-                            <div class="col-sm-12 col-md-10">
-                                {{ field }}
-                            </div>
-                        </div>
-                    {% endfor %}
-
-                    <button class="btn btn-primary" type="submit" id="enviar"><i class="icon-copy fa fa-save" aria-hidden="true"></i>  Guardar datos</button>
-                    <a class="btn btn-secundary" href="{{ url_listar }}" role="button"><i class="icon-copy fa fa-window-close-o" aria-hidden="true"></i>  Cancelar</a>
+                    
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading h4"><i class="icon-copy fa fa-exclamation-triangle" aria-hidden="true"></i> ¡Notificación!</h4>
+                        <p>¿Estás seguro de eliminar el registro N° {{ object.id }}?</p>
+                        <hr>
+                        <button class="btn btn-primary" type="submit" id="enviar"><i class="icon-copy fa fa-trash-o" aria-hidden="true"></i>  Sí, aceptar</button>
+                        <a class="btn btn-secundary" href="{{ url_listar }}" role="button"><i class="icon-copy fa fa-window-close-o" aria-hidden="true"></i>  Cancelar</a>
+                    </div>
+                    
                 </form>
             </div>
         </div>

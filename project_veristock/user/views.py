@@ -6,6 +6,9 @@ from .models import Customer, Person, Position, Type_Document, User
 from .forms import PersonForm, PositionForm, Type_DocumentForm, UserForm, CustomerForm
 
 def home(request):
+    return render(request, './dashboard/home.html')
+
+def landing_page(request):
     return render(request, './social/home1.html')
 
 def base(request):

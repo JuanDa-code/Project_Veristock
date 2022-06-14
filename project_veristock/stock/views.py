@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.http import JsonResponse
@@ -17,25 +18,34 @@ from .forms import ProductForm, SaleForm, DevolutionForm
 class ProductListView(ListView):
     model = Product
     template_name = 'stock/producto/index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['entries'] = Entries.objects.all()
-        return context
     
     @method_decorator(login_required)
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Lista de Productos'
+        context['botonCrear'] = 'Crear nuevo producto'
+        context['urlCrear'] = reverse_lazy('crear_producto')
+        context['entries'] = Entries.objects.all()
+        return context
+
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            data = Product.objects.get(id = request.POST['id']).toJSON()
+            action = request.POST['action']
+            if action == 'searchData':
+                data = []
+                for i in Product.objects.all():
+                    data.append(i.toJSON())
+            else:
+                data['error'] = 'Ha ocurrido un error.'
         except Exception as e:
             data['error'] = str(e)
         
-        return JsonResponse(data)
+        return JsonResponse(data, safe=False)
 
 class ProductCreateView(CreateView):
     model = Product
@@ -47,7 +57,6 @@ class ProductCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['titlePaginador'] = 'Crear nuevo producto'
         context['infoH4'] = 'Información del producto'
-        context['botonCancelar'] = reverse_lazy('producto_index')
         context['url_listar'] = reverse_lazy('producto_index')
         context['listar'] = 'Listar Productos'
         context['action'] = 'add'
@@ -59,6 +68,10 @@ class ProductCreateView(CreateView):
             action = request.POST['action']
             if action == 'add':
                 form = self.get_form()
+                product_id = form.id_product.id
+                product = Product.objects.get(pk = product_id)
+                product.stock -= 1
+                product.save()
                 data = form.save()
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
@@ -93,28 +106,52 @@ class ProductUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         context['titlePaginador'] = 'Editar producto'
         context['infoH4'] = 'Información del producto'
-        context['botonCancelar'] = reverse_lazy('producto_index')
         context['url_listar'] = reverse_lazy('producto_index')
         context['listar'] = 'Listar Productos'
         context['action'] = 'edit'
         return context
 
-def delete_product(request, id):
-    product = Product.objects.get(id = id)
-    product.delete()
-    return redirect('producto_index')
+class ProductDeleteView(DeleteView):
+    model = Product
+    template_name = './stock/producto/eliminar.html'
+    success_url = reverse_lazy('producto_index')
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            self.object.delete()
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Eliminar un producto'
+        context['infoH4'] = 'Información del producto'
+        context['url_listar'] = reverse_lazy('producto_index')
+        context['listar'] = 'Listar Productos'
+        return context
 
 def addStockProduct(request, id):
     product = Product.objects.get(id = id)
 
     if request.method == 'POST':
         stock = request.POST.get("stock")
-        precio = request.POST.get("precio")
-
-        product.stock += int(stock)
-        product.cost_sale = int(precio)
-        product.save()
-        return redirect('producto_index')
+        if int(request.POST.get("precio")) == 0:
+            product.stock += int(stock)
+            product.save()
+            return redirect('producto_index')
+        else:
+            precio = request.POST.get("precio")
+            product.stock += int(stock)
+            product.cost_sale = int(precio)
+            product.save()
+            return redirect('producto_index')
 
     return render(request, './stock/producto/agregar_producto.html', context={'product': product})
 
@@ -207,6 +244,9 @@ class DevolutionListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Lista de devoluciones'
+        context['botonCrear'] = 'Crear nueva devolución'
+        context['urlCrear'] = reverse_lazy('crear_devolucion')
         return context
     
     @method_decorator(login_required)
@@ -233,7 +273,6 @@ class DevolutionCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['titlePaginador'] = 'Crear nueva devolución'
         context['infoH4'] = 'Información de la devolución'
-        context['botonCancelar'] = reverse_lazy('devolucion_index')
         context['url_listar'] = reverse_lazy('devolucion_index')
         context['listar'] = 'Listar Devoluciones'
         context['action'] = 'add'
@@ -245,6 +284,7 @@ class DevolutionCreateView(CreateView):
             action = request.POST['action']
             if action == 'add':
                 form = self.get_form()
+                print(form)
                 data = form.save()
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
@@ -262,7 +302,6 @@ class DevolutionUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         context['titlePaginador'] = 'Editar devolución'
         context['infoH4'] = 'Información de la devolución'
-        context['botonCancelar'] = reverse_lazy('devolucion_index')
         context['url_listar'] = reverse_lazy('devolucion_index')
         context['listar'] = 'Listar devoluciones'
         context['action'] = 'edit'
@@ -281,7 +320,15 @@ class DevolutionUpdateView(UpdateView):
             data['error'] = str(e)
         return JsonResponse(data)
 
-def delete_devolution(request, id):
-    devolution = Devolution.objects.get(id = id)
-    devolution.delete()
-    return redirect('devolucion_index')
+class DevolutionDeleteView(DeleteView):
+    model = Devolution
+    template_name = './stock/devolucion/eliminar.html'
+    success_url = reverse_lazy('devolucion_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Eliminar una devolución'
+        context['infoH4'] = 'Información de la devolución'
+        context['url_listar'] = reverse_lazy('devolucion_index')
+        context['listar'] = 'Listar devoluciones'
+        return context

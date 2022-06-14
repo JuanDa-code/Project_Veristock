@@ -1,13 +1,5 @@
 {% extends "./../../social/listar.html" %}
 
-{% block titlePaginador %} Lista de Productos {% endblock titlePaginador %}
-
-{% block titleH4 %}Lista de Productos{% endblock titleH4 %}
-{% block breadcrumb %} Productos {% endblock breadcrumb %}
-{% block titleTable %}Lista de Productos{% endblock titleTable %}
-{% block urlCrear %}{% url 'crear_producto' %}{% endblock urlCrear %}{% url 'crear_producto' %}
-{% block botonCrear %}producto{% endblock botonCrear %}
-
 {% block col %}
 <tr>
     <th scope="col" style="width: 10%">#</th>
@@ -34,15 +26,10 @@
             <td>{{ p.stock }}</td>
             <td>{{ p.state }}</td>
             <td>
-                <div class="dropdown">
-                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                        <i class="dw dw-more"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <button class="dropdown-item" onclick="abrir_modal('{% url 'agregar_stock' p.id %}')"><i class="icon-copy fa fa-plus" aria-hidden="true"></i> Agregar productos</button>
-                        <a class="dropdown-item" href="{% url 'editar_producto' p.id %}"><i class="dw dw-edit2"></i> Editar</a>
-                        <a class="dropdown-item" href="{% url 'eliminar_producto' p.id %}"><i class="dw dw-delete-3"></i> Eliminar</a>
-                    </div>
+                <div class="table-actions">
+                    <a class="dropdown-item" onclick="abrir_modal('{% url 'agregar_stock' p.id %}')" data-color="#8ABD5F" style="color: rgb(138, 189, 95);"><i class="icon-copy fa fa-plus" aria-hidden="true"></i></a>
+                    <a class="dropdown-item" href="{% url 'editar_producto' p.id %}" data-color="#265ed7" style="color: rgb(38, 94, 215);"><i class="icon-copy dw dw-edit2"></i></a>
+                    <a class="dropdown-item" href="{% url 'eliminar_producto' p.id %}" data-color="#e95959" style="color: rgb(233, 89, 89);"><i class="dw dw-delete-3"></i></a>
                 </div>
             </td>
         </tr>

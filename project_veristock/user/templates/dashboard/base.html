@@ -21,6 +21,10 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'lib/dashboard/styles/icon-font.min.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'lib/dashboard/datatables/css/dataTables.bootstrap4.min.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'lib/dashboard/datatables/css/responsive.bootstrap4.min.css' %}">
+	<!-- datetimepicker -->
+	<link rel="stylesheet" type="text/css" href="{% static 'lib/dashboard/air-datepicker/css/datepicker.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'lib/dashboard/air-datepicker/css/datepicker.min.css' %}">
+
 	<link rel="stylesheet" type="text/css" href="{% static 'lib/dashboard/sweetalert2/sweetalert2.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'lib/dashboard/styles/style.css' %}">
 
@@ -99,7 +103,7 @@
 				<div class="dropdown">
 					<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 						<span class="user-icon">
-							<img src="{% static 'vendor/dashboard/images/photo1.jpg' %}" alt="">
+							<img src="{% static 'img/dashboard/photo1.jpg' %}" alt="">
 						</span>
 						<span class="user-name">Ross C. Lopez</span>
 					</a>
@@ -112,7 +116,7 @@
 				</div>
 			</div>
 			<div class="github-link">
-				<a href="https://github.com/dropways/deskapp" target="_blank"><img src="{% static 'vendor/dashboard/images/github.svg' %}" alt=""></a>
+				<a href="https://github.com/dropways/deskapp" target="_blank"><img src="{% static 'img/dashboard/github.svg' %}" alt=""></a>
 			</div>
 		</div>
 	</div>
@@ -120,8 +124,8 @@
 	<div class="right-sidebar">
 		<div class="sidebar-title">
 			<h3 class="weight-600 font-16 text-blue">
-				Layout Settings
-				<span class="btn-block font-weight-400 font-12">User Interface Settings</span>
+				Ajustes de diseño
+				<span class="btn-block font-weight-400 font-12">Configuración de la interfaz de usuario</span>
 			</h3>
 			<div class="close-sidebar" data-toggle="right-sidebar-close">
 				<i class="icon-copy ion-close-round"></i>
@@ -129,19 +133,19 @@
 		</div>
 		<div class="right-sidebar-body customscroll">
 			<div class="right-sidebar-body-content">
-				<h4 class="weight-600 font-18 pb-10">Header Background</h4>
+				<h4 class="weight-600 font-18 pb-10">Fondo de la cabecera</h4>
 				<div class="sidebar-btn-group pb-30 mb-10">
-					<a href="javascript:void(0);" class="btn btn-outline-primary header-white active">White</a>
-					<a href="javascript:void(0);" class="btn btn-outline-primary header-dark">Dark</a>
+					<a href="javascript:void(0);" class="btn btn-outline-primary header-white active">Claro</a>
+					<a href="javascript:void(0);" class="btn btn-outline-primary header-dark">Oscuro</a>
 				</div>
 
-				<h4 class="weight-600 font-18 pb-10">Sidebar Background</h4>
+				<h4 class="weight-600 font-18 pb-10">Fondo de la barra lateral</h4>
 				<div class="sidebar-btn-group pb-30 mb-10">
-					<a href="javascript:void(0);" class="btn btn-outline-primary sidebar-light ">White</a>
-					<a href="javascript:void(0);" class="btn btn-outline-primary sidebar-dark active">Dark</a>
+					<a href="javascript:void(0);" class="btn btn-outline-primary sidebar-light ">Claro</a>
+					<a href="javascript:void(0);" class="btn btn-outline-primary sidebar-dark active">Oscuro</a>
 				</div>
 
-				<h4 class="weight-600 font-18 pb-10">Menu Dropdown Icon</h4>
+				<h4 class="weight-600 font-18 pb-10">Icono del menú desplegable</h4>
 				<div class="sidebar-radio-group pb-10 mb-10">
 					<div class="custom-control custom-radio custom-control-inline">
 						<input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input" value="icon-style-1" checked="">
@@ -157,7 +161,7 @@
 					</div>
 				</div>
 
-				<h4 class="weight-600 font-18 pb-10">Menu List Icon</h4>
+				<h4 class="weight-600 font-18 pb-10">Icono de la lista de Menús</h4>
 				<div class="sidebar-radio-group pb-30 mb-10">
 					<div class="custom-control custom-radio custom-control-inline">
 						<input type="radio" id="sidebariconlist-1" name="menu-list-icon" class="custom-control-input" value="icon-list-style-1" checked="">
@@ -186,7 +190,7 @@
 				</div>
 
 				<div class="reset-options pt-30 text-center">
-					<button class="btn btn-danger" id="reset-settings">Reset Settings</button>
+					<button class="btn btn-danger" id="reset-settings">Restablecer la configuración</button>
 				</div>
 			</div>
 		</div>
@@ -246,6 +250,11 @@
 	<!-- jQuery Autocomplete -->
 	<script src="{% static 'lib/dashboard/jquery-ui-1.13.1.custom/jquery-ui.js' %}"></script>
 	<script src="{% static 'lib/dashboard/jquery-ui-1.13.1.custom/jquery-ui.min.js' %}"></script>
+
+	<!-- datetimepicker -->
+	<script src="{% static 'lib/dashboard/air-datepicker/js/datepicker.js' %}"></script>
+	<script src="{% static 'lib/dashboard/air-datepicker/js/datepicker.min.js' %}"></script>
+	<script src="{% static 'lib/dashboard/air-datepicker/js/i18n/datepicker.es.js' %}"></script>
 
 	<!-- Buttons for Export datatable -->
 	<script src="{% static 'lib/dashboard/datatables/js/dataTables.buttons.min.js' %}"></script>

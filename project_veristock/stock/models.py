@@ -14,6 +14,12 @@ class Product(models.Model):
     stock = models.IntegerField(verbose_name='Stock', default=0, null=False)
     state = models.CharField(verbose_name='Estado', choices=estado, max_length=10, default='A')
 
+    # Se debe cambiar el campo garantía para que sea de tipo número y de 
+    # este modo se agregue la cantidad de meses que tiene de garantía
+    # Se debe eliminar el campo remarks o observaciones, no da ningún tipo
+    # información importante.
+    # Se debe cambiar el atributo estado, definir si funciona o si es mejor eliminar el atributo
+
     def __str__(self):
         return '{} {} {}'.format(self.name, self.brand, self.reference)
 
@@ -42,7 +48,7 @@ class Entries(models.Model):
 
 class Devolution(models.Model):
     id = models.AutoField(primary_key=True)
-    date = models.DateTimeField(verbose_name='Fecha')
+    date = models.DateField(verbose_name='Fecha')
     reason = models.CharField(max_length=100, verbose_name='Motivo')
     remarks = models.TextField(null=True, verbose_name='Observaciones')
     id_product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Producto')

@@ -1,7 +1,7 @@
 {% extends "./../dashboard/base.html" %}
 {% load static %}
 
-{% block title %} {% block titlePaginador %}{% endblock titlePaginador %} {% endblock %}
+{% block title %} {{ titlePaginador }} {% endblock %}
 
 {% block extracss %}{% endblock extracss %}
 
@@ -15,12 +15,12 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>{% block titleH4 %}{% endblock titleH4 %}</h4>
+                            <h4>{{ titlePaginador}}</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">{% block breadcrumb %}{% endblock breadcrumb %}</li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ titlePaginador }}</li>
                             </ol>
                         </nav>
                     </div>
@@ -41,9 +41,9 @@
             <!-- Tabla de productos -->
             <div class="card-box mb-30">
                 <div class="pd-20">
-                    <h4 class="text-blue h4">{% block titleTable %}{% endblock titleTable %}</h4>
-                    <a class="btn btn-primary" href="{% block urlCrear %}{% endblock urlCrear %}">Crear nuevo {% block botonCrear %}{% endblock botonCrear %}</a>
-                    <a class="btn btn-primary btnTest" href="#">Recargar</a>
+                    <h4 class="text-blue h4">{{ titlePaginador }}</h4>
+                    <a class="btn btn-primary" href="{{ urlCrear }}"><i class="icon-copy fa fa-plus-square" aria-hidden="true"></i>  {{ botonCrear }}</a>
+                    {% comment %} <a class="btn btn-primary btnTest" href="#"><i class="icon-copy fa fa-refresh" aria-hidden="true"></i> Recargar</a> {% endcomment %}
                 </div>
                 <div class="pd-20">
                     <div class="table-responsive">

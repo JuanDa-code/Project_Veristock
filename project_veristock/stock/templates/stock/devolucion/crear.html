@@ -1,20 +1,19 @@
 {% extends './../../social/form.html' %}
 
-{% block icon %}<i class="icon-copy fa fa-plus" aria-hidden="true"></i>{% endblock icon %}
-
-{% block inputHidden %}
-    <input type="hidden" name="action" value="{{ action }}">
-{% endblock inputHidden %}
-
-
 {% block extrajs %}
 <script type="text/javascript">
+
+    $(function () {
+        $('#datetimepicker').datepicker({
+            autoclose: true,
+        });
+    })
 
     $('form').on('submit', function (e) {
         e.preventDefault();
 
         var parameters = $(this).serializeArray();
-
+        
         $.ajax({
             url: window.location.pathname,
             type: 'POST',

@@ -108,11 +108,12 @@ class DevolutionForm(forms.ModelForm):
         model = Devolution
         fields =  ['date', 'reason', 'remarks', 'id_product']
         widgets = {
-            'date': forms.DateTimeInput(
+            'date': forms.TextInput(
                 attrs = {
                     'autocomplete': 'off',
-                    'class': 'form-control datetimepicker',
+                    'class': 'form-control',
                     'placeholder': 'Seleccione una fecha',
+                    'id': 'datetimepicker',
                 }
             ),
             'reason': forms.TextInput(

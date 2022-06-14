@@ -9,14 +9,16 @@
             <h5 class="modal-title">{{ product.name }} {{ product.brand }} {{ product.reference }}</h5><br>
             <form method="POST" action="{% url 'agregar_stock' product.id %}">
                 {% csrf_token %}
+                <label>Añadir Stock</label>
                 <div class="input-group custom">
                     <input type="number" class="form-control form-control-lg" placeholder="Stock" name="stock" required>
                     <div class="input-group-append custom">
                         <span class="input-group-text"><i class="icon-copy fa fa-cubes" aria-hidden="true"></i></span>
                     </div>
                 </div>
+                <label>Actualizar precio</label>
                 <div class="input-group custom">
-                    <input type="number" class="form-control form-control-lg" placeholder="Precio" name="precio">
+                    <input type="number" class="form-control form-control-lg" placeholder="Precio" name="precio" value="0">
                     <div class="input-group-append custom">
                         <span class="input-group-text"><i class="icon-copy fa fa-dollar" aria-hidden="true"></i></span>
                     </div>

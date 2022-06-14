@@ -1,43 +1,69 @@
 {% extends "./../../social/listar.html" %}
 
-{% block titlePaginador %} Lista de Devoluciones {% endblock titlePaginador %}
-
-{% block titleH4 %}Lista de Devoluciones{% endblock titleH4 %}
-{% block breadcrumb %} Devoluciones {% endblock breadcrumb %}
-{% block titleTable %}Lista de devoluciones{% endblock titleTable %}
-{% block urlCrear %}{% url 'crear_devolucion' %}{% endblock urlCrear %}
-{% block botonCrear %}devolución{% endblock botonCrear %}
-
 {% block col %}
 <tr>
-    <th scope="col">#</th>
-    <th>Fecha</th>
-    <th>Motivo</th>
-    <th>Observaciones</th>
-    <th>Nombre Producto</th>
-    <th>Accciones</th>
+    <th scope="col" style="width: 10%">#</th>
+    <th style="width: 15%">Fecha</th>
+    <th style="width: 15%">Motivo</th>
+    <th style="width: 15%">Observaciones</th>
+    <th style="width: 15%">Nombre Producto</th>
+    <th style="width: 5%">Accciones</th>
 </tr>
 {% endblock col %}
 
 {% block row %}
-    {% for devolution in devolutions %}
+    {% for d in object_list %}
         <tr>
-            <td class="table-plus">{{ devolution.id }}</td>
-            <td>{{ devolution.date }}</td>
-            <td>{{ devolution.reason }}</td>
-            <td>{{ devolution.remarks }}</td>
-            <td>{{ devolution.id_product.name }} {{ devolution.id_product.brand }} {{ devolution.id_product.reference }}</td>
+            <td class="table-plus">{{ d.id }}</td>
+            <td>{{ d.date }}</td>
+            <td>{{ d.reason }}</td>
+            <td>{{ d.remarks }}</td>
+            <td>{{ d.id_product.name }} {{ d.id_product.brand }} {{ d.id_product.reference }}</td>
             <td>
-                <div class="dropdown">
-                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                        <i class="dw dw-more"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <a class="dropdown-item" href="{% url 'editar_devolucion' devolution.id %}"><i class="dw dw-edit2"></i> Editar</a>
-                        <a class="dropdown-item" href="{% url 'eliminar_devolucion' devolution.id %}"><i class="dw dw-delete-3"></i> Eliminar</a>
-                    </div>
+                <div class="table-actions">
+                    <a class="dropdown-item" href="{% url 'editar_devolucion' d.id %}" data-color="#265ed7" style="color: rgb(38, 94, 215);"><i class="icon-copy dw dw-edit2"></i></a>
+                    <a class="dropdown-item" href="{% url 'eliminar_devolucion' d.id %}" data-color="#e95959" style="color: rgb(233, 89, 89);"><i class="dw dw-delete-3"></i></a>
                 </div>
             </td>
         </tr>
     {% endfor %}
 {% endblock row %}
+
+{% block extrajs %}
+<script type="text/javascript">
+    $(function () {
+        $('.btnTest').on('click', function () {
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: {id: 2},
+                dataType: 'json'
+            }).done(function (data) { 
+                console.log(data);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            }).always(function (data) {
+                
+            });
+        });
+
+        $('#data').DataTable({
+            responsive: true,
+            autoWidth: false,
+            language: {
+                emptyTable: "No hay registros en la tabla",
+                info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                search: "Buscar: <i class='icon-copy fa fa-search' aria-hidden='true'></i>",
+                lengthMenu: "Mostrar _MENU_ registros",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior",
+                },
+            }
+        });
+    });
+</script>
+{% endblock extrajs %}
