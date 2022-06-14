@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import model_to_dict
 from stock.choices import estado
 
 class Type_Document(models.Model):
@@ -7,6 +8,10 @@ class Type_Document(models.Model):
 
     def __str__(self):
         return self.type_document
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
     class Meta:
         ordering = ['id']
@@ -21,6 +26,10 @@ class Position(models.Model):
 
     def __str__(self):
         return self.name
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
     class Meta:
         ordering = ['name']
@@ -43,6 +52,9 @@ class Person(models.Model):
     def __str__(self):
         return self.first_name
 
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
         
     class Meta:
         ordering = ['id']
@@ -59,6 +71,9 @@ class User(models.Model):
     def __str__(self):
         return self.id_person.first_name + " " + self.id_person.last_names
 
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
     class Meta:
         ordering = ['id_person']
         verbose_name = 'Usuario'
@@ -71,6 +86,9 @@ class Customer(models.Model):
     def __str__(self):
         return self.person.first_name + " " + self.person.last_names
 
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
     class Meta:
         ordering = ['person']
         verbose_name = 'Cliente'

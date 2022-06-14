@@ -1,44 +1,65 @@
-{% extends "./../../social/navbar.html" %}
+{% extends "./../../social/listar.html" %}
 
-{% block title %} Lista de Cargos {% endblock %}
+{% block col %}
+<tr>
+    <th scope="col" style="width: 15%">#</th>
+    <th style="width: 40%">Nombre</th>
+    <th style="width: 40%">Descripción</th>
+    <th style="width: 5%">Accciones</th>
+</tr>
+{% endblock col %}
 
-{% block content %} 
+{% block row %}
+    {% for c in object_list %}
+        <tr>
+            <td class="table-plus">{{ c.id }}</td>
+            <td>{{ c.name }}</td>
+            <td>{{ c.description }}</td>
+            <td>
+                <div class="table-actions">
+                    <a class="dropdown-item" href="{% url 'editar_cargo' c.id %}" data-color="#265ed7" style="color: rgb(38, 94, 215);"><i class="icon-copy dw dw-edit2"></i></a>
+                    <a class="dropdown-item" href="{% url 'eliminar_cargo' c.id %}" data-color="#e95959" style="color: rgb(233, 89, 89);"><i class="dw dw-delete-3"></i></a>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock row %}
 
+{% block extrajs %}
+<script type="text/javascript">
+    $(function () {
+        $('.btnTest').on('click', function () {
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: {id: 2},
+                dataType: 'json'
+            }).done(function (data) { 
+                console.log(data);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            }).always(function (data) {
+                
+            });
+        });
 
-<div class="card">
-    <div class="card-header">
-        <a name="" id="" class="btn btn-dark" href=" {% url 'crear_cargo' %}" role="button">Agregar nuevo Cargo</a>
-    </div>
-    <div class="card-body">
-        <h4 class="card-title">Cargos</h4>
-        
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Accciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for position in positions %}
-                <tr>
-                    <td>{{ position.id }}</td>
-                    <td>{{ position.name }}</td>
-                    <td>{{ position.description }}</td>
-                    <td>
-                        <a name="" id="" class="btn btn-info" href="{% url 'editar_cargo' position.id %}" role="button">Editar</a>
-                        |
-                        <a name="" id="" class="btn btn-danger" href="{% url 'eliminar_cargo' position.id %}" role="button">Eliminar</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        
-
-    </div>
-</div>
-
-{% endblock %}
+        $('#data').DataTable({
+            responsive: true,
+            autoWidth: false,
+            language: {
+                emptyTable: "No hay registros en la tabla",
+                info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                search: "Buscar: <i class='icon-copy fa fa-search' aria-hidden='true'></i>",
+                lengthMenu: "Mostrar _MENU_ registros",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior",
+                },
+            }
+        });
+    });
+</script>
+{% endblock extrajs %}

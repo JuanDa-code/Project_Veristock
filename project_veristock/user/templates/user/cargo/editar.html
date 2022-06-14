@@ -1,18 +1,29 @@
-{% extends './../../social/navbar.html' %}
+{% extends './../../social/form.html' %}
 
-{% block title %} Editar Cargo {% endblock %}
+{% block extrajs %}
+<script type="text/javascript">
 
-{% block content %}
+    $('form').on('submit', function (e) {
+        e.preventDefault();
 
-<div class="card">
-    <div class="card-header">
-        Editar Cargo
-    </div>
-    <div class="card-body">
-        <h4 class="card-title">Datos del Cargo</h4>
-        {% include './../../stock/form.html' %}
-        {% block cancelar %} <a name="" id="" class="btn btn-secundary" href="{% url 'cargo_index' %}" role="button">Cancelar</a> {% endblock %}
-    </div>
-</div>
+        var parameters = $(this).serializeArray();
 
-{% endblock %}
+        $.ajax({
+            url: window.location.pathname,
+            type: 'POST',
+            data: parameters,
+            dataType: 'json'
+        }).done(function (data) { 
+            if(!data.hasOwnProperty('error')) {
+                location.href = '{{ url_listar }}';
+                return false;
+            }
+            message_error(data.error);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus + ': ' + errorThrown);
+        }).always(function (data) {
+            
+        });
+    });
+</script>
+{% endblock extrajs %}

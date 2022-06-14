@@ -1,5 +1,5 @@
-from re import template
 from django.urls import path
+from user.views import *
 from . import views
 from django.contrib.auth.views import LoginView, LogoutView
 
@@ -9,11 +9,12 @@ urlpatterns = [
     path('base/', views.base, name='base'),
     path('iniciar_sesion/', LoginView.as_view(template_name='social/iniciar_sesion.html'), name='iniciar_sesion'),
     path('registrar/', views.register, name='registrar'),
+
     # Urls Position
-    path('cargo/index/', views.position, name='cargo_index'),
-    path('cargo/crear/', views.add_position, name='crear_cargo'),
-    path('cargo/eliminar/<int:id>', views.delete_position, name='eliminar_cargo'),
-    path('cargo/editar/<int:id>', views.edit_position, name='editar_cargo'),
+    path('cargo/index/', PositionListView.as_view(), name='cargo_index'),
+    path('cargo/crear/', PositionCreateView.as_view(), name='crear_cargo'),
+    path('cargo/eliminar/<int:pk>', PositionDeleteView.as_view(), name='eliminar_cargo'),
+    path('cargo/editar/<int:pk>', PositionUpdateView.as_view(), name='editar_cargo'),
 
     # Urls Type Document
     path('tipo_documento/index/', views.type_document, name='tipo_documento_index'),

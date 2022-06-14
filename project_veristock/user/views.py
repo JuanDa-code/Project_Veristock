@@ -1,7 +1,11 @@
-from multiprocessing import context
+from django.http import JsonResponse
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
 from .models import Customer, Person, Position, Type_Document, User
 from .forms import PersonForm, PositionForm, Type_DocumentForm, UserForm, CustomerForm
 
@@ -26,29 +30,113 @@ def register(request):
 
 # CRUD Position
     
-def position(request):
-    positions = Position.objects.all()
-    return render(request, './user/cargo/index.html', {'positions': positions})
+class PositionListView(ListView):
+    model = Position
+    template_name = 'user/cargo/index.html'
 
-def add_position(request):
-    form = PositionForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        form.save()
-        return redirect('cargo_index')
-    return render(request, './user/cargo/crear.html', {'form': form})
+    @method_decorator(login_required)
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
-def edit_position(request, id):
-    position = Position.objects.get(id = id)
-    form = PositionForm(request.POST or None, request.FILES or None, instance = position)
-    if form.is_valid() and request.POST:
-        form.save()
-        return redirect('cargo_index')
-    return render(request, './user/cargo/editar.html', {'form': form})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Lista de Cargos'
+        context['botonCrear'] = 'Crear nuevo cargo'
+        context['urlCrear'] = reverse_lazy('crear_cargo')
+        return context
 
-def delete_position(request, id):
-    position = Position.objects.get(id = id)
-    position.delete()
-    return redirect('cargo_index')
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'searchData':
+                data = []
+                for i in Position.objects.all():
+                    data.append(i.toJSON())
+            else:
+                data['error'] = 'Ha ocurrido un error.'
+        except Exception as e:
+            data['error'] = str(e)
+
+        return JsonResponse(data, safe=False)
+
+class PositionCreateView(CreateView):
+    model = Position
+    form_class = PositionForm
+    template_name = 'user/cargo/crear.html'
+    success_url = reverse_lazy('cargo_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Crear nuevo cargo'
+        context['infoH4'] = 'Información del cargo'
+        context['url_listar'] = reverse_lazy('cargo_index')
+        context['listar'] = 'Listar Cargos'
+        context['action'] = 'add'
+        return context
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'add':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+class PositionUpdateView(UpdateView):
+    model = Position
+    form_class = Position
+    template_name = 'user/cargo/editar.html'
+    success_url = reverse_lazy('cargo_index')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'edit':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+class PositionDeleteView(DeleteView):
+    model = Position
+    template_name = './user/cargo/eliminar.html'
+    success_url = reverse_lazy('cargo_index')
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            self.object.delete()
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Eliminar un cargo'
+        context['infoH4'] = 'Información del cargo'
+        context['url_listar'] = reverse_lazy('cargo_index')
+        context['listar'] = 'Listar Cargos'
+        return context
 
 # CRUD Type Document
 
