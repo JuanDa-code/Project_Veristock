@@ -1,4 +1,3 @@
-from cProfile import label
 from django import forms
 from .models import Product, Sale, Devolution
 
@@ -117,10 +116,9 @@ class DevolutionForm(forms.ModelForm):
                     'id': 'datetimepicker',
                 }
             ),
-            'reason': forms.TextInput(
+            'reason': forms.Select(
                 attrs = {
-                    'class': 'form-control',
-                    'placeholder': 'Motivos de la devolución'
+                    'class': 'custom-select',
                 }
             ),
             'remarks': forms.Textarea(

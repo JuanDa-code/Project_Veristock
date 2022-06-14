@@ -1,7 +1,7 @@
 from django.db import models
 from django.forms import model_to_dict
 from user.models import Customer, User
-from .choices import estado, garantia
+from .choices import estado, garantia, motivo
 
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
@@ -49,7 +49,7 @@ class Entries(models.Model):
 class Devolution(models.Model):
     id = models.AutoField(primary_key=True)
     date = models.DateField(verbose_name='Fecha')
-    reason = models.CharField(max_length=100, verbose_name='Motivo')
+    reason = models.CharField(max_length=100, verbose_name='Motivo', choices=motivo)
     remarks = models.TextField(null=True, verbose_name='Observaciones')
     id_product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Producto')
 
