@@ -4,7 +4,7 @@ from . import views
 from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
-    path('', views.home, name='home1'),
+    path('', views.landing_page, name='home1'),
     path('home', views.home, name='home'),
     path('base/', views.base, name='base'),
     path('iniciar_sesion/', LoginView.as_view(template_name='social/iniciar_sesion.html'), name='iniciar_sesion'),

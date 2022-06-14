@@ -68,10 +68,6 @@ class ProductCreateView(CreateView):
             action = request.POST['action']
             if action == 'add':
                 form = self.get_form()
-                product_id = form.id_product.id
-                product = Product.objects.get(pk = product_id)
-                product.stock -= 1
-                product.save()
                 data = form.save()
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
