@@ -4,17 +4,20 @@ function message_error(obj) {
     if(typeof (obj) == 'object') {
         html += '<ul>';
         
-        var valores = {
-            'name': 'Nombre',
-            'brand': 'Marca',
-            'reference': 'Referencia',
-            'cost_sale': 'Costo Venta',
-            'warranty': 'Garantía',
-            'remarks': 'Observaciones',
-            'stock': 'Stock',
-        }
 
-        $.each(obj, function (key, value, valores) {
+        $.each(obj, function (key, value) {
+            var valores = {
+                'name': 'Nombre',
+                'brand': 'Marca',
+                'reference': 'Referencia',
+                'cost_sale': 'Costo Venta',
+                'warranty': 'Garantía',
+                'remarks': 'Observaciones',
+                'stock': 'Stock',
+                'date' : 'Fecha',
+                'reason': 'Motivo',
+                'id_product' : 'Producto'
+            }
             html += '<li>' + valores[key] + ': ' + value + '</li>';
         });
         html += '</ul>';
