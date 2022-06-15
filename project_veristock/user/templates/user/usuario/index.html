@@ -1,45 +1,77 @@
-{% extends "./../../social/navbar.html" %}
+{% extends "./../../social/listar.html" %}
 
-{% block title %} Lista de Usuarios {% endblock %}
+{% block col %}
+<tr>
+    <th scope="col" style="width: 10%">#</th>
+    <th style="width: 15%">Nombre</th>
+    <th style="width: 10%">Tipo Documento</th>
+    <th style="width: 15%">Número Documento</th>
+    <th style="width: 15%">Correo</th>
+    <th style="width: 15%">Cargo</th>
+    <th style="width: 15%">Estado</th>
+    <th style="width: 5%">Acciones</th>
+</tr>
+{% endblock col %}
 
-{% block content %} 
+{% block row %}
+    {% for u in object_list %}
+        <tr>
+            <td class="table-plus">{{ u.id }}</td>
+            <td>{{ u.first_name }} {{ u.last_names }}</td>
+            <td>{{ u.type_document.type_document }}</td>
+            <td>{{ u.document_number }}</td>
+            <td>{{ u.email_address }}</td>
+            <td>{{ u.id_position.name }}</td>
+            {% if u.state == 'A' %}
+                <td>Activo</td>
+            {% elif u.state == 'I' %}
+                <td>Inactivo</td>
+            {% endif %}           
+            <td>
+                <div class="table-actions">
+                    <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Editar" href="{% url 'editar_usuario' u.id %}" data-color="#265ed7" style="color: rgb(38, 94, 215);"><i class="icon-copy dw dw-edit2"></i></a>
+                    <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Eliminar" href="{% url 'eliminar_usuario' u.id %}" data-color="#e95959" style="color: rgb(233, 89, 89);"><i class="dw dw-delete-3"></i></a>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock row %}
 
-<div class="card">
-    <div class="card-header">
-        <a name="" id="" class="btn btn-dark" href=" {% url 'crear_usuario' %}" role="button">Agregar nuevo Usuario</a>
-    </div>
-    <div class="card-body">
-        <h4 class="card-title">Usuarios</h4>
-        
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nombre Persona</th>
-                    <th>Contraseña</th>
-                    <th>Estado</th>
-                    <th>Accciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.id_person }}</td>
-                    <td>{{ user.password }}</td>
-                    <td>{{ user.state }}</td>
-                    <td>
-                        <a name="" id="" class="btn btn-info" href="{% url 'editar_usuario' user.id %}" role="button">Editar</a>
-                        |
-                        <a name="" id="" class="btn btn-danger" href="{% url 'eliminar_usuario' user.id %}" role="button">Eliminar</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        
+{% block extrajs %}
+<script type="text/javascript">
+    $(function () {
+        $('.btnTest').on('click', function () {
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: {id: 2},
+                dataType: 'json'
+            }).done(function (data) { 
+                console.log(data);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            }).always(function (data) {
+                
+            });
+        });
 
-    </div>
-</div>
-
-{% endblock %}
+        $('#data').DataTable({
+            responsive: true,
+            autoWidth: false,
+            language: {
+                emptyTable: "No hay registros en la tabla",
+                info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                search: "Buscar: <i class='icon-copy fa fa-search' aria-hidden='true'></i>",
+                lengthMenu: "Mostrar _MENU_ registros",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior",
+                },
+            }
+        });
+    });
+</script>
+{% endblock extrajs %}

@@ -8,6 +8,7 @@
 
         var parameters = $(this).serializeArray();
         
+        
         $.ajax({
             url: window.location.pathname,
             type: 'POST',
@@ -18,6 +19,7 @@
                 location.href = '{{ url_listar }}';
                 return false;
             }
+            console.log(parameters);
             message_error(data.error);
         }).fail(function (jqXHR, textStatus, errorThrown) {
             alert(textStatus + ': ' + errorThrown);

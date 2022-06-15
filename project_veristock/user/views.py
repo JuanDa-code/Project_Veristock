@@ -95,16 +95,63 @@ class Type_DocumentListView(ListView):
 
 # CRUD User
 
-def user(request):
-    users = User.objects.all()
-    return render(request, './user/usuario/index.html', {'users': users})
+class UserListView(ListView):
+    model = User
+    template_name = 'user/usuario/index.html'
+    
+    @method_decorator(login_required)
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
-def add_user(request):
-    form = UserForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        form.save()
-        return redirect('usuario_index')
-    return render(request, './user/usuario/crear.html', {'form': form})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Lista de Usuarios'
+        context['botonCrear'] = 'Crear nuevo usuario'
+        context['urlCrear'] = reverse_lazy('crear_usuario')
+        return context
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'searchData':
+                data = []
+                for i in User.objects.all():
+                    data.append(i.toJSON())
+            else:
+                data['error'] = 'Ha ocurrido un error.'
+        except Exception as e:
+            data['error'] = str(e)
+        
+        return JsonResponse(data, safe=False)
+
+class UserCreateView(CreateView):
+    model = User
+    form_class = UserForm
+    template_name = 'user/usuario/crear.html'
+    success_url = reverse_lazy('crear_usuario')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Crear nuevo usuario'
+        context['url_listar'] = reverse_lazy('usuario_index')
+        context['listar'] = 'Listar Usuarios'
+        context['action'] = 'add'
+        return context
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'add':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
 
 def edit_user(request, id):
     user = User.objects.get(id = id)
@@ -144,29 +191,3 @@ def delete_customer(request, id):
     customer = Customer.objects.get(id = id)
     customer.delete()
     return redirect('cliente_index')
-
-# CRUD User_Position
-
-# def user_position(request):
-#     user_positions = User_Position.objects.all()
-#     return render(request, './user/usuario_cargo/index.html', {'user_positions': user_positions})
-
-# def add_user_position(request):
-#     form = User_PositionForm(request.POST or None, request.FILES or None)
-#     if form.is_valid():
-#         form.save()
-#         return redirect('usuario_cargo_index')
-#     return render(request, './user/usuario_cargo/crear.html', {'form': form})
-
-# def edit_user_position(request, id):
-#     user_position = User_Position.objects.get(id = id)
-#     form = User_PositionForm(request.POST or None, request.FILES or None, instance = user_position)
-#     if form.is_valid() and request.POST:
-#         form.save()
-#         return redirect('usuario_cargo_index')
-#     return render(request, './user/usuario_cargo/editar.html', {'form': form})
-
-# def delete_user_position(request, id):
-#     user_position = User_Position.objects.get(id = id)
-#     user_position.delete()
-#     return redirect('usuario_cargo_index')

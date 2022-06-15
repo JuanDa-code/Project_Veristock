@@ -3,9 +3,15 @@ from .models import Customer, User
 
 class UserForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for form in self.visible_fields():
+            form.field.widget.attrs['autocomplete'] = 'off'
+
     class Meta:
         model = User
         fields = ['first_name', 'second_name', 'last_names', 'type_document', 'document_number', 'email_address', 'phone', 'date_birth', 'id_position', 'password', 'state']
+        exclude = ['second_name']
         widgets = {
             'first_name': forms.TextInput(
                 attrs = {
@@ -49,10 +55,11 @@ class UserForm(forms.ModelForm):
                     'placeholder': 'Ingrese su número de teléfono',
                 }
             ),
-            'date_birth': forms.DateInput(
+            'date_birth': forms.TextInput(
                 attrs = {
-                    'class': 'form-control date-picker',
+                    'class': 'form-control',
                     'placeholder': 'Seleccione una fecha',
+                    'id': 'datetimepicker',  
                 }
             ),
             'id_position': forms.Select(
@@ -72,6 +79,18 @@ class UserForm(forms.ModelForm):
                 }
             ),
         }
+
+    def save(self, commit = True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
 
 class CustomerForm(forms.ModelForm):
 
@@ -121,10 +140,23 @@ class CustomerForm(forms.ModelForm):
                     'placeholder': 'Ingrese su número de teléfono',
                 }
             ),
-            'date_birth': forms.DateInput(
+            'date_birth': forms.TextInput(
                 attrs = {
-                    'class': 'form-control date-picker',
+                    'class': 'form-control',
                     'placeholder': 'Seleccione una fecha',
+                    'id': 'datetimepicker',
                 }
             ),
         }
+
+    def save(self, commit = True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data

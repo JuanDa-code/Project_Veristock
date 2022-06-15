@@ -1,6 +1,6 @@
 estado = (
-    ('D', 'Disponible'),
-    ('A', 'Agotado'),
+    ('A', 'Activo'),
+    ('I', 'Inactivo'),
 )
 
 garantia = (

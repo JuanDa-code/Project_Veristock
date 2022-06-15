@@ -9,10 +9,6 @@ class Type_Document(models.Model):
     def __str__(self):
         return self.type_document
 
-    def toJSON(self):
-        item = model_to_dict(self)
-        return item
-
     class Meta:
         ordering = ['id']
         verbose_name = 'Tipo Documento'
@@ -25,10 +21,6 @@ class Position(models.Model):
     def __str__(self):
         return self.name
 
-    def toJSON(self):
-        item = model_to_dict(self)
-        return item
-
     class Meta:
         ordering = ['name']
         verbose_name = 'Cargo'
@@ -36,14 +28,14 @@ class Position(models.Model):
 class User(models.Model):
     id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=100, verbose_name='Primer Nombre')
-    second_name = models.CharField(max_length=100, verbose_name='Segundo Nombre', null=True)
+    second_name = models.CharField(max_length=100, verbose_name='Segundo Nombre')
     last_names = models.CharField(max_length=100, verbose_name='Apellidos')
     type_document = models.ForeignKey(Type_Document, on_delete=models.CASCADE, verbose_name='Tipo Documento')
     document_number = models.IntegerField(verbose_name='Número Documento')
     email_address = models.EmailField(verbose_name='Email')
-    phone = models.BigIntegerField(verbose_name='Teléfono', null=True)
-    date_birth = models.DateField(verbose_name='Fecha de Nacimiento', null=True)
-    id_position = models.ForeignKey(Position, on_delete=models.CASCADE, verbose_name='Cargo', null=True)
+    phone = models.BigIntegerField(verbose_name='Teléfono')
+    date_birth = models.DateField(verbose_name='Fecha de Nacimiento')
+    id_position = models.ForeignKey(Position, on_delete=models.CASCADE, verbose_name='Cargo')
     password = models.CharField(max_length=100 ,verbose_name="Contraseña")
     state = models.CharField(verbose_name='Estado', max_length=20, choices=estado)
 

@@ -1,9 +1,7 @@
 function message_error(obj) {
-    console.log(obj);
     var html = '';
     if(typeof (obj) == 'object') {
         html += '<ul>';
-        
 
         $.each(obj, function (key, value) {
             var valores = {
@@ -17,11 +15,21 @@ function message_error(obj) {
                 'date' : 'Fecha',
                 'reason': 'Motivo',
                 'id_product' : 'Producto',
+                'first_name': 'Primer nombre',
+                'second_name': 'Segundo nombre',
+                'last_names': 'Apellidos',
+                'type_document': 'Tipo de documento',
+                'document_number': 'Número de documento',
+                'id_position': 'Cargo',
+                'password': 'Contraseña',
+                'state': 'Estado',
+                'date_birth': 'Fecha cumpleaños',
+                'phone': 'Teléfono',
+                'email_address': 'Correo electrónico'
             }
             html += '<li>' + valores[key] + ': ' + value + '</li>';
         });
         html += '</ul>';
-        console.log(html);
         swal(
             {
                 type: 'error',
@@ -31,7 +39,6 @@ function message_error(obj) {
         );
     } else {
         html += '<p>' + obj + '</p>';
-        console.log(html);
         swal(
             {
                 type: 'error',

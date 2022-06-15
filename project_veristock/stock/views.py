@@ -232,10 +232,6 @@ class SaleListView(ListView):
         
         return JsonResponse(data)
 
-def sale(request):
-    sales = Sale.objects.all()
-    return render(request, './stock/venta/index.html', {'sales': sales})
-
 def add_sale(request):
     products = Product.objects.all()
     form = SaleForm(request.POST or None, request.FILES or None)
