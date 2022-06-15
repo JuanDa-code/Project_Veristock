@@ -2,17 +2,18 @@ from re import template
 from django.urls import path
 from . import views
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('', views.home, name='home1'),
     path('home', views.home1, name='home1'),
     path('navbar', views.navbar, name='navbar'),
     path('base/', views.base, name='base'),
-    path('iniciar_sesion/', LoginView.as_view(template_name='social/iniciar_sesion.html'), name='iniciar_sesion'),
-    path('iniciar_sesion1/', LoginView.as_view(template_name='social/iniciar_sesion1.html'), name='iniciar_sesion1'),
-     path('registrar/', views.register, name='registrar'),
+    #path('iniciar_sesion/', LoginView.as_view(template_name='social/iniciar_sesion.html'), name='iniciar_sesion'),
+    path('accounts/login/', LoginView.as_view(template_name='social/iniciar_sesion1.html'), name='login'),
+    path('registrar/', views.register, name='registrar'),
     # Urls Position
-    path('cargo/index/', views.position, name='cargo_index'),
+    path('cargo/index/',login_required(views.position), name='cargo_index'),
     path('cargo/crear/', views.add_position, name='crear_cargo'),
     path('cargo/eliminar/<int:id>', views.delete_position, name='eliminar_cargo'),
     path('cargo/editar/<int:id>', views.edit_position, name='editar_cargo'),
@@ -24,7 +25,7 @@ urlpatterns = [
     path('tipo_documento/editar/<int:id>', views.edit_type_document, name='editar_tipo_documento'),
 
     # Urls Person
-    path('persona/index/', views.person, name='persona_index'),
+    path('persona/index/', login_required(views.person), name='persona_index'),
     path('persona/crear/', views.add_person, name='crear_persona'),
     path('persona/eliminar/<int:id>', views.delete_person, name='eliminar_persona'),
     path('persona/editar/<int:id>', views.edit_person, name='editar_persona'),

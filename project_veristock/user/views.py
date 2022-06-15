@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .models import Customer, Person, Position, Type_Document, User
 from .forms import PersonForm, PositionForm, Type_DocumentForm, UserForm, CustomerForm
+from django.contrib.auth.decorators import permission_required, login_required
+
 
 def home(request):
     return render(request, './social/home1.html')
@@ -52,7 +54,8 @@ def login1(request):
     return render(request, './social/iniciar_sesion.html', context)
 
 # CRUD Position
-    
+
+@permission_required('user.Can_view_Cargo')
 def position(request):
     positions = Position.objects.all()
     return render(request, './user/cargo/index.html', {'positions': positions})
