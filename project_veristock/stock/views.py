@@ -1,3 +1,4 @@
+from datetime import date
 from multiprocessing import context
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -206,6 +207,31 @@ def sale_register(request):
     #     return redirect('venta_index')
     
 
+class SaleListView(ListView):
+    model = Sale
+    template_name = 'stock/venta/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Lista de ventas'
+        context['botonCrear'] = 'Crear nueva venta'
+        context['urlCrear'] = reverse_lazy('crear_venta')
+        return context
+    
+    @method_decorator(login_required)
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            data = Sale.objects.get(id = request.POST['id']).toJSON()
+        except Exception as e:
+            data['error'] = str(e)
+        
+        return JsonResponse(data)
+
 def sale(request):
     sales = Sale.objects.all()
     return render(request, './stock/venta/index.html', {'sales': sales})
@@ -267,6 +293,7 @@ class DevolutionCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['productos'] = Product.objects.all()
         context['titlePaginador'] = 'Crear nueva devolución'
         context['infoH4'] = 'Información de la devolución'
         context['url_listar'] = reverse_lazy('devolucion_index')
@@ -280,8 +307,47 @@ class DevolutionCreateView(CreateView):
             action = request.POST['action']
             if action == 'add':
                 form = self.get_form()
-                print(form)
-                data = form.save()
+                reason = request.POST['reason']
+                product_id = request.POST['id_product']
+                product = Product.objects.get(pk = product_id)
+                producto_cambio = request.POST['producto_cambio']
+                if product.stock != 0:
+                    if product.warranty == 'C':
+                        if reason == 'I':
+                            product.stock += 1
+                            product.save()
+                            if producto_cambio != 0:
+                                product2 = Product.objects.get(pk = producto_cambio)
+                                if product2.stock != 0:
+                                    product2.stock -= 1
+                                    product2.save()
+                                    data = form.save()
+                                else:
+                                    data['error'] = 'El producto escogido no tiene stock.'
+                        elif reason == 'F':
+                            if producto_cambio != 0:
+                                product2 = Product.objects.get(pk = producto_cambio)
+                                if product2.stock != 0:
+                                    product2.stock -= 1
+                                    product2.save()
+                                    data = form.save()
+                                else:
+                                    data['error'] = 'El producto escogido no tiene stock.'
+                            data = form.save()
+                        elif reason == 'S':
+                            if producto_cambio != 0:
+                                product2 = Product.objects.get(pk = producto_cambio)
+                                if product2.stock != 0:
+                                    product2.stock -= 1
+                                    product2.save()
+                                    data = form.save()
+                                else:
+                                    data['error'] = 'El producto escogido no tiene stock.'
+                            data = form.save()
+                    else:
+                        data['error'] = 'El producto escogido no tiene garantía.'
+                else:
+                    data['error'] = 'El producto escogido no tiene stock.'
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:
@@ -294,10 +360,14 @@ class DevolutionUpdateView(UpdateView):
     template_name = 'stock/devolucion/editar.html'
     success_url = reverse_lazy('devolucion_index')
 
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['productos'] = Product.objects.all()
         context['titlePaginador'] = 'Editar devolución'
-        context['infoH4'] = 'Información de la devolución'
         context['url_listar'] = reverse_lazy('devolucion_index')
         context['listar'] = 'Listar devoluciones'
         context['action'] = 'edit'
@@ -309,7 +379,12 @@ class DevolutionUpdateView(UpdateView):
             action = request.POST['action']
             if action == 'edit':
                 form = self.get_form()
-                data = form.save()
+                product_id = request.POST['id_product']
+                product = Product.objects.get(pk = product_id)
+                if product.warranty == 'C':
+                    data = form.save()
+                else:
+                    data['error'] = 'El producto escogido no tiene garantía.'
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:

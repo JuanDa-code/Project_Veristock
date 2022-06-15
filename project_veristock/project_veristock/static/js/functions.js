@@ -16,7 +16,7 @@ function message_error(obj) {
                 'stock': 'Stock',
                 'date' : 'Fecha',
                 'reason': 'Motivo',
-                'id_product' : 'Producto'
+                'id_product' : 'Producto',
             }
             html += '<li>' + valores[key] + ': ' + value + '</li>';
         });
@@ -32,5 +32,12 @@ function message_error(obj) {
     } else {
         html += '<p>' + obj + '</p>';
         console.log(html);
+        swal(
+            {
+                type: 'error',
+                title: '¡Algo salió mal!',
+                html: html,
+            }
+        );
     }
 }

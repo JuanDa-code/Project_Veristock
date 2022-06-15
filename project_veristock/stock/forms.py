@@ -11,7 +11,7 @@ class ProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ['name', 'cost_sale', 'brand', 'reference', 'warranty', 'remarks', 'stock']
+        fields = ['name', 'cost_sale', 'brand', 'reference', 'warranty', 'stock']
         exclude = ['state']
         widgets = {
             'name': forms.TextInput(
@@ -42,12 +42,6 @@ class ProductForm(forms.ModelForm):
             'warranty': forms.Select(
                 attrs = {
                     'class': 'custom-select',
-                }
-            ),
-            'remarks': forms.TextInput(
-                attrs = {
-                    'class': 'form-control',
-                    'placeholder': 'Observaciones del producto',
                 }
             ),
             'stock': forms.NumberInput(

@@ -12,21 +12,9 @@ urlpatterns = [
 
     # Urls Position
     path('cargo/index/', PositionListView.as_view(), name='cargo_index'),
-    path('cargo/crear/', PositionCreateView.as_view(), name='crear_cargo'),
-    path('cargo/eliminar/<int:pk>', PositionDeleteView.as_view(), name='eliminar_cargo'),
-    path('cargo/editar/<int:pk>', PositionUpdateView.as_view(), name='editar_cargo'),
 
     # Urls Type Document
-    path('tipo_documento/index/', views.type_document, name='tipo_documento_index'),
-    path('tipo_documento/crear/', views.add_type_document, name='crear_tipo_documento'),
-    path('tipo_documento/eliminar/<int:id>', views.delete_type_document, name='eliminar_tipo_documento'),
-    path('tipo_documento/editar/<int:id>', views.edit_type_document, name='editar_tipo_documento'),
-
-    # Urls Person
-    path('persona/index/', views.person, name='persona_index'),
-    path('persona/crear/', views.add_person, name='crear_persona'),
-    path('persona/eliminar/<int:id>', views.delete_person, name='eliminar_persona'),
-    path('persona/editar/<int:id>', views.edit_person, name='editar_persona'),
+    path('tipo_documento/index/', Type_DocumentListView.as_view(), name='tipo_documento_index'),
 
     # Urls User
     path('usuario/index/', views.user, name='usuario_index'),

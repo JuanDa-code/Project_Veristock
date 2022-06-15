@@ -15,8 +15,7 @@ urlpatterns = [
 
     # Urls Sale
 
-    path('venta/index/', views.sale, name='venta_index'),
-    path('venta/index1/', views.sale_register, name='venta_index1'),
+    path('venta/index/', SaleListView.as_view(), name='venta_index'),
     path('venta/crear/', views.listar_productos, name='crear_venta'),
     path('venta/eliminar/<int:id>', views.delete_sale, name='eliminar_venta'),
     path('venta/editar/<int:id>', views.edit_sale, name='editar_venta'),

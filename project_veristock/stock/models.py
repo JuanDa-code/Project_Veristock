@@ -10,7 +10,6 @@ class Product(models.Model):
     brand = models.CharField(max_length=100, verbose_name='Marca')
     reference = models.CharField(max_length=100, verbose_name='Referencia')
     warranty = models.CharField(max_length=10, choices=garantia, verbose_name='Tiempo Garantia')
-    remarks = models.TextField(max_length=250, verbose_name='Observaciones', null=True)
     stock = models.IntegerField(verbose_name='Stock', default=0, null=False)
     state = models.CharField(verbose_name='Estado', choices=estado, max_length=10, default='A')
 
@@ -51,7 +50,7 @@ class Devolution(models.Model):
     date = models.DateField(verbose_name='Fecha')
     reason = models.CharField(max_length=100, verbose_name='Motivo', choices=motivo)
     remarks = models.TextField(null=True, verbose_name='Observaciones')
-    id_product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Producto')
+    id_product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Producto en devolución')
 
     def __str__(self):
         return self.reason

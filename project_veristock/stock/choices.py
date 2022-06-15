@@ -1,7 +1,6 @@
 estado = (
-    ('A', 'Activo'),
-    ('V', 'Vendido'),
-    ('D', 'Devolucion')
+    ('D', 'Disponible'),
+    ('A', 'Agotado'),
 )
 
 garantia = (
@@ -13,4 +12,11 @@ motivo = (
     ('I', 'Insatisfacción'),
     ('F', 'Problemas de fábrica'),
     ('S', 'Problamas de software')
+)
+
+cargo = (
+    ('G', 'Gerente'),
+    ('A', 'Administrador'),
+    ('S', 'Supervisor'),
+    ('T', 'Trabajador')
 )

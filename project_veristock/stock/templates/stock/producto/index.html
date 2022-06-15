@@ -22,14 +22,22 @@
             <td>{{ p.cost_sale }}</td>
             <td>{{ p.brand }}</td>
             <td>{{ p.reference }}</td>
-            <td>{{ p.warranty }}</td>
-            <td>{{ p.stock }}</td>
+            {% if p.warranty == 'C' %}
+            <td>Con garantía</td>
+            {% elif p.warranty == 'S' %}
+            <td>Sin garantía</td>
+            {% endif %}
+            {% if p.stock != 0 %}
+                <td><span class="badge badge-success badge-pill">{{ p.stock }}</span></td>
+            {% else %}
+                <td><span class="badge badge-danger badge-pill">{{ p.stock }}</span></td>
+            {% endif %}
             <td>{{ p.state }}</td>
             <td>
                 <div class="table-actions">
-                    <a class="dropdown-item" onclick="abrir_modal('{% url 'agregar_stock' p.id %}')" data-color="#8ABD5F" style="color: rgb(138, 189, 95);"><i class="icon-copy fa fa-plus" aria-hidden="true"></i></a>
-                    <a class="dropdown-item" href="{% url 'editar_producto' p.id %}" data-color="#265ed7" style="color: rgb(38, 94, 215);"><i class="icon-copy dw dw-edit2"></i></a>
-                    <a class="dropdown-item" href="{% url 'eliminar_producto' p.id %}" data-color="#e95959" style="color: rgb(233, 89, 89);"><i class="dw dw-delete-3"></i></a>
+                    <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Agregar productos" onclick="abrir_modal('{% url 'agregar_stock' p.id %}')" data-color="#8ABD5F" style="color: rgb(138, 189, 95);"><i class="icon-copy fa fa-plus" aria-hidden="true"></i></a>
+                    <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Editar" href="{% url 'editar_producto' p.id %}" data-color="#265ed7" style="color: rgb(38, 94, 215);"><i class="icon-copy dw dw-edit2"></i></a>
+                    <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Eliminar" href="{% url 'eliminar_producto' p.id %}" data-color="#e95959" style="color: rgb(233, 89, 89);"><i class="dw dw-delete-3"></i></a>
                 </div>
             </td>
         </tr>

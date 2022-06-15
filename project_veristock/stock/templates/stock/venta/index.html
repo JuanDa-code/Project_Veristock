@@ -1,53 +1,69 @@
-{% extends "./../../social/navbar.html" %}
+{% extends "./../../social/listar.html" %}
 
-{% block title %} Lista de Ventas {% endblock %}
+{% block col %}
+<tr>
+    <th scope="col" style="width: 10%">#</th>
+    <th style="width: 15%">Fecha</th>
+    <th style="width: 15%">Total Costo</th>
+    <th style="width: 15%">Cliente</th>
+    <th style="width: 15%">Usuario</th>
+    <th style="width: 5%">Accciones</th>
+</tr>
+{% endblock col %}
 
-{% block content %} 
+{% block row %}
+    {% for v in object_list %}
+        <tr>
+            <td class="table-plus">{{ v.invoice_number }}</td>
+            <td>{{ v.date }}</td>
+            <td>{{ v.totalSale }}</td>
+            <td>{{ v.customer }}</td>
+            <td>{{ v.user }}</td>
+            <td>
+                <div class="table-actions">
+                    <a class="dropdown-item" href="{% url 'editar_venta' v.invoice_number %}" data-color="#265ed7" style="color: rgb(38, 94, 215);"><i class="icon-copy dw dw-edit2"></i></a>
+                    <a class="dropdown-item" href="{% url 'eliminar_venta' v.invoice_number %}" data-color="#e95959" style="color: rgb(233, 89, 89);"><i class="dw dw-delete-3"></i></a>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock row %}
 
-<div class="card">
-    <div class="card-header">
-        <a name="" id="" class="btn btn-dark" href=" {% url 'crear_venta' %}" role="button">Agregar nueva venta</a>
-    </div>
-    <div class="card-body">
-        <h4 class="card-title">Ventas</h4>
-        
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Numero Factura</th>
-                    <th>Fecha</th>
-                    <th>Cantidad</th>
-                    <th>Total</th>
-                    <th>Cliente</th>
-                    <th>Usuario</th>
-                    <th>Item</th>
-                    <th>Accciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for sale in sales %}
-                <tr>
-                    <td>{{ sale.id }}</td>
-                    <td>{{ sale.invoice_number }}</td>
-                    <td>{{ sale.date }}</td>
-                    <td>{{ sale.quantity }}</td>
-                    <td>{{ sale.total }}</td>
-                    <td>{{ sale.customer }}</td>
-                    <td>{{ sale.user }}</td>
-                    <td>{{ sale.item }}</td>
-                    <td>
-                        <a name="" id="" class="btn btn-info" href="{% url 'editar_venta' sale.id %}" role="button">Editar</a>
-                        |
-                        <a name="" id="" class="btn btn-danger" href="{% url 'eliminar_venta' sale.id %}" role="button">Eliminar</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        
+{% block extrajs %}
+<script type="text/javascript">
+    $(function () {
+        $('.btnTest').on('click', function () {
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: {id: 2},
+                dataType: 'json'
+            }).done(function (data) { 
+                console.log(data);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            }).always(function (data) {
+                
+            });
+        });
 
-    </div>
-</div>
-
-{% endblock %}
+        $('#data').DataTable({
+            responsive: true,
+            autoWidth: false,
+            language: {
+                emptyTable: "No hay registros en la tabla",
+                info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                search: "Buscar: <i class='icon-copy fa fa-search' aria-hidden='true'></i>",
+                lengthMenu: "Mostrar _MENU_ registros",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior",
+                },
+            }
+        });
+    });
+</script>
+{% endblock extrajs %}

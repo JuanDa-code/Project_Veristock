@@ -16,13 +16,19 @@
         <tr>
             <td class="table-plus">{{ d.id }}</td>
             <td>{{ d.date }}</td>
-            <td>{{ d.reason }}</td>
+            {% if d.reason == 'I' %}
+                <td>Insatisfacción</td>
+            {% elif d.reason == 'F' %}
+                <td>Problemas de fábrica</td>
+            {% elif d.reason == 'S' %}
+                <td>Problamas de software</td>
+            {% endif %}            
             <td>{{ d.remarks }}</td>
             <td>{{ d.id_product.name }} {{ d.id_product.brand }} {{ d.id_product.reference }}</td>
             <td>
                 <div class="table-actions">
-                    <a class="dropdown-item" href="{% url 'editar_devolucion' d.id %}" data-color="#265ed7" style="color: rgb(38, 94, 215);"><i class="icon-copy dw dw-edit2"></i></a>
-                    <a class="dropdown-item" href="{% url 'eliminar_devolucion' d.id %}" data-color="#e95959" style="color: rgb(233, 89, 89);"><i class="dw dw-delete-3"></i></a>
+                    <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Editar" href="{% url 'editar_devolucion' d.id %}" data-color="#265ed7" style="color: rgb(38, 94, 215);"><i class="icon-copy dw dw-edit2"></i></a>
+                    <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Eliminar" href="{% url 'eliminar_devolucion' d.id %}" data-color="#e95959" style="color: rgb(233, 89, 89);"><i class="dw dw-delete-3"></i></a>
                 </div>
             </td>
         </tr>
