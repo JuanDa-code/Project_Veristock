@@ -21,11 +21,11 @@
                 </tr>
             </thead>
             <tbody>
-                {% for customer in customers %}
+                {% for Customer in Customers %}
                 <tr>
-                    <td>{{ customer.id }}</td>
-                    <td>{{ customer.person }}</td>
-                    <td>{{ customer.state }}</td>
+                    <td>{{ Customer.id }}</td>
+                    <td>{{ Customer.person }}</td>
+                    <td>{{ Customer.state }}</td>
                     <td>
                         <a name="" id="" class="btn btn-info" href="{% url 'editar_cliente' customer.id %}" role="button">Editar</a>
                         |

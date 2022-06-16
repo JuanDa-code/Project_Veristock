@@ -14,7 +14,7 @@
 {% endblock col %}
 
 {% block row %}
-    {% for u in object_list %}
+    {% for User in Users %}
         <tr>
             <td class="table-plus">{{ u.id }}</td>
             <td>{{ u.first_name }} {{ u.last_names }}</td>
