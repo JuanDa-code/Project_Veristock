@@ -55,7 +55,7 @@ def login1(request):
 
 # CRUD Position
 
-@permission_required('user.Can_view_Cargo')
+@permission_required('user.Can_view_Position')
 def position(request):
     positions = Position.objects.all()
     return render(request, './user/cargo/index.html', {'positions': positions})
