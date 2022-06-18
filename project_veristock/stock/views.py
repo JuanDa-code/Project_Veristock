@@ -1,9 +1,9 @@
 import datetime
 import json
-from multiprocessing import context
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.db import transaction
@@ -20,11 +20,11 @@ import os
 from django.conf import settings
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-from django.contrib.staticfiles import finders
 
 # CRUD Product
 
-class ProductListView(ListView):
+class ProductListView(ListView, LoginRequiredMixin, PermissionRequiredMixin):
+    permission_required = ''
     model = Product
     template_name = 'stock/producto/index.html'
     
@@ -62,6 +62,10 @@ class ProductCreateView(CreateView):
     template_name = 'stock/producto/crear.html'
     success_url = reverse_lazy('producto_index')
 
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titlePaginador'] = 'Crear nuevo producto'
@@ -90,6 +94,7 @@ class ProductUpdateView(UpdateView):
     template_name = 'stock/producto/editar.html'
     success_url = reverse_lazy('producto_index')
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)
@@ -121,6 +126,7 @@ class ProductDeleteView(DeleteView):
     template_name = './stock/producto/eliminar.html'
     success_url = reverse_lazy('producto_index')
 
+    @method_decorator(login_required)
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -166,6 +172,7 @@ class SaleListView(ListView):
     model = Sale
     template_name = 'stock/venta/index.html'
 
+    @method_decorator(login_required)
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -202,6 +209,7 @@ class SaleCreateView(CreateView):
     template_name = 'stock/venta/crear.html'
     success_url = reverse_lazy('venta_index')
 
+    @method_decorator(login_required)
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -258,6 +266,7 @@ class SaleDeleteView(DeleteView):
     template_name = './stock/venta/eliminar.html'
     success_url = reverse_lazy('venta_index')
 
+    @method_decorator(login_required)
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -285,6 +294,7 @@ class SaleUpdateView(UpdateView):
     template_name = 'stock/venta/editar.html'
     success_url = reverse_lazy('producto_index')
 
+    @method_decorator(login_required)
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -380,6 +390,10 @@ class DevolutionCreateView(CreateView):
     template_name = 'stock/devolucion/crear.html'
     success_url = reverse_lazy('devolucion_index')
 
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['productos'] = Product.objects.all()
@@ -449,6 +463,7 @@ class DevolutionUpdateView(UpdateView):
     template_name = 'stock/devolucion/editar.html'
     success_url = reverse_lazy('devolucion_index')
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)
@@ -485,6 +500,10 @@ class DevolutionDeleteView(DeleteView):
     template_name = './stock/devolucion/eliminar.html'
     success_url = reverse_lazy('devolucion_index')
 
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titlePaginador'] = 'Eliminar una devolución'
@@ -495,9 +514,6 @@ class DevolutionDeleteView(DeleteView):
         return context
 
 class SaleInvoicePdfView(View):
-
-    
-
     def get(self, request, *args, **kwargs):
         try:
             template = get_template('stock/venta/pdf.html')

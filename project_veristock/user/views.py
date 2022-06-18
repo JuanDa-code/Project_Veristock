@@ -6,17 +6,39 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
+
+from stock.models import Entries
 from .models import Customer, Position, Type_Document, User
 from .forms import UserForm, CustomerForm
+from django.contrib.auth.views import LoginView, LogoutView
 
 def home(request):
-    return render(request, './dashboard/home.html')
+    context = {
+        'entries': Entries.objects.all()
+    }
+    return render(request, './dashboard/home.html', context)
 
 def landing_page(request):
-    return render(request, './social/home1.html')
+    return render(request, './social/home.html')
 
 def base(request):
-    return render(request, './dashboard/base.html')
+    context = {
+        'user': request.POST['user']
+    }
+    return render(request, './dashboard/base.html', context)
+
+class LoginFormView(LoginView):
+    template_name = 'social/iniciar_sesion.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('home')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Iniciar Sesión'
+        return context
 
 def register(request):
     form = UserCreationForm()
@@ -132,6 +154,10 @@ class UserCreateView(CreateView):
     template_name = 'user/usuario/crear.html'
     success_url = reverse_lazy('usuario_index')
 
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titlePaginador'] = 'Crear nuevo usuario'
@@ -159,6 +185,7 @@ class UserUpdateView(UpdateView):
     template_name = 'user/usuario/editar.html'
     success_url = reverse_lazy('usuario_index')
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)
@@ -190,6 +217,7 @@ class UserDeleteView(DeleteView):
     success_url = reverse_lazy('usuario_index')
 
     @method_decorator(csrf_exempt)
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)
@@ -276,6 +304,7 @@ class CustomerUpdateView(UpdateView):
     template_name = 'user/cliente/editar.html'
     success_url = reverse_lazy('cliente_index')
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)
@@ -306,6 +335,7 @@ class CustomerDeleteView(DeleteView):
     template_name = './user/cliente/eliminar.html'
     success_url = reverse_lazy('cliente_index')
 
+    @method_decorator(login_required)
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()

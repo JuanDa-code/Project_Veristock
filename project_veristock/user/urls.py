@@ -1,13 +1,14 @@
 from django.urls import path
 from user.views import *
 from . import views
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import *
 
 urlpatterns = [
     path('', views.landing_page, name='landing_page'),
     path('home', views.home, name='home'),
     path('base/', views.base, name='base'),
-    path('iniciar_sesion/', LoginView.as_view(template_name='social/iniciar_sesion.html'), name='iniciar_sesion'),
+    path('iniciar_sesion/', LoginFormView.as_view(), name='iniciar_sesion'),
+    path('logout/', LogoutView.as_view(), name='cerrar_sesion'),
     path('registrar/', views.register, name='registrar'),
 
     # Urls User

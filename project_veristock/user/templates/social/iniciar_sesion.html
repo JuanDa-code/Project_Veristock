@@ -1,4 +1,5 @@
 {% load static %}
+{% load widget_tweaks %}
 
 <!DOCTYPE html>
 <html lang="es">
@@ -6,29 +7,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="{% static 'lib/dashboard/styles/core.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'lib/dashboard/styles/icon-font.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'lib/dashboard/sweetalert2/sweetalert2.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'lib/dashboard/styles/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/style_login.css' %}">
     <title>Iniciar Sesión</title>
 </head>
 <body>
 	<div class="container" id="container">
-		<div class="form-container sign-in-container">
-			<form class="form" method="post">
-                {% csrf_token %}
-				<img width="340" height="80"src="{% static 'img/login/Logo.png' %}" alt="logo">
-				<h1>Iniciar sesión</h1>
-				<span>Usa tu cuenta</span>
-				<input type="text" placeholder="Nombre Usuario" name="username" required id="id_username"/>
-				<input type="password" placeholder="Contraseña" name="password" required id="id_password"/>
-				<a href="#">¿Olvidaste la contraseña?</a>
-				<button type="submit" id="submit">Ingresar</button>
-				<a href="{% url 'home1' %}">Cancelar</a>
-			</form>
-		</div>
-		<div class="overlay-container">
-			<div class="overlay">
-				<img src="{% static 'img/login/imagenlogin2.svg' %}">
+		<div class="pd-20 card-box mb-30">
+			<div class="form-container sign-in-container">
+				<form class="form" method="post">
+					{% csrf_token %}
+					<img width="340" height="80"src="{% static 'img/login/Logo.png' %}" alt="logo">
+					<h1>Iniciar sesión</h1>
+					<span>Usa tu cuenta</span>
+					{{ form.username|add_class:'form-control'|attr:'autocomplete:off'|attr:'placehorder:Ingrese su nombre de usuario' }}
+					{{ form.password|add_class:'form-control'|attr:'autocomplete:off'|attr:'placehorder:Ingrese su contraseña' }}
+					{{ form.errors }}
+					<a href="#">¿Olvidaste la contraseña?</a>
+					<button type="submit" id="submit">Ingresar</button>
+					<a href="{% url 'landing_page' %}">Cancelar</a>
+				</form>
+			</div>
+			<div class="overlay-container">
+				<div class="overlay">
+					<img src="{% static 'img/login/imagenlogin2.svg' %}">
+				</div>
 			</div>
 		</div>
 	</div>
+<script src="{% static 'js/dashboard/jquery.min.js' %}"></script>
+<script src="{% static 'lib/dashboard/scripts/core.js' %}"></script>
+<script src="{% static 'lib/dashboard/scripts/script.min.js' %}"></script>
+<script src="{% static 'lib/dashboard/scripts/process.js' %}"></script>
+<script src="{% static 'lib/dashboard/scripts/layout-settings.js' %}"></script>
+<script src="{% static 'lib/dashboard/sweetalert2/sweetalert2.all.js' %}"></script>
+<script src="{% static 'lib/dashboard/sweetalert2/sweet-alert.init.js' %}"></script>
+
 </body>
 </html>
