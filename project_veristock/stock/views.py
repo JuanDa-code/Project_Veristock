@@ -1,18 +1,26 @@
-from datetime import date
+import datetime
+import json
 from multiprocessing import context
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.http import JsonResponse
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.db.models import Q
+from django.db import transaction
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from project_veristock.settings import STATIC_URL
 
-from user.models import Customer
-from .models import Product, Sale, Devolution, Entries
+from user.models import Customer, User
+from .models import Product, Sale, Devolution, Entries, Details_sale
 from .forms import ProductForm, SaleForm, DevolutionForm
 
+import os
+from django.conf import settings
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
 
 # CRUD Product
 
@@ -132,6 +140,7 @@ class ProductDeleteView(DeleteView):
         context['infoH4'] = 'Información del producto'
         context['url_listar'] = reverse_lazy('producto_index')
         context['listar'] = 'Listar Productos'
+        context['id'] = self.object.id
         return context
 
 def addStockProduct(request, id):
@@ -152,110 +161,194 @@ def addStockProduct(request, id):
 
     return render(request, './stock/producto/agregar_producto.html', context={'product': product})
 
-# ciclo de la lista que tienes
-# how to django save in the db a list of object<T>
-
 # CRUD Sale
-
-class SaleView (Sale):
-    template_name = 'stock/venta/crear.html'
-
-    def post(self, request, *args, **kwargs):
-        data = {}
-        try:
-            action = request.POST['action']
-            if action == 'search_product_id':
-                data = [{'id': '', 'text': '------------'}]
-                for i in Product.objects.filter(name__icontains=request.POST['term']):
-                    item = i.toJson()
-                    item['value'] = i.name
-                    data.append(item)
-            else:
-                data['error'] = 'Ha ocurrido un error'
-        except Exception as e:
-            data['error'] = str(e)
-        return JsonResponse(data, safe=False)
-
-def listar_productos(request):
-    busqueda = request.GET.get("buscar")
-    productos = Product.objects.all()
-
-    if busqueda:
-        productos = Product.objects.filter(
-            Q(name__icontains = busqueda) |
-            Q(brand__icontains = busqueda) |
-            Q(reference__icontains = busqueda)
-        ).distinct()
-
-    form = SaleForm(request.POST or None, request.FILES or None)
-
-    return render(request, './stock/venta/crear.html', context = {'productos': productos, 'form': form})
-
-def sale_register(request):
-    sales = Sale.objects.all()
-    customers = Customer.objects.all()
-    form = SaleForm(request.POST or None, request.FILES or None)
-    # if form.is_valid:
-    #     form.save()
-    #     return redirect('venta_index')
-    return render(request, './stock/venta/index1.html', context = {'sales': sales, 'form': form, 'customers': customers})
-    # for product in products:
-    #     product.quantity = Item.objects.filter(product__id=product.id).count()
-    # form = SaleForm(request.POST or None, request.FILES or None)
-    # if form.is_valid():
-    #     form.save()
-    #     return redirect('venta_index')
-    
-
 class SaleListView(ListView):
     model = Sale
     template_name = 'stock/venta/index.html'
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titlePaginador'] = 'Lista de ventas'
         context['botonCrear'] = 'Crear nueva venta'
         context['urlCrear'] = reverse_lazy('crear_venta')
+        context['urlEliminar'] = reverse_lazy('eliminar_venta')
         return context
-    
-    @method_decorator(login_required)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'searchdata':
+                data = []
+                for i in Sale.objects.all():
+                    data.append(i.toJSON())
+            elif action == 'search_details_prod':
+                data = []
+                for i in Details_sale.objects.filter(invoice_number=request.POST['invoice_number']):
+                    data.append(i.toJSON())
+            else:
+                data['error'] = 'Ha ocurrido un error.'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)   
+
+class SaleCreateView(CreateView):
+    model = Sale
+    form_class = SaleForm
+    template_name = 'stock/venta/crear.html'
+    success_url = reverse_lazy('venta_index')
+
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['productos'] = Product.objects.all()
+        context['titlePaginador'] = 'Crear nueva venta'
+        context['url_listar'] = reverse_lazy('venta_index')
+        context['listar'] = 'Listar Ventas'
+        context['action'] = 'add'
+        return context
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'buscar_productos':
+                data = []
+                term = request.POST['term']
+                prods = Product.objects.filter(~Q(stock__exact=0), Q(name__icontains=term) | Q(brand__icontains=term) | Q(reference__icontains=term))[0:10]
+                for i in prods:
+                    item = i.toJSON()
+                    item['value'] = i.name + ' ' + i.brand + ' ' + i.reference
+                    data.append(item)
+            elif action == 'add':
+                with transaction.atomic():
+                    vents = json.loads(request.POST['vents'])
+                    sale = Sale()
+                    date = datetime.datetime.strptime(vents['date'], '%d/%m/%Y')
+                    sale.date = datetime.datetime.strftime(date, '%Y-%m-%d')
+                    sale.user = User.objects.get(id = vents['user'])
+                    sale.customer = Customer.objects.get(id = vents['customer'])
+                    sale.totalSale = int(vents['totalSale'])
+                    sale.save()
+                    for i in vents['products']:
+                        detSale = Details_sale()
+                        detSale.invoice_number = Sale.objects.get(invoice_number = sale.invoice_number)
+                        detSale.id_product = Product.objects.get(id = i['id'])
+                        detSale.quantity = int(i['cant'])
+                        product = Product.objects.get(id = detSale.id_product.id)
+                        product.stock -= detSale.quantity
+                        product.save()
+                        detSale.totalPrice = int(i['subtotal'])
+                        detSale.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+class SaleDeleteView(DeleteView):
+    model = Sale
+    template_name = './stock/venta/eliminar.html'
+    success_url = reverse_lazy('venta_index')
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            data = Sale.objects.get(id = request.POST['id']).toJSON()
+            self.object.delete()
         except Exception as e:
             data['error'] = str(e)
-        
         return JsonResponse(data)
 
-def add_sale(request):
-    products = Product.objects.all()
-    form = SaleForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        form.save()
-        return redirect('venta_index')
-    return render(request, './stock/venta/crear.html', context={'form': form, 'products': products})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Eliminar una venta'
+        context['url_listar'] = reverse_lazy('venta_index')
+        context['listar'] = 'Listar Ventas'
+        context['id'] = self.object.invoice_number
+        return context
 
-def delete_sale(request, id):
-    sale = Sale.objects.get(id = id)
-    sale.delete()
-    return redirect('venta_index')
+class SaleUpdateView(UpdateView):
+    model = Sale
+    form_class = SaleForm
+    template_name = 'stock/venta/editar.html'
+    success_url = reverse_lazy('producto_index')
 
-def edit_sale(request, id):
-    sale = Sale.objects.get(id = id)
-    form = SaleForm(request.POST or None, request.FILES or None, instance = sale)
-    if form.is_valid() and request.POST:
-        form.save()
-        return redirect('venta_index')
-    return render(request, './stock/venta/editar.html', {'form': form})
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['productos'] = Product.objects.all()
+        context['titlePaginador'] = 'Edición de una venta'
+        context['url_listar'] = reverse_lazy('venta_index')
+        context['listar'] = 'Listar Ventas'
+        context['action'] = 'edit'
+        context['detProduct'] = json.dumps(self.get_details_product())
+        return context
+
+    def get_details_product(self):
+        data = []
+        try:
+            for i in Details_sale.objects.filter(invoice_number=self.get_object().invoice_number):
+                item = i.id_product.toJSON()
+                item['cant'] = i.quantity
+                data.append(item)
+        except:
+            pass
+        return data
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'buscar_productos':
+                data = []
+                term = request.POST['term']
+                prods = Product.objects.filter(~Q(stock__exact=0), Q(name__icontains=term) | Q(brand__icontains=term) | Q(reference__icontains=term))[0:10]
+                for i in prods:
+                    item = i.toJSON()
+                    item['value'] = i.name + ' ' + i.brand + ' ' + i.reference
+                    data.append(item)
+            elif action == 'edit':
+                with transaction.atomic():
+                    vents = json.loads(request.POST['vents'])
+                    sale = self.get_object()
+                    sale.date = vents['date']
+                    sale.user = User.objects.get(id = vents['user'])
+                    sale.customer = Customer.objects.get(id = vents['customer'])
+                    sale.totalSale = int(vents['totalSale'])
+                    sale.save()
+                    sale.details_sale_set.all().delete()
+                    for i in vents['products']:
+                        detSale = Details_sale()
+                        detSale.invoice_number = Sale.objects.get(invoice_number = sale.invoice_number)
+                        detSale.id_product = Product.objects.get(id = i['id'])
+                        detSale.quantity = int(i['cant'])
+                        product = Product.objects.get(id = detSale.id_product.id)
+                        product.stock -= detSale.quantity
+                        product.save()
+                        detSale.totalPrice = int(i['subtotal'])
+                        detSale.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
 
     # CRUD Devolution
-
 class DevolutionListView(ListView):
     model = Devolution
     template_name = 'stock/devolucion/index.html'
@@ -398,4 +491,24 @@ class DevolutionDeleteView(DeleteView):
         context['infoH4'] = 'Información de la devolución'
         context['url_listar'] = reverse_lazy('devolucion_index')
         context['listar'] = 'Listar devoluciones'
+        context['id'] = self.object.id
         return context
+
+class SaleInvoicePdfView(View):
+
+    
+
+    def get(self, request, *args, **kwargs):
+        try:
+            template = get_template('stock/venta/pdf.html')
+            context = {
+                'sale': Sale.objects.get(pk = self.kwargs['pk']),
+            }
+            html = template.render(context)
+            response = HttpResponse(content_type='application/pdf')
+            #response['Content-Disposition'] = 'attachment; filename="reporte.pdf"'
+            pisa_status = pisa.CreatePDF(html, dest=response)
+            return response
+        except:
+            pass
+        return HttpResponseRedirect(reverse_lazy('venta_index'))

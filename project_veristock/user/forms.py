@@ -11,7 +11,6 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'second_name', 'last_names', 'type_document', 'document_number', 'email_address', 'phone', 'date_birth', 'id_position', 'password', 'state']
-        exclude = ['second_name']
         widgets = {
             'first_name': forms.TextInput(
                 attrs = {
@@ -34,7 +33,7 @@ class UserForm(forms.ModelForm):
             ),
             'type_document': forms.Select(
                 attrs = {
-                    'class': 'custom-select',
+                    'class': 'custom-select2 form-control',
                 }
             ),
             'document_number': forms.NumberInput(
@@ -64,7 +63,7 @@ class UserForm(forms.ModelForm):
             ),
             'id_position': forms.Select(
                 attrs = {
-                    'class': 'custom-select',
+                    'class': 'custom-select2 form-control',
                 }
             ),
             'password': forms.PasswordInput(
@@ -75,7 +74,7 @@ class UserForm(forms.ModelForm):
             ),
             'state': forms.Select(
                 attrs = {
-                    'class': 'custom-select',
+                    'class': 'custom-select2 form-control',
                 }
             ),
         }
@@ -119,7 +118,7 @@ class CustomerForm(forms.ModelForm):
             ),
             'type_document': forms.Select(
                 attrs = {
-                    'class': 'custom-select',
+                    'class': 'custom-select2 form-control',
                 }
             ),
             'document_number': forms.NumberInput(

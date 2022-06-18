@@ -4,52 +4,100 @@
 <tr>
     <th scope="col" style="width: 10%">#</th>
     <th style="width: 15%">Fecha</th>
-    <th style="width: 15%">Total Costo</th>
     <th style="width: 15%">Cliente</th>
     <th style="width: 15%">Usuario</th>
-    <th style="width: 5%">Accciones</th>
+    <th style="width: 15%">Total Costo</th>
+    <th style="width: 5%">Acciones</th>
 </tr>
 {% endblock col %}
 
 {% block row %}
-    {% for v in object_list %}
-        <tr>
-            <td class="table-plus">{{ v.invoice_number }}</td>
-            <td>{{ v.date }}</td>
-            <td>{{ v.totalSale }}</td>
-            <td>{{ v.customer }}</td>
-            <td>{{ v.user }}</td>
-            <td>
-                <div class="table-actions">
-                    <a class="dropdown-item" href="{% url 'editar_venta' v.invoice_number %}" data-color="#265ed7" style="color: rgb(38, 94, 215);"><i class="icon-copy dw dw-edit2"></i></a>
-                    <a class="dropdown-item" href="{% url 'eliminar_venta' v.invoice_number %}" data-color="#e95959" style="color: rgb(233, 89, 89);"><i class="dw dw-delete-3"></i></a>
-                </div>
-            </td>
-        </tr>
-    {% endfor %}
+    
 {% endblock row %}
+
+{% block extraContent %}
+<div class="modal fade" id="myModalDet" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel"><i class="icon-copy fa fa-shopping-cart" aria-hidden="true"></i> Consulta de detalles de productos</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <h5 class="modal-title">{{ product.name }} {{ product.brand }} {{ product.reference }}</h5><br>
+                <div class="table-responsive">
+                    <table class="table" id="tableDet">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Precio Unidad</th>
+                                <th>Cantidad</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock extraContent %}
 
 {% block extrajs %}
 <script type="text/javascript">
-    $(function () {
-        $('.btnTest').on('click', function () {
-            $.ajax({
-                url: window.location.pathname,
-                type: 'POST',
-                data: {id: 2},
-                dataType: 'json'
-            }).done(function (data) { 
-                console.log(data);
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                alert(textStatus + ': ' + errorThrown);
-            }).always(function (data) {
-                
-            });
-        });
 
-        $('#data').DataTable({
+    var tableSale;
+
+    $(function () {
+
+        tableSale = $('#data').DataTable({
             responsive: true,
             autoWidth: false,
+            destroy: true,
+            deferRender: true,
+            ajax: {
+                url: window.location.pathname,
+                type: 'POST',
+                data: {
+                    'action': 'searchdata'
+                },
+                dataSrc: ""
+            },
+            columns: [
+                {"data": "invoice_number"},
+                {"data": "date"},
+                {"data": "customer.first_name"},
+                {"data": "user.first_name"},
+                {"data": "totalSale"},
+                {"data": 'totalSale'},
+            ],
+            columnDefs: [
+                {
+                    targets: [-2],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return '$' + parseInt(data);
+                    }
+                },
+                {
+                    targets: [-1],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        var buttons = '<a class="dropdown-item" rel="details" data-toggle="tooltip" data-placement="top" title="Consulta de detalles de productos" data-color="#265ed7" style="color: rgb(38, 94, 215);"><i class="icon-copy fa fa-shopping-cart" aria-hidden="true"></i></a>';
+                        buttons += '<a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Editar" href="/venta/editar/' + row.invoice_number + '" data-color="#265ed7" style="color: rgb(38, 94, 215);"><i class="icon-copy dw dw-edit2"></i></a>';
+                        buttons += '<a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Eliminar" href="/venta/eliminar/' + row.invoice_number + '" data-color="#e95959" style="color: rgb(233, 89, 89);"><i class="dw dw-delete-3"></i></a>';
+                        return buttons;
+                    }
+                },
+            ],
             language: {
                 emptyTable: "No hay registros en la tabla",
                 info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -64,6 +112,76 @@
                 },
             }
         });
+
+        $('#data tbody').on('click', 'a[rel="details"]', function () {
+            var tr = tableSale.cell($(this).closest('td, li')).index();
+            var data = tableSale.row(tr.row).data();
+
+            console.log(data);
+            
+            $('#tableDet').DataTable({
+                responsive: true,
+                autoWidth: false,
+                destroy: true,
+                deferRender: true,
+                ajax: {
+                    url: window.location.pathname,
+                    type: 'POST',
+                    data: {
+                        'action': 'search_details_prod',
+                        'invoice_number': data.invoice_number
+                    },
+                    dataSrc: ""
+                },
+                columns: [
+                    {"data": "id_product"},
+                    {"data": "id_product.cost_sale"},
+                    {"data": "quantity"},
+                    {"data": "totalPrice"},
+                ],
+                columnDefs: [
+                    {
+                        targets: [0],
+                        class: 'text-center',
+                        render: function (data, type, row) {
+                            return '' + data.name + ' ' + data.brand + ' ' + data.reference + '';
+                        }
+                    },
+                    {
+                        targets: [-1],
+                        class: 'text-center',
+                        render: function (data, type, row) {
+                            return '$' + parseInt(data);
+                        }
+                    },
+                    {
+                        targets: [-2],
+                        class: 'text-center',
+                        render: function (data, type, row) {
+                            return data;
+                        }
+                    },
+                ],
+                initComplete: function (settings, json) {
+
+                },
+                language: {
+                    emptyTable: "No hay registros en la tabla",
+                    info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    search: "Buscar: <i class='icon-copy fa fa-search' aria-hidden='true'></i>",
+                    lengthMenu: "Mostrar _MENU_ registros",
+                    paginate: {
+                        first: "Primero",
+                        last: "Último",
+                        next: "Siguiente",
+                        previous: "Anterior",
+                    },
+                },
+            });
+
+            $('#myModalDet').modal('show');
+        });        
     });
 </script>
 {% endblock extrajs %}

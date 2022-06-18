@@ -130,7 +130,7 @@ class UserCreateView(CreateView):
     model = User
     form_class = UserForm
     template_name = 'user/usuario/crear.html'
-    success_url = reverse_lazy('crear_usuario')
+    success_url = reverse_lazy('usuario_index')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -152,42 +152,177 @@ class UserCreateView(CreateView):
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)
+        
+class UserUpdateView(UpdateView):
+    model = User
+    form_class = UserForm
+    template_name = 'user/usuario/editar.html'
+    success_url = reverse_lazy('usuario_index')
 
-def edit_user(request, id):
-    user = User.objects.get(id = id)
-    form = UserForm(request.POST or None, request.FILES or None, instance = user)
-    if form.is_valid() and request.POST:
-        form.save()
-        return redirect('usuario_index')
-    return render(request, './user/usuario/editar.html', {'form': form})
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
 
-def delete_user(request, id):
-    user = User.objects.get(id = id)
-    user.delete()
-    return redirect('usuario_index')
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'edit':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Editar usuario'
+        context['url_listar'] = reverse_lazy('usuario_index')
+        context['listar'] = 'Listar usuarios'
+        context['action'] = 'edit'
+        return context
+
+class UserDeleteView(DeleteView):
+    model = User
+    template_name = './user/usuario/eliminar.html'
+    success_url = reverse_lazy('usuario_index')
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            self.object.delete()
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Eliminar un usuario'
+        context['url_listar'] = reverse_lazy('usuario_index')
+        context['listar'] = 'Listar usuarios'
+        context['id'] = self.object.id
+        return context
 
 # CRUD Customer
 
-def customer(request):
-    customers = Customer.objects.all()
-    return render(request, './user/cliente/index.html', {'customers': customers})
+class CustomerListView(ListView):
+    model = Customer
+    template_name = 'user/cliente/index.html'
+    
+    @method_decorator(login_required)
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
-def add_customer(request):
-    form = CustomerForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        form.save()
-        return redirect('cliente_index')
-    return render(request, './user/cliente/crear.html', {'form': form})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Lista de clientes'
+        context['botonCrear'] = 'Crear nuevo cliente'
+        context['urlCrear'] = reverse_lazy('crear_cliente')
+        return context
 
-def edit_customer(request, id):
-    customer  = Customer.objects.get(id = id)
-    form = CustomerForm(request.POST or None, request.FILES or None, instance = customer)
-    if form.is_valid() and request.POST:
-        form.save()
-        return redirect('cliente_index')
-    return render(request, './user/cliente/editar.html', {'form': form})
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'searchData':
+                data = []
+                for i in User.objects.all():
+                    data.append(i.toJSON())
+            else:
+                data['error'] = 'Ha ocurrido un error.'
+        except Exception as e:
+            data['error'] = str(e)
+        
+        return JsonResponse(data, safe=False)
 
-def delete_customer(request, id):
-    customer = Customer.objects.get(id = id)
-    customer.delete()
-    return redirect('cliente_index')
+class CustomerCreateView(CreateView):
+    model = Customer
+    form_class = CustomerForm
+    template_name = 'user/cliente/crear.html'
+    success_url = reverse_lazy('cliente_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Crear nuevo cliente'
+        context['url_listar'] = reverse_lazy('cliente_index')
+        context['listar'] = 'Listar clientes'
+        context['action'] = 'add'
+        return context
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'add':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+        
+class CustomerUpdateView(UpdateView):
+    model = Customer
+    form_class = CustomerForm
+    template_name = 'user/cliente/editar.html'
+    success_url = reverse_lazy('cliente_index')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'edit':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Editar cliente'
+        context['url_listar'] = reverse_lazy('cliente_index')
+        context['listar'] = 'Listar clientes'
+        context['action'] = 'edit'
+        return context
+
+class CustomerDeleteView(DeleteView):
+    model = User
+    template_name = './user/cliente/eliminar.html'
+    success_url = reverse_lazy('cliente_index')
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            self.object.delete()
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titlePaginador'] = 'Eliminar un cliente'
+        context['url_listar'] = reverse_lazy('cliente_index')
+        context['listar'] = 'Listar clientes'
+        context['id'] = self.object.id
+        return context

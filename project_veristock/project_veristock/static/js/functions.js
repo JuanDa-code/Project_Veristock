@@ -25,7 +25,9 @@ function message_error(obj) {
                 'state': 'Estado',
                 'date_birth': 'Fecha cumpleaños',
                 'phone': 'Teléfono',
-                'email_address': 'Correo electrónico'
+                'email_address': 'Correo electrónico',
+                'invoice_number': 'Número de factura',
+                'totalSale': 'Total venta'
             }
             html += '<li>' + valores[key] + ': ' + value + '</li>';
         });

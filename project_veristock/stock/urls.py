@@ -16,13 +16,16 @@ urlpatterns = [
     # Urls Sale
 
     path('venta/index/', SaleListView.as_view(), name='venta_index'),
-    path('venta/crear/', views.listar_productos, name='crear_venta'),
-    path('venta/eliminar/<int:id>', views.delete_sale, name='eliminar_venta'),
-    path('venta/editar/<int:id>', views.edit_sale, name='editar_venta'),
+    path('venta/crear/', SaleCreateView.as_view(), name='crear_venta'),
+    path('venta/eliminar/<int:pk>', SaleDeleteView.as_view(), name='eliminar_venta'),
+    path('venta/editar/<int:pk>', SaleUpdateView.as_view(), name='editar_venta'),
     
     # Urls Devolution
     path('devolucion/index/', DevolutionListView.as_view(), name='devolucion_index'),
     path('devolucion/crear/', DevolutionCreateView.as_view(), name='crear_devolucion'),
     path('devolucion/eliminar/<int:pk>', DevolutionDeleteView.as_view(), name='eliminar_devolucion'),
     path('devolucion/editar/<int:pk>', DevolutionUpdateView.as_view(), name='editar_devolucion'),
+
+    # Pdf's
+    path('venta/pdf/<int:pk>', SaleInvoicePdfView.as_view(), name='pdf_venta'),
 ]

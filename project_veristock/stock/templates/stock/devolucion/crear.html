@@ -4,7 +4,7 @@
 <div class="form-group row">
     <label class="col-sm-12 col-md-2 col-form-label">Producto a cambiar</label>
     <div class="col-sm-12 col-md-10">
-        <select class="custom-select" name="producto_cambio" required id="id_producto_cambio">
+        <select class="custom-select2 form-control" name="producto_cambio" required id="id_producto_cambio">
             <option value="0" selected>---------</option>
             {% for p in productos %}
                 <option value="{{ p.id }}">{{ p.name }} {{ p.brand }} {{ p.reference }}</option>

@@ -20,7 +20,11 @@
             <td>{{ u.first_name }} {{ u.last_names }}</td>
             <td>{{ u.type_document.type_document }}</td>
             <td>{{ u.document_number }}</td>
-            <td>{{ u.email_address }}</td>
+            {% if u.email_address == None %}
+                <td>Vacío</td>
+            {% else %}
+                <td>{{ u.email_address }}</td>
+            {% endif %}
             <td>{{ u.id_position.name }}</td>
             {% if u.state == 'A' %}
                 <td>Activo</td>

@@ -1,3 +1,4 @@
+from tkinter.tix import Select
 from django import forms
 from .models import Product, Sale, Devolution
 
@@ -11,8 +12,7 @@ class ProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ['name', 'cost_sale', 'brand', 'reference', 'warranty', 'stock']
-        exclude = ['state']
+        fields = ['name', 'cost_sale', 'brand', 'reference', 'warranty', 'time_warranty', 'stock']
         widgets = {
             'name': forms.TextInput(
                 attrs = {
@@ -41,7 +41,13 @@ class ProductForm(forms.ModelForm):
             ),
             'warranty': forms.Select(
                 attrs = {
-                    'class': 'custom-select',
+                    'class': 'custom-select2 form-control',
+                }
+            ),
+            'time_warranty': forms.NumberInput(
+                attrs = {
+                    'class': 'form-control',
+                    'placeholder': 'Tiempo de garantía (Meses)',
                 }
             ),
             'stock': forms.NumberInput(
@@ -70,11 +76,12 @@ class SaleForm(forms.ModelForm):
         model = Sale
         fields =  ['date', 'totalSale', 'customer', 'user']
         widgets = {
-            'date': forms.DateInput(
+            'date': forms.TextInput(
                 attrs = {
                     'autocomplete': 'off',
-                    'class': 'form-control date-picker',
+                    'class': 'form-control',
                     'placeholder': 'Seleccione una fecha',
+                    'id': 'datetimepicker',
                 }
             ),
             'totalSale': forms.NumberInput(
@@ -86,12 +93,12 @@ class SaleForm(forms.ModelForm):
             ),
             'customer': forms.Select(
                 attrs = {
-                    'class': 'custom-select',
+                    'class': 'custom-select2 form-control',
                 }
             ),
             'user': forms.Select(
                 attrs = {
-                    'class': 'custom-select'
+                    'class': 'custom-select2 form-control'
                 }
             ),
         }
@@ -112,7 +119,7 @@ class DevolutionForm(forms.ModelForm):
             ),
             'reason': forms.Select(
                 attrs = {
-                    'class': 'custom-select',
+                    'class': 'custom-select2 form-control',
                 }
             ),
             'remarks': forms.Textarea(
@@ -123,7 +130,7 @@ class DevolutionForm(forms.ModelForm):
             ),
             'id_product': forms.Select(
                 attrs = {
-                    'class': 'custom-select'
+                    'class': 'custom-select2 form-control'
                 }
             ),
         }

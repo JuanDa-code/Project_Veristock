@@ -9,7 +9,6 @@
     <th style="width: 15%">Referencia</th>
     <th style="width: 15%">Garantía</th>
     <th style="width: 15%">Stock</th>
-    <th style="width: 15%">Estado</th>
     <th style="width: 15%">Acciones</th>
 </tr>
 {% endblock col %}
@@ -32,7 +31,6 @@
             {% else %}
                 <td><span class="badge badge-danger badge-pill">{{ p.stock }}</span></td>
             {% endif %}
-            <td>{{ p.state }}</td>
             <td>
                 <div class="table-actions">
                     <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Agregar productos" onclick="abrir_modal('{% url 'agregar_stock' p.id %}')" data-color="#8ABD5F" style="color: rgb(138, 189, 95);"><i class="icon-copy fa fa-plus" aria-hidden="true"></i></a>

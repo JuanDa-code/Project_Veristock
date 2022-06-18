@@ -1,13 +1,7 @@
-{% extends './../../social/form.html' %}
+{% extends './../../social/base_eliminar.html' %}
 
 {% block extrajs %}
 <script type="text/javascript">
-
-    $(function () {
-        $('#datetimepicker').datepicker({
-            autoclose: true,
-        });
-    })
 
     $('form').on('submit', function (e) {
         e.preventDefault();
@@ -17,7 +11,7 @@
         $.ajax({
             url: window.location.pathname,
             type: 'POST',
-            data: parameters,
+            data: {},
             dataType: 'json'
         }).done(function (data) {
             if(!data.hasOwnProperty('error')) {

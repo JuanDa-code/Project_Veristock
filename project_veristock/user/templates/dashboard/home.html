@@ -1,6 +1,22 @@
 {% extends './base.html' %}
 {% load static %}
 
+{% block preloader %}
+<div class="pre-loader">
+    <div class="pre-loader-box">
+        <div class="loader-logo"><img src="{% static 'img/logos/Logo-3.png' %}" alt=""></div>
+        <div class='loader-progress' id="progress_div">
+            <div class='bar' id='bar1'></div>
+        </div>
+        <div class='percent' id='percent1'>0%</div>
+        <div class="loading-text">
+            Cargando...
+        </div>
+    </div>
+</div>
+{% endblock preloader %}
+
+
 {% block container %}
 <div class="main-container">
     <div class="pd-ltr-20">

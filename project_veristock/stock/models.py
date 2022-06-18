@@ -9,15 +9,9 @@ class Product(models.Model):
     cost_sale = models.IntegerField(verbose_name='Costo Venta', default=0, null=False)
     brand = models.CharField(max_length=100, verbose_name='Marca')
     reference = models.CharField(max_length=100, verbose_name='Referencia')
-    warranty = models.CharField(max_length=10, choices=garantia, verbose_name='Tiempo Garantia')
+    warranty = models.CharField(max_length=10, choices=garantia, verbose_name='Garantia')
+    time_warranty = models.IntegerField(verbose_name='Tiempo Garantia')
     stock = models.IntegerField(verbose_name='Stock', default=0, null=False)
-    state = models.CharField(verbose_name='Estado', choices=estado, max_length=10, default='A')
-
-    # Se debe cambiar el campo garantía para que sea de tipo número y de 
-    # este modo se agregue la cantidad de meses que tiene de garantía
-    # Se debe eliminar el campo remarks o observaciones, no da ningún tipo
-    # información importante.
-    # Se debe cambiar el atributo estado, definir si funciona o si es mejor eliminar el atributo
 
     def __str__(self):
         return '{} {} {}'.format(self.name, self.brand, self.reference)
@@ -65,13 +59,20 @@ class Devolution(models.Model):
 
 class Sale(models.Model):
     invoice_number = models.AutoField(verbose_name='Numero Factura', primary_key=True)
-    date = models.DateTimeField(verbose_name='Fecha')
+    date = models.DateField(verbose_name='Fecha')
     totalSale = models.IntegerField(verbose_name='Total Venta')
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name='Cliente')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuario')
 
     def __str__(self):
         return str(self.invoice_number)
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['totalSale'] = int(self.totalSale)
+        item['customer'] = self.customer.toJSON()
+        item['user'] = self.user.toJSON()
+        return item
 
     class Meta:
         ordering = ['invoice_number']
@@ -86,6 +87,11 @@ class Details_sale(models.Model):
 
     def __str__(self):
         return str(self.invoice_number)
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['id_product'] = self.id_product.toJSON()
+        return item
 
     class Meta:
         verbose_name = 'Detalle de Venta'
@@ -107,7 +113,7 @@ class Detail_temp(models.Model):
 class Logs(models.Model):
     id = models.AutoField(primary_key=True)
     description = models.TextField(max_length=100, verbose_name='Descripcion')
-    date = models.DateTimeField(verbose_name='Fecha')
+    date = models.DateField(verbose_name='Fecha')
     user = models.TextField(max_length=100, verbose_name='Usuario')
 
     def __str__(self):
@@ -115,4 +121,4 @@ class Logs(models.Model):
 
     class Meta:
         ordering = ['description']
-        verbose_name = 'Logs'
+        verbose_name = 'Registros'

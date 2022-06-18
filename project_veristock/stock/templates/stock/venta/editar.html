@@ -1,18 +1,316 @@
-{% extends './../../social/navbar.html' %}
+{% extends './../../dashboard/base.html' %}
 
-{% block title %} Editar Venta {% endblock %}
+{% block title %} Agrergar nueva venta {% endblock %}
 
-{% block content %}
+{% block container %}
 
-<div class="card">
-    <div class="card-header">
-        Editar Venta
-    </div>
-    <div class="card-body">
-        <h4 class="card-title">Datos de Venta</h4>
-        {% include './../form.html' %}
-        {% block cancelar %} <a name="" id="" class="btn btn-secundary" href="{% url 'venta_index' %}" role="button">Cancelar</a> {% endblock %}
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <!-- Formulario -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="title">
+                                    <h4>Creación de una venta</h4>
+                                </div>
+                                <nav aria-label="breadcrumb" role="navigation">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+                                        <li class="breadcrumb-item"><a href="{{ url_listar }}">{{ listar }}</a></li>
+                                        <li class="breadcrumb-item active">Nueva venta</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="card-group mb-30">
+                            <div class="col-sm-12 col-md-8">
+                                <div class="card card-box pd-20 mb-30">
+                                    <div class="clearfix">
+                                        <h3 class="text-blue h3"><i class="icon-copy fa fa-cubes" aria-hidden="true"></i> Detalle de producto</h3>
+                                        <label>Buscador de productos disponibles</label> <br>
+                                        <div class="form-group">
+                                            <div class="input-group-append">
+                                                <input type="text" class="form-control selectpicker" placeholder="Ingrese una descripción de producto" name="buscar">
+                                                <button type="button" class="btn btn-danger btnRemoveText"><i class="icon-copy fa fa-window-close" aria-hidden="true"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="action" value="{{ action }}">
+                                    <hr>
+                                    <button type="button" class="btn btn-danger btn-xs btnRemoveAll"><i class="dw dw-delete-3"></i> Eliminar todos mis productos</button>
+                                    <hr>
+                                    <div class="table-responsive">
+                                        <table class="table" id="tableProducts">
+                                            <thead>
+                                                <tr>
+                                                    <th>Eliminar</th>
+                                                    <th>Producto</th>
+                                                    <th>Precio Unidad</th>
+                                                    <th>Cantidad disponible</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Subtotal</th>
+                                                </tr>
+                                            </thead>
+                                            
+                                            <tbody>
+                                                <tr>
+                                                    
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="card card-box pd-20 mb-30">
+                                    <div class="clearfix">
+                                        <div class="pull-left">
+                                            <h3 class="text-blue h3"><i class="icon-copy fa fa-shopping-cart" aria-hidden="true"></i>  Datos de la venta</h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            {{ form }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="btn btn-outline-secondary" href="{{ url_listar }}" role="button"><i class="icon-copy fa fa-window-close-o" aria-hidden="true"></i>  Cancelar</a>
+                        <button class="btn btn-warning" type="submit" id="enviar"><i class="icon-copy fa fa-save" aria-hidden="true"></i>  Guardar datos</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 {% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+
+    var tableProducts;
+    
+    var vents = {
+        items : {
+            customer: '',
+            date: '',
+            totalSale: 0,
+            user: '',
+            products: [],
+        },
+        calculate_invoice: function () {
+            var total = 0;
+
+            $.each(this.items.products, function (pos, dict) {
+                dict.subtotal = dict.cant * parseInt(dict.cost_sale);
+                total += dict.subtotal;
+            });
+            this.items.totalSale = total;
+            $('input[name="totalSale"]').val(this.items.totalSale);
+        },
+        add: function (item) {
+            this.items.products.push(item);
+            this.list();
+        },
+        list: function (){
+            this.calculate_invoice();
+
+            tableProducts = $('#tableProducts').DataTable({
+                responsive: true,
+                destroy: true,
+                autoWidth: false,
+                data: this.items.products,
+                columns: [
+                    {"data": "id"},
+                    {"data": "name"},
+                    {"data": "cost_sale"},
+                    {"data": "stock"},
+                    {"data": "cant"},
+                    {"data": "subtotal"},
+                ],
+                columnDefs: [
+                    {
+                        targets: [1],
+                        class: 'text-center',
+                        orderable: false,
+                        render: function (data, type, row) {
+                            return '' + row.name + ' ' + row.brand + ' ' + row.reference + '';
+                        }
+                    },
+                    {
+                        targets: [3],
+                        class: 'text-center',
+                        orderable: false,
+                        render: function (data, type, row) {
+                            return '<span class="badge badge-success badge-pill">' + row.stock + '</span>';
+                        }
+                    },
+                    {
+                        targets: [0],
+                        class: 'text-center',
+                        orderable: false,
+                        render: function (data, type, row) {
+                            return '<a rel="remove" class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Eliminar" data-color="#e95959" style="color: rgb(233, 89, 89);"><i class="dw dw-delete-3"></i></a>';
+                        }
+                    },
+                    {
+                        targets: [-1, -4],
+                        class: 'text-center',
+                        orderable: false,
+                        render: function (data, type, row) {
+                            return '$' + parseInt(data);
+                        }
+                    },
+                    {
+                        targets: [-2],
+                        class: 'text-center',
+                        orderable: false,
+                        render: function (data, type, row) {
+                            return '<input type="text" name="cant" class="form-control form-control-sm input-sm" autocomplete="off" value="' + row.cant + '">';
+                        }
+                    },
+                ],
+                rowCallback(row, data, displayNum, displayIndex, dataIndex) {
+                    $(row).find('input[name="cant"]').TouchSpin({
+                        min: 1,
+                        max: 1000000000,
+                        step: 1
+                    });
+                },
+                language: {
+                    emptyTable: "No hay registros en la tabla",
+                    info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    search: "Buscar: <i class='icon-copy fa fa-search' aria-hidden='true'></i>",
+                    lengthMenu: "Mostrar _MENU_ registros",
+                    paginate: {
+                        first: "Primero",
+                        last: "Último",
+                        next: "Siguiente",
+                        previous: "Anterior",
+                    },
+                },
+            });
+        },
+    };
+
+    vents.items.products = {{ detProduct|safe }};
+    vents.list();
+
+    $(function () {
+
+        // Evento calcular
+
+        $('#tableProducts tbody')
+            .on('click', 'a[rel=remove]', function () {
+                var tr = tableProducts.cell($(this).closest('td, li')).index();
+                vents.items.products.splice(tr.row, 1);
+                vents.list();
+            })
+            .on('change', 'input[name="cant"]', function () {
+                var cant = parseInt($(this).val());
+                var tr = tableProducts.cell($(this).closest('td, li')).index();
+                vents.items.products[tr.row].cant = cant;
+                vents.calculate_invoice();
+                $('td:eq(5)', tableProducts.row(tr.row).node()).html('$' + vents.items.products[tr.row].subtotal);    
+            });
+
+        // Evento submit
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+
+            if (vents.items.products.length === 0) {
+                message_error('Debe al menos tener un item en su detalle de producto.');
+                return false;
+            }
+
+            vents.items.date = $('input[name="date"]').val();
+            vents.items.customer = $('select[name="customer"]').val();
+            vents.items.user = $('select[name="user"]').val();
+
+            var parameters = new FormData();
+            parameters.append('action', $('input[name="action"]').val());
+            parameters.append('vents', JSON.stringify(vents.items));
+
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: parameters,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+            }).done(function (data) { 
+                if(!data.hasOwnProperty('error')) {
+                    location.href = '{{ url_listar }}';
+                    return false;
+                }
+                message_error(data.error);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            }).always(function (data) {
+                
+            });
+        });
+
+        // Busqueda de productos
+
+        $('input[name="buscar"]').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: window.location.pathname,
+                    type: 'POST',
+                    data: {
+                        'action': 'buscar_productos',
+                        'term': request.term
+                    },
+                    dataType: 'json'
+                }).done(function (data) { 
+                    response(data);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert(textStatus + ': ' + errorThrown);
+                }).always(function (data) {
+                    
+                });
+            },
+            delay: 300,
+            select: function (event, ui) {
+                event.preventDefault();
+                ui.item.cant = 1;
+                ui.item.subtotal = 0;
+
+                vents.add(ui.item);
+                
+                $(this).val('');
+            },
+        });
+
+        $('.btnRemoveText').on('click', function () {
+            $('input[name="buscar"]').val('').focus();
+        });
+
+        $('.btnRemoveAll').on('click', function () {
+            if (vents.items.products.length === 0) return false;
+            vents.items.products = [];
+            vents.list();
+            swal("Eliminado!", "Has eliminado todos los productos selecionados.", "success");
+        });
+
+        // Datetime picker
+        $('#datetimepicker').datepicker({
+            autoclose: true,
+            format: 'dd-mm-yy'
+        });
+
+        vents.list();
+    });
+</script>
+{% endblock extrajs %}
