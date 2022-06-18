@@ -96,29 +96,3 @@ class Details_sale(models.Model):
     class Meta:
         verbose_name = 'Detalle de Venta'
         ordering = ['invoice_number']
-
-class Detail_temp(models.Model):
-    id = models.AutoField(primary_key=True)
-    invoice_number = models.ForeignKey(Sale, on_delete=models.CASCADE)
-    id_product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
-    totalPrice = models.IntegerField()
-
-    def __str__(self):
-        return str(self.invoice_number)
-
-    class Meta:
-        ordering = ['invoice_number']
-
-class Logs(models.Model):
-    id = models.AutoField(primary_key=True)
-    description = models.TextField(max_length=100, verbose_name='Descripcion')
-    date = models.DateField(verbose_name='Fecha')
-    user = models.TextField(max_length=100, verbose_name='Usuario')
-
-    def __str__(self):
-        return self.description
-
-    class Meta:
-        ordering = ['description']
-        verbose_name = 'Registros'
